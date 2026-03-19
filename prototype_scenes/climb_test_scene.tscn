@@ -1,0 +1,93 @@
+[gd_scene load_steps=12 format=3 uid="uid://bk8g6ww5x571i"]
+
+[ext_resource type="Script" uid="uid://762odk34n8kn" path="res://scripts/ui/StateLabel.cs" id="1_awone"]
+[ext_resource type="Script" uid="uid://ykvsm1kkb6uj" path="res://scripts/climb/CreateCollisionShape.cs" id="1_dqwrh"]
+[ext_resource type="PackedScene" uid="uid://cbnhcgf14nygg" path="res://prefabs/giants/pill_giant.tscn" id="1_gtjjn"]
+[ext_resource type="PackedScene" uid="uid://didvpehlarxml" path="res://prefabs/player/player_container.tscn" id="2_gtjjn"]
+[ext_resource type="Script" uid="uid://ctitt2qrhgui7" path="res://scripts/ui/FPS.cs" id="2_ke55c"]
+[ext_resource type="Script" uid="uid://p2ulqxveulw4" path="res://scripts/ui/StaminaLabel.cs" id="3_niqrx"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_awone"]
+
+[sub_resource type="Sky" id="Sky_dqwrh"]
+sky_material = SubResource("ProceduralSkyMaterial_awone")
+
+[sub_resource type="Environment" id="Environment_ke55c"]
+background_mode = 2
+sky = SubResource("Sky_dqwrh")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_klrrp"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0wbt6"]
+
+[node name="ClimbTestScene" type="Node3D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="FPS" type="RichTextLabel" parent="CanvasLayer"]
+modulate = Color(0.964706, 0, 1, 1)
+offset_right = 256.0
+offset_bottom = 64.0
+text = "FPS: "
+script = ExtResource("2_ke55c")
+
+[node name="CharacterState" type="RichTextLabel" parent="CanvasLayer" node_paths=PackedStringArray("CharacterData")]
+modulate = Color(0.964706, 0, 1, 1)
+offset_top = 32.0
+offset_right = 256.0
+offset_bottom = 96.0
+text = "STATE: "
+script = ExtResource("1_awone")
+CharacterData = NodePath("../../PlayerContainer")
+
+[node name="Stamina" type="RichTextLabel" parent="CanvasLayer" node_paths=PackedStringArray("CharacterData")]
+modulate = Color(0.964706, 0, 1, 1)
+offset_top = 64.0
+offset_right = 256.0
+offset_bottom = 128.0
+text = "STAMINA: "
+script = ExtResource("3_niqrx")
+CharacterData = NodePath("../../PlayerContainer")
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.966667, 0, 1, 1)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ke55c")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 0, 100, 0)
+
+[node name="CreateCollisionShape" type="Node3D" parent="." node_paths=PackedStringArray("CharacterData", "Giant")]
+script = ExtResource("1_dqwrh")
+CharacterData = NodePath("../PlayerContainer")
+Giant = NodePath("../PillGiant")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_klrrp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0, 0, 0)
+mesh = SubResource("BoxMesh_0wbt6")
+
+[node name="PillGiant" parent="." instance=ExtResource("1_gtjjn")]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 88.125, 0)
+
+[node name="PlayerContainer" parent="." instance=ExtResource("2_gtjjn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 30)

@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://c06728ka5lnsp"]
+
+[ext_resource type="Script" uid="uid://l8ux0cfdy86h" path="res://scripts/climb/ClimbableAnimatedEntity.cs" id="1_skyrn"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_skyrn"]
+resource_local_to_scene = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ji4cb"]
+shading_mode = 0
+vertex_color_use_as_albedo = true
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_xtkg8"]
+resource_local_to_scene = true
+
+[node name="AnimatedClimbableEntity" type="StaticBody3D" node_paths=PackedStringArray("IKs")]
+collision_layer = 4
+script = ExtResource("1_skyrn")
+IKs = []
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConcavePolygonShape3D_skyrn")
+
+[node name="WireFrame" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_ji4cb")
+mesh = SubResource("ImmediateMesh_xtkg8")
+skeleton = NodePath("../../..")

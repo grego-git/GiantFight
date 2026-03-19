@@ -1,0 +1,261 @@
+[gd_scene load_steps=21 format=3 uid="uid://didvpehlarxml"]
+
+[ext_resource type="Script" uid="uid://dte2ro7bsxaov" path="res://scripts/character/CharacterData.cs" id="1_878l0"]
+[ext_resource type="Script" uid="uid://df846gkbqrlvn" path="res://scripts/character/CharacterController.cs" id="2_828ix"]
+[ext_resource type="Script" uid="uid://71ylt0i7qy56" path="res://scripts/character/CameraController.cs" id="3_6wvb2"]
+[ext_resource type="PackedScene" uid="uid://cgmqbcxtjcg42" path="res://prefabs/player/sword.tscn" id="4_nj2e3"]
+[ext_resource type="Script" uid="uid://b88c7kconot4w" path="res://scripts/character/CameraTarget.cs" id="4_tghw6"]
+[ext_resource type="Script" uid="uid://b0phulapw04cv" path="res://scripts/character/Sword.cs" id="5_46u0n"]
+[ext_resource type="Script" uid="uid://nguijowt7053" path="res://scripts/character/LimbChecker.cs" id="5_nx1cc"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6wvb2"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_tghw6"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_828ix"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_tghw6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nx1cc"]
+shading_mode = 0
+albedo_color = Color(0, 0, 1, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_tghw6"]
+radius = 5.0
+
+[sub_resource type="Animation" id="Animation_nj2e3"]
+resource_name = "sword_swing"
+length = 0.383335
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sword:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.116667, 0.183333, 0.233333, 0.333333, 0.383333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(1, 0, 0), Vector3(0, 0, -1.5), Vector3(-1, 0.5, 0), Vector3(-1, 0.5, 0), Vector3(0, 0.25, -1), Vector3(1, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sword:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.183333, 0.233333, 0.383333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(1.91986, 1.5708, 0), Vector3(1.91986, 1.5708, -3.14159), Vector3(1.91986, 1.5708, -3.14159), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_46u0n"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sword:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sword:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_xe0wy"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sword:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sword:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_1jhq6"]
+resource_name = "sword_swing_2"
+length = 0.433335
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sword:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.116667, 0.183333, 0.266667, 0.316667, 0.433333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(1, 0, 0), Vector3(0.5, 0.222, -1), Vector3(-0.5, 0.375, -1), Vector3(-1, 0, 0), Vector3(0, 0, -1.5), Vector3(1, 0.5, 0), Vector3(1, 0.5, 0), Vector3(1, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sword:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.116667, 0.266667, 0.316667, 0.433333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.785398, 1.5708, 2.0944), Vector3(-2.0944, 1.5708, -3.49066), Vector3(-2.0944, 1.5708, -3.49066), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1jhq6"]
+_data = {
+&"RESET": SubResource("Animation_46u0n"),
+&"idle": SubResource("Animation_xe0wy"),
+&"sword_swing": SubResource("Animation_nj2e3"),
+&"sword_swing_2": SubResource("Animation_1jhq6")
+}
+
+[sub_resource type="SphereMesh" id="SphereMesh_828ix"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_tghw6"]
+
+[node name="PlayerContainer" type="Node3D"]
+script = ExtResource("1_878l0")
+Speed = 10.0
+ClimbSpeed = 10.0
+JumpSpeed = 15.0
+DashSpeed = 50.0
+GripDepleteRate = 2.0
+GripReplenishRate = 4.0
+FatigueReplenishRate = 5.0
+MaxHealth = 3.0
+MaxStamina = 30.0
+MaxStun = 2.0
+MaxAim = 0.25
+MaxDash = 0.25
+AccelerationStunThreshold = 25.0
+AccelerationKnockBackThreshold = 25.0
+
+[node name="CharacterController" type="CharacterBody3D" parent="." node_paths=PackedStringArray("Feet")]
+collision_mask = 73903
+script = ExtResource("2_828ix")
+Feet = NodePath("../Feet")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterController"]
+shape = SubResource("CapsuleShape3D_6wvb2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterController/CollisionShape3D"]
+mesh = SubResource("CapsuleMesh_tghw6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterController/CollisionShape3D/MeshInstance3D"]
+transform = Transform3D(0.5, 0, 0, 0, 0.25, 0, 0, 0, 0.5, 0, 0.5, -0.5)
+mesh = SubResource("BoxMesh_828ix")
+
+[node name="GroundRayCast" type="RayCast3D" parent="CharacterController"]
+target_position = Vector3(0, -3, 0)
+collision_mask = 46
+
+[node name="ClimbRayCast" type="RayCast3D" parent="CharacterController"]
+target_position = Vector3(0, 0, -3)
+collision_mask = 46
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterController/ClimbRayCast"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 2, 0, 0, -1)
+mesh = SubResource("BoxMesh_tghw6")
+surface_material_override/0 = SubResource("StandardMaterial3D_nx1cc")
+
+[node name="CrawlRayCast" type="RayCast3D" parent="CharacterController"]
+target_position = Vector3(0, -3, 0)
+collision_mask = 46
+
+[node name="HangRayCast" type="RayCast3D" parent="CharacterController"]
+target_position = Vector3(0, 3, 0)
+collision_mask = 46
+
+[node name="LimbChecker" type="ShapeCast3D" parent="CharacterController"]
+shape = SubResource("SphereShape3D_tghw6")
+target_position = Vector3(0, 0, 0)
+collision_mask = 32768
+collide_with_areas = true
+collide_with_bodies = false
+script = ExtResource("5_nx1cc")
+
+[node name="SwordAnimPlayer" type="AnimationPlayer" parent="CharacterController"]
+libraries = {
+&"": SubResource("AnimationLibrary_1jhq6")
+}
+
+[node name="Sword" parent="CharacterController" node_paths=PackedStringArray("anim") instance=ExtResource("4_nj2e3")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 1, 0, 0)
+script = ExtResource("5_46u0n")
+anim = NodePath("../SwordAnimPlayer")
+
+[node name="Feet" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Feet"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+mesh = SubResource("SphereMesh_828ix")
+
+[node name="CameraOrientation" type="Node3D" parent="." node_paths=PackedStringArray("Camera3D", "Target", "TargetToCameraRayCast")]
+process_mode = 3
+script = ExtResource("3_6wvb2")
+Camera3D = NodePath("../CharacterCamera")
+Target = NodePath("../CameraTarget")
+TargetToCameraRayCast = NodePath("../PlayerToCameraRayCast")
+PanSpeed = 4.0
+Distance = 15.0
+MaxXRotation = 60.0
+NormalFOV = 90.0
+ChargingFOV = 60.0
+DashFOV = 180.0
+ClimbFOV = 120.0
+
+[node name="CameraUpRotation" type="Node3D" parent="CameraOrientation"]
+
+[node name="CameraRightRotation" type="Node3D" parent="CameraOrientation/CameraUpRotation"]
+
+[node name="SlingShotAim" type="RayCast3D" parent="CameraOrientation/CameraUpRotation/CameraRightRotation"]
+target_position = Vector3(0, 0, -100)
+collision_mask = 62
+hit_back_faces = false
+
+[node name="CameraTarget" type="Node3D" parent="."]
+script = ExtResource("4_tghw6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CameraTarget"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+mesh = SubResource("SphereMesh_tghw6")
+
+[node name="CharacterCamera" type="Camera3D" parent="."]
+
+[node name="PlayerToCameraRayCast" type="RayCast3D" parent="."]
+collision_mask = 46
+hit_from_inside = true
