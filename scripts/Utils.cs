@@ -3,7 +3,6 @@ using Godot;
 
 public static class Utils
 {
-
     public static float LineT(Vector3 p, Vector3 x, Vector3 y)
     {
         return (p - x).Dot(y - x) / (y - x).Dot(y - x);

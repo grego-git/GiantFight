@@ -121,6 +121,7 @@ public class CharacterStateHang : ICharacterState
         }
         else if (characterData.CanSwingSword() && characterData.Controller.SwingSwordInput())
         {
+            characterData.Controller.LookAt(characterData.Controller.GlobalPosition - characterData.CameraController.CameraUpRotation.GlobalBasis.Z, Vector3.Up);
             climbVelocity = Vector3.Zero;
             characterData.Controller.Sword.Swing();
         }

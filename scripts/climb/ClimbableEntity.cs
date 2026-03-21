@@ -7,8 +7,6 @@ using System.Reflection.Metadata.Ecma335;
 public partial class ClimbableEntity : StaticBody3D
 {
     [Export]
-    public float MaxAccumulatedDamaged { get; set; }
-    [Export]
     public string MaxSwordChargeTriggerAnimation { get; set; }
     [Export]
     public bool CheckForDuplicateVerts { get; set; }
@@ -22,10 +20,6 @@ public partial class ClimbableEntity : StaticBody3D
     public MeshInstance3D MeshInstance { get; private set; }
     public Dictionary<int, int> EdgeFaceDicitonary { get; private set; }
     public Dictionary<int, int> CounterpartEdges { get; private set; }
-    public float Damage{ get; protected set; }
-    public float SwordCharge{ get; protected set; }
-
-    private float accumulatedDamage;
 
     protected MeshDataTool meshDataTool;
 
@@ -106,30 +100,9 @@ public partial class ClimbableEntity : StaticBody3D
         return meshDataTool.GetEdgeFaces(faceId);
     }
 
-    public bool HasReachedMaxDamage()
-    {
-        return MaxAccumulatedDamaged > 0.0f && accumulatedDamage >= MaxAccumulatedDamaged;
-    }
-
     public void Stabbed(float damage)
     {
-        SwordCharge = damage;
-
-        if (GetCollisionLayerValue(5) && !HasReachedMaxDamage())
-        {
-            float calculatedDamage = damage * 10.0f;
-            float maxDamage = MaxAccumulatedDamaged > 0.0f ? (MaxAccumulatedDamaged - accumulatedDamage) : calculatedDamage;
-            Damage = Mathf.Min(calculatedDamage, maxDamage);
-        }
-        else
-            Damage = damage / 5.0f;
-
-        accumulatedDamage += Damage;
-    }
-
-    public void ResetDamage()
-    {
-        Damage = 0.0f;
+        
     }
 
     public virtual void Destroy()

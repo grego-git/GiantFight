@@ -1,8 +1,9 @@
+using System.Reflection.Metadata;
 using Godot;
 
 public partial class CharacterController : CharacterBody3D
 {
-    public static readonly float GRAVITY = -9.81f * 2.0f;
+    public static readonly float GRAVITY = -9.81f;
 
     [Signal]
     public delegate void HitEventHandler(Vector3 attackPoint, float damage, float knockBackSpeed, bool checkIfStunned, bool attackInTheAir);
@@ -102,7 +103,7 @@ public partial class CharacterController : CharacterBody3D
             {
                 StaticBody3D body = (StaticBody3D)GetSlideCollision(i).GetCollider();
 
-                if (body.GetCollisionLayerValue(6))
+                if (body.GetCollisionLayerValue((int)Constants.COLLIDER_LAYERS.GROUND))
                     return true;
             }
         }
@@ -160,7 +161,7 @@ public partial class CharacterController : CharacterBody3D
         ClimbRayCast.ForceRaycastUpdate();
 
         if (ClimbRayCast.IsColliding() &&
-            ((CollisionObject3D)ClimbRayCast.GetCollider()).GetCollisionLayerValue(3) &&
+            ((CollisionObject3D)ClimbRayCast.GetCollider()).GetCollisionLayerValue((int)Constants.COLLIDER_LAYERS.DYNAMIC_COLLIDER_CLIMBABLE) &&
             ClimbFace.ValidClimbFaceNormal(ClimbRayCast.GetCollisionNormal()))
             return true;
 
@@ -172,7 +173,7 @@ public partial class CharacterController : CharacterBody3D
         CrawlRayCast.ForceRaycastUpdate();
 
         if (CrawlRayCast.IsColliding() &&
-            ((CollisionObject3D)CrawlRayCast.GetCollider()).GetCollisionLayerValue(3) &&
+            ((CollisionObject3D)CrawlRayCast.GetCollider()).GetCollisionLayerValue((int)Constants.COLLIDER_LAYERS.DYNAMIC_COLLIDER_CLIMBABLE) &&
             CrawlFace.ValidCrawlFaceNormal(CrawlRayCast.GetCollisionNormal()))
             return true;
 
@@ -184,7 +185,7 @@ public partial class CharacterController : CharacterBody3D
         HangRayCast.ForceRaycastUpdate();
 
         if (HangRayCast.IsColliding() &&
-            ((CollisionObject3D)HangRayCast.GetCollider()).GetCollisionLayerValue(3) &&
+            ((CollisionObject3D)HangRayCast.GetCollider()).GetCollisionLayerValue((int)Constants.COLLIDER_LAYERS.DYNAMIC_COLLIDER_CLIMBABLE) &&
             HangFace.ValidHangFaceNormal(HangRayCast.GetCollisionNormal()))
             return true;
 
@@ -279,9 +280,6 @@ public partial class CharacterController : CharacterBody3D
                 }
             }
         }
-
-        if (face == null)
-            GD.Print("NO FACE");
 
         return face;
     }

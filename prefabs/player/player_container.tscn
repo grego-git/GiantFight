@@ -23,35 +23,6 @@ albedo_color = Color(0, 0, 1, 1)
 [sub_resource type="SphereShape3D" id="SphereShape3D_tghw6"]
 radius = 5.0
 
-[sub_resource type="Animation" id="Animation_nj2e3"]
-resource_name = "sword_swing"
-length = 0.383335
-step = 0.0166667
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sword:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.116667, 0.183333, 0.233333, 0.333333, 0.383333),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector3(1, 0, 0), Vector3(0, 0, -1.5), Vector3(-1, 0.5, 0), Vector3(-1, 0.5, 0), Vector3(0, 0.25, -1), Vector3(1, 0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sword:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.183333, 0.233333, 0.383333),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(1.91986, 1.5708, 0), Vector3(1.91986, 1.5708, -3.14159), Vector3(1.91986, 1.5708, -3.14159), Vector3(0, 0, 0)]
-}
-
 [sub_resource type="Animation" id="Animation_46u0n"]
 length = 0.001
 tracks/0/type = "value"
@@ -104,6 +75,35 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_nj2e3"]
+resource_name = "sword_swing"
+length = 0.383335
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sword:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.116667, 0.183333, 0.233333, 0.333333, 0.383333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(1, 0, 0), Vector3(0, 0, -1.5), Vector3(-1, 0.5, 0), Vector3(-1, 0.5, 0), Vector3(0, 0.25, -1), Vector3(1, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sword:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.183333, 0.233333, 0.383333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(1.91986, 1.5708, 0), Vector3(1.91986, 1.5708, -3.14159), Vector3(1.91986, 1.5708, -3.14159), Vector3(0, 0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_1jhq6"]
@@ -165,7 +165,7 @@ AccelerationStunThreshold = 25.0
 AccelerationKnockBackThreshold = 25.0
 
 [node name="CharacterController" type="CharacterBody3D" parent="." node_paths=PackedStringArray("Feet")]
-collision_mask = 73903
+collision_mask = 103
 script = ExtResource("2_828ix")
 Feet = NodePath("../Feet")
 
@@ -181,11 +181,11 @@ mesh = SubResource("BoxMesh_828ix")
 
 [node name="GroundRayCast" type="RayCast3D" parent="CharacterController"]
 target_position = Vector3(0, -3, 0)
-collision_mask = 46
+collision_mask = 38
 
 [node name="ClimbRayCast" type="RayCast3D" parent="CharacterController"]
 target_position = Vector3(0, 0, -3)
-collision_mask = 46
+collision_mask = 38
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterController/ClimbRayCast"]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 2, 0, 0, -1)
@@ -194,16 +194,16 @@ surface_material_override/0 = SubResource("StandardMaterial3D_nx1cc")
 
 [node name="CrawlRayCast" type="RayCast3D" parent="CharacterController"]
 target_position = Vector3(0, -3, 0)
-collision_mask = 46
+collision_mask = 38
 
 [node name="HangRayCast" type="RayCast3D" parent="CharacterController"]
 target_position = Vector3(0, 3, 0)
-collision_mask = 46
+collision_mask = 38
 
 [node name="LimbChecker" type="ShapeCast3D" parent="CharacterController"]
 shape = SubResource("SphereShape3D_tghw6")
 target_position = Vector3(0, 0, 0)
-collision_mask = 32768
+collision_mask = 64
 collide_with_areas = true
 collide_with_bodies = false
 script = ExtResource("5_nx1cc")

@@ -15,6 +15,8 @@ public partial class Sword : Node3D
 
     public State CurrentState { get; set; }
 
+    private Area3D swordBox;
+
     private string[] SWING_ANIMATIONS =
     {
         "sword_swing",
@@ -27,7 +29,10 @@ public partial class Sword : Node3D
     {
         base._Ready();
 
+        swordBox = (Area3D)GetNode("SwordBox");
+
         anim.AnimationFinished += AnimationFinished;
+        swordBox.BodyEntered += BodyEntered;
     }
 
     public override void _PhysicsProcess(double delta)
@@ -37,9 +42,13 @@ public partial class Sword : Node3D
         switch(CurrentState)
         {
             case State.IDLE:
+                swordBox.Monitorable = false;
+                swordBox.Monitoring = false;
                 anim.Play("idle");
                 break;
             case State.SWING:
+                swordBox.Monitorable = true;
+                swordBox.Monitoring = true;
                 break;
         }
     }
@@ -62,5 +71,10 @@ public partial class Sword : Node3D
     {
         if (CurrentState == State.SWING)
             CurrentState = State.IDLE;
+    }
+
+    public void BodyEntered(Node3D node)
+    {
+        GD.Print("HIT: " + node.Name);
     }
 }

@@ -95,6 +95,7 @@ public class CharacterStateAir : ICharacterState
         }
         else if (characterData.CanSwingSword() && characterData.Controller.SwingSwordInput())
         {
+            characterData.Controller.LookAt(characterData.Controller.GlobalPosition - characterData.CameraController.CameraUpRotation.GlobalBasis.Z, Vector3.Up);
             horizontalVelocity = Vector3.Zero;
             characterData.Controller.Sword.Swing();
         }
