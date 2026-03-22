@@ -5,8 +5,6 @@ using Godot;
 public partial class CharacterData : Node3D
 {
     [Export]
-    public bool Debug { get; set; }
-    [Export]
     public float Speed { get; set; }
     [Export]
     public float ClimbSpeed { get; set; }
@@ -40,11 +38,13 @@ public partial class CharacterData : Node3D
     public ICharacterState CurrentCharacterState { get; set; }
     public CharacterController Controller { get; private set; }
     public CameraController CameraController { get; private set; }
+    public GpuParticles3D DeadParticles { get; private set; }
 
     public bool CanTakeDamage { get; set; }
     public bool IsOnGround { get; set; }
     public bool Running { get; set; }
     public bool IsFatigued { get; set; }
+    public bool InGiantProximity { get; set; }
     public Meter HealthMeter { get; private set; }
     public Meter StaminaMeter { get; private set; }
     public Meter FatigueMeter { get; private set; }
@@ -69,18 +69,20 @@ public partial class CharacterData : Node3D
 
         Controller = (CharacterController)GetNode("CharacterController");
         CameraController = (CameraController)GetNode("CameraOrientation");
+        DeadParticles = (GpuParticles3D)GetNode("DeadParticles");
         CurrentCharacterState = new CharacterStateGrounded(this, Vector3.Zero);
     
         Controller.Hit += Hit;
-        Controller.Punched += Punched;
+        
+        Controller.Feet.Visible = Constants.DEBUG;
     }
 
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
 
-        if (Controller.DebugInput())
-            Debug = !Debug;
+        //if (Controller.DebugInput())
+        //    Debug = !Debug;
         
         FillMeters((float)delta);
         ChangeState();
@@ -92,7 +94,7 @@ public partial class CharacterData : Node3D
         CameraController.Update((float)delta, this);
         CheckForDeath();
 
-        Controller.Feet.Visible = Debug;
+        Controller.Feet.Visible = Constants.DEBUG;
     }
 
     public void FillMeters(float delta)
@@ -296,11 +298,6 @@ public partial class CharacterData : Node3D
         
     }
 
-    public void KnockedBack(Vector3 knockBackVelocity)
-    {
-        
-    }
-
     public string GetState()
     {
         return CurrentCharacterState?.GetState() ?? "NONE";
@@ -343,49 +340,22 @@ public partial class CharacterData : Node3D
         if (HealthMeter.Value <= 0.0f)
         {
             if (GetState() != "DEAD")
+            {
                 CurrentCharacterState = new CharacterStateDead(this);
+                Controller.Visible = false;
+                DeadParticles.GlobalPosition = Controller.GlobalPosition;
+                DeadParticles.Emitting = true;                
+            }
             else if (DeathMeter.IsEmpty())
             {
+                GetTree().ReloadCurrentScene();
                 return;
             }
         }
     }
 
-    public void Hit(Vector3 attackPoint, float damage, float knockBackSpeed, bool checkIfStunned, bool attackInTheAir)
+    public void Hit()
     {
-        string state = GetState();
-
-        if (!attackInTheAir && state == "AIR")
-            return;
-        
-        switch (state)
-        {
-            case "HANG":
-            case "CRAWL":
-            case "CLIMB":
-            case "LEDGE":
-                Stun();
-                TakeDamage(damage);
-                break;
-            default:
-                Vector3 toPlayer = Utils.GetFlatDirectionalVector(Controller.GlobalPosition - attackPoint);
-                Vector3 velocity = toPlayer * knockBackSpeed;
-
-                if (velocity == Vector3.Zero)
-                    velocity = Vector3.Forward * knockBackSpeed;
-
-                KnockedBack(velocity);
-                TakeDamage(damage);
-                break;
-        }
-    }
-
-    public void Punched(Vector3 knockBack, float damage, float cameraShakeTime, float cameraShakeStrength, float drainMeter)
-    {
-        CurrentCharacterState = new CharacterStateThrown(this, knockBack, 0.0f);
-        CameraController.Shake(cameraShakeTime, cameraShakeStrength);
-        CameraController.Update(0.0f, this);
-        TakeDamage(damage);
-        StaminaMeter.FillMeter(MaxStamina * (1.0f - drainMeter));
+        HealthMeter.Empty();
     }
 }

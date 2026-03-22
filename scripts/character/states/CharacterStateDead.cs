@@ -24,10 +24,7 @@ public class CharacterStateDead : ICharacterState
 
     public void Update(float delta)
     {
-        if (characterData.Controller.IsOnFloor())
-            verticalVelocity = 0.0f;
-        else
-            verticalVelocity += CharacterController.GRAVITY * delta;
+        verticalVelocity = 0.0f;
     }
 
     public bool OnThisEntity(ClimbableEntity entity)

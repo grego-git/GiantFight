@@ -26,6 +26,7 @@ public partial class PlayerDetection : Node3D
     public void Update(CharacterData characterData, ClimbableEntity[] climbables)
     {
         PlayerDetectionZone = DetectionZoneAreas.NONE;
+        characterData.InGiantProximity = false;
 
         HashSet<string> bonesPlayerIsOn = GetBonesPlayerIsOn(characterData, climbables);
 
@@ -35,6 +36,8 @@ public partial class PlayerDetection : Node3D
             PlayerPosition = characterData.Controller.GlobalPosition;
             DistanceToPlayer = 0.0f;
             FacingPlayer = true;
+            
+            characterData.InGiantProximity = true;
         }
         else 
         {
@@ -57,6 +60,8 @@ public partial class PlayerDetection : Node3D
 
                     if (AngleToPlayer < 0.0f)
                         AngleToPlayer = (2.0f * Mathf.Pi) + AngleToPlayer;
+                    
+                    characterData.InGiantProximity = true;
                     break;
                 }
             }

@@ -18,10 +18,11 @@ public partial class CreateCollisionShape : Node3D
 
     public void Update()
     {
-        if (Giant == null)
+        if (Giant == null || !Giant.IsInsideTree())
             return;
-
-        GD.Print("CREATING COLLISION SHAPES");
+        
+        if (CharacterData == null || !CharacterData.IsInsideTree())
+            return;
 
         foreach (var climbEntity in Giant.ClimbAnimatedEntities)
         {

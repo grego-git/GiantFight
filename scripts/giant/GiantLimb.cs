@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class GiantLimb : Area3D
+public partial class GiantLimb : Node3D
 {
     [Export]
     public string Bone { get; set; }
@@ -23,16 +23,19 @@ public partial class GiantLimb : Area3D
         Enabled = true;
 
         mesh = (MeshInstance3D)GetNode("MeshInstance3D");
+        mesh.Visible = Constants.DEBUG;
     }
 
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
+        mesh.Visible = Constants.DEBUG;
     }
 
     public void UpdatePosition()
     {
-        GD.Print("UPDATING LIMBS");
+        if (!Skeleton.IsInsideTree())
+            return;
 
         if (!setOffset)
         {

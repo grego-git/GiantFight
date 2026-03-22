@@ -5,9 +5,7 @@ public partial class CharacterController : CharacterBody3D
     public static readonly float GRAVITY = -9.81f;
 
     [Signal]
-    public delegate void HitEventHandler(Vector3 attackPoint, float damage, float knockBackSpeed, bool checkIfStunned, bool attackInTheAir);
-    [Signal]
-    public delegate void PunchedEventHandler(Vector3 knockBack, float damage, float cameraShakeTime, float cameraShakeStrength, float drainMeter);
+    public delegate void HitEventHandler();
 
     [Export]
     public Node3D Feet { get; set; }

@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://nt1dhl7277ke"]
+
+[ext_resource type="Script" uid="uid://dva6oi7ux7gur" path="res://scripts/giant/DestroyHitBox.cs" id="1_qnjrp"]
+[ext_resource type="Script" uid="uid://sbueogfis8dk" path="res://scripts/giant/GiantHitBox.cs" id="2_8fr3f"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_7efx8"]
+radius = 0.75
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_qnjrp"]
+top_radius = 0.75
+bottom_radius = 0.75
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qnjrp"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1, 0, 0.983333, 0.12549)
+
+[node name="StompCylinder" type="Node3D"]
+script = ExtResource("1_qnjrp")
+KillTimer = 0.25
+
+[node name="Area3D" type="Area3D" parent="." node_paths=PackedStringArray("Mesh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+collision_layer = 128
+script = ExtResource("2_8fr3f")
+Mesh = NodePath("MeshInstance3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("CylinderShape3D_7efx8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D"]
+mesh = SubResource("CylinderMesh_qnjrp")
+surface_material_override/0 = SubResource("StandardMaterial3D_qnjrp")

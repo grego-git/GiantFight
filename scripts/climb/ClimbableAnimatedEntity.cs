@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using Godot;
 
 public partial class ClimbableAnimatedEntity : ClimbableEntity
@@ -55,10 +56,8 @@ public partial class ClimbableAnimatedEntity : ClimbableEntity
     {
         if (destroyed)
             return;
-            
-        GD.Print("UPDATING CLIMBABLE ENTITY");
         
-        if (!destroyed && collidableFaces != null && collidableFaces.Count > 0)
+        if (Constants.DEBUG && collidableFaces != null && collidableFaces.Count > 0)
         {
             Utils.DrawAnimatedDebugMesh(debugMesh, collidableFaces, faces);
         }

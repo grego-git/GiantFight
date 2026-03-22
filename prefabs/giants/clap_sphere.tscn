@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://dgfhou4rx418s"]
+
+[ext_resource type="Script" uid="uid://dva6oi7ux7gur" path="res://scripts/giant/DestroyHitBox.cs" id="1_yxqua"]
+[ext_resource type="Script" uid="uid://sbueogfis8dk" path="res://scripts/giant/GiantHitBox.cs" id="2_bfyra"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_yxqua"]
+radius = 1.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_bfyra"]
+radius = 1.0
+height = 2.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qnjrp"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1, 0, 0.983333, 0.12549)
+
+[node name="ClapSphere" type="Node3D"]
+script = ExtResource("1_yxqua")
+KillTimer = 0.25
+
+[node name="Area3D" type="Area3D" parent="." node_paths=PackedStringArray("Mesh")]
+collision_layer = 128
+script = ExtResource("2_bfyra")
+Mesh = NodePath("MeshInstance3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_yxqua")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D"]
+mesh = SubResource("SphereMesh_bfyra")
+surface_material_override/0 = SubResource("StandardMaterial3D_qnjrp")

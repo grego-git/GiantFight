@@ -41,9 +41,6 @@ public class CharacterStateAir : ICharacterState
         }
         else if (verticalVelocity <= 0.0f && characterData.Controller.IsOnFloor())
         {
-            //if (characterData.RootScene.CurrentSceneState != RootScene.SceneState.OUTRO)
-            //    characterData.TakeDamageFromFall(Mathf.Abs(verticalVelocity));
-
             return new CharacterStateGrounded(characterData, horizontalVelocity);
         }
 

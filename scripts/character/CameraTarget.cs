@@ -6,11 +6,13 @@ public partial class CameraTarget : Node3D
     public override void _Ready()
     {
         base._Ready();
+        
+        Visible = Constants.DEBUG;
     }
 
     public void Update(float delta, CharacterData characterData)
     {
-        Visible = characterData.Debug;
+        Visible = Constants.DEBUG;
 
         Vector3 target = characterData.Controller.GlobalPosition;
 
