@@ -1,10 +1,12 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class PlayerDetection : Node3D
 {
     public enum DetectionZoneAreas
     {
+        NEGATE,
         TOP,
         MIDDLE,
         FLOOR,
@@ -21,31 +23,54 @@ public partial class PlayerDetection : Node3D
     public float AngleToPlayer { get; set; }
     public bool FacingPlayer { get; set; }
 
-    public void Update(float delta)
+    public void Update(CharacterData characterData, ClimbableEntity[] climbables)
     {
         PlayerDetectionZone = DetectionZoneAreas.NONE;
 
-        for (int i = 0; i < DetectionZones.Length; i++)
+        HashSet<string> bonesPlayerIsOn = GetBonesPlayerIsOn(characterData, climbables);
+
+        if (bonesPlayerIsOn != null && bonesPlayerIsOn.Count > 0)
         {
-            DetectionZones[i].ForceUpdateTransform();
-            
-            if (DetectionZones[i].IsColliding())
+            PlayerDetectionZone = DetectionZoneAreas.ON_GIANT;
+            PlayerPosition = characterData.Controller.GlobalPosition;
+            DistanceToPlayer = 0.0f;
+            FacingPlayer = true;
+        }
+        else 
+        {
+            for (int i = 0; i < DetectionZones.Length; i++)
             {
-                PlayerDetectionZone = (DetectionZoneAreas)i;
-                PlayerPosition = ((Node3D)DetectionZones[i].GetCollider(0)).GlobalPosition;
-                
-                Vector3 flatPlayerPosition = Utils.GetFlatSpatialVector(PlayerPosition, GlobalPosition.Y);
-                Vector3 toPlayer = flatPlayerPosition - GlobalPosition;
+                DetectionZones[i].ForceUpdateTransform();
 
-                FacingPlayer = GlobalBasis.Z.Normalized().AngleTo(toPlayer.Normalized()) < Mathf.DegToRad(15.0f);
+                if (DetectionZones[i].IsColliding())
+                {
+                    PlayerDetectionZone = (DetectionZoneAreas)i;
+                    PlayerPosition = ((Node3D)DetectionZones[i].GetCollider(0)).GlobalPosition;
 
-                DistanceToPlayer = toPlayer.Length();
-                AngleToPlayer = Vector3.Back.SignedAngleTo(toPlayer.Normalized(), Vector3.Up);
-                
-                if (AngleToPlayer < 0.0f)
-                    AngleToPlayer = (2.0f * Mathf.Pi) + AngleToPlayer;
-                break;
+                    Vector3 flatPlayerPosition = Utils.GetFlatSpatialVector(PlayerPosition, GlobalPosition.Y);
+                    Vector3 toPlayer = flatPlayerPosition - GlobalPosition;
+
+                    FacingPlayer = GlobalBasis.Z.Normalized().AngleTo(toPlayer.Normalized()) < Mathf.DegToRad(15.0f);
+
+                    DistanceToPlayer = toPlayer.Length();
+                    AngleToPlayer = Vector3.Back.SignedAngleTo(toPlayer.Normalized(), Vector3.Up);
+
+                    if (AngleToPlayer < 0.0f)
+                        AngleToPlayer = (2.0f * Mathf.Pi) + AngleToPlayer;
+                    break;
+                }
             }
         }
+    }
+    
+    private HashSet<string> GetBonesPlayerIsOn(CharacterData characterData, ClimbableEntity[] climbables)
+    {
+        foreach (var climbable in climbables)
+        {
+            if (characterData.OnThisEntity(climbable))
+                return characterData.GetBoneImOnFromClimbable();
+        }
+
+        return null;
     }
 }

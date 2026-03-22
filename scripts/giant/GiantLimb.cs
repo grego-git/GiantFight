@@ -32,6 +32,8 @@ public partial class GiantLimb : Area3D
 
     public void UpdatePosition()
     {
+        GD.Print("UPDATING LIMBS");
+
         if (!setOffset)
         {
             Transform3D boneTransform = Skeleton.GlobalTransform * Skeleton.GetBoneGlobalPose(Skeleton.FindBone(Bone));

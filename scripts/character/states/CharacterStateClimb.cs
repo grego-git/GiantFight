@@ -149,7 +149,7 @@ public class CharacterStateClimb : ICharacterState
         {
             dashDir = climbVelocity != Vector3.Zero ? climbVelocity.Normalized() : -characterData.CameraController.CameraUpRotation.GlobalBasis.Z;
             climbVelocity = Vector3.Zero;
-            characterData.Dash(dashDir);
+            characterData.Dash();
         }
         else if (characterData.CanSwingSword() && characterData.Controller.SwingSwordInput())
         {

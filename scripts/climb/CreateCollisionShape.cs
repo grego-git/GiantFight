@@ -9,12 +9,19 @@ public partial class CreateCollisionShape : Node3D
     [Export]
     public Giant Giant { get; set; }
 
-    public override void _PhysicsProcess(double delta)
+    public override void _Ready()
     {
-        base._PhysicsProcess(delta);
+        base._Ready();
 
+        Giant.Skeleton.SkeletonUpdated += Update;
+    }
+
+    public void Update()
+    {
         if (Giant == null)
             return;
+
+        GD.Print("CREATING COLLISION SHAPES");
 
         foreach (var climbEntity in Giant.ClimbAnimatedEntities)
         {
@@ -26,6 +33,12 @@ public partial class CreateCollisionShape : Node3D
         foreach (var climbEntity in Giant.ClimbAnimatedEntities)
         {
             climbEntity.GetCollidableFaces(bonesDetected);
+        }
+
+        foreach (var climbEntity in Giant.ClimbAnimatedEntities)
+        {
+            climbEntity.CreateShape();
+            climbEntity.Update();
         }
     }
 }

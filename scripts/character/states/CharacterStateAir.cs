@@ -91,7 +91,7 @@ public class CharacterStateAir : ICharacterState
             dashTransform = dashTransform.LookingAt(dashTransform.Origin + dashTransform.Basis.Z, dashTransform.Basis.Y);
             horizontalVelocity = Vector3.Zero;
             verticalVelocity = 0.0f;
-            characterData.Dash(dashTransform.Basis.Z);
+            characterData.Dash();
         }
         else if (characterData.CanSwingSword() && characterData.Controller.SwingSwordInput())
         {

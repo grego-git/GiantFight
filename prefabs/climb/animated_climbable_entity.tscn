@@ -12,10 +12,9 @@ vertex_color_use_as_albedo = true
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_xtkg8"]
 resource_local_to_scene = true
 
-[node name="AnimatedClimbableEntity" type="StaticBody3D" node_paths=PackedStringArray("IKs")]
+[node name="AnimatedClimbableEntity" type="StaticBody3D"]
 collision_layer = 4
 script = ExtResource("1_skyrn")
-IKs = []
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("ConcavePolygonShape3D_skyrn")

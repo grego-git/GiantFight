@@ -3,8 +3,6 @@ using Godot;
 
 public partial class ClimbableAnimatedEntity : ClimbableEntity
 {
-    [Export]
-    public SkeletonIK3D[] IKs { get; set; }
     public Skeleton3D Skeleton { get; private set; }
     public AnimationPlayer AnimationPlayer { get; private set; }
     public Node3D EntityRootNode { get; private set; }
@@ -16,7 +14,6 @@ public partial class ClimbableAnimatedEntity : ClimbableEntity
     private ConcavePolygonShape3D shape;
 
     private float timeSinceCreated;
-    private int iksProcessed;
     private bool destroyed;
 
     public override void _Ready()
@@ -24,13 +21,6 @@ public partial class ClimbableAnimatedEntity : ClimbableEntity
         base._Ready();
 
         Skeleton = (Skeleton3D)GetNode("../../");
-        Skeleton.SkeletonUpdated += Update;
-        
-        if (IKs != null)
-        {
-            foreach (var ik in IKs)
-                ik.ModificationProcessed += Update;
-        }
 
         faces = new AnimatedMeshWorldTriangle[meshDataTool.GetFaceCount()];
         debugMesh = (MeshInstance3D)GetNode("WireFrame");
@@ -65,35 +55,15 @@ public partial class ClimbableAnimatedEntity : ClimbableEntity
     {
         if (destroyed)
             return;
-        
-        if (IKs != null && IKs.Length > 0) 
-        {
-            if (iksProcessed < IKs.Length + 1)
-                iksProcessed++;
-
-            if (iksProcessed != IKs.Length + 1)
-                return;
-        }
+            
+        GD.Print("UPDATING CLIMBABLE ENTITY");
         
         if (!destroyed && collidableFaces != null && collidableFaces.Count > 0)
         {
-            Utils.UpdateAnimatedEntiyFaces(meshDataTool, Skeleton, MeshInstance.Skin, faces, timeSinceCreated, memoizedFaces);
-            Vector3[] verts = new Vector3[collidableFaces.Count * 3];
-
-            for (int i = 0; i < collidableFaces.Count; i++)
-            {
-                verts[i * 3] = faces[collidableFaces[i]].Vertices[0];
-                verts[(i * 3) + 1] = faces[collidableFaces[i]].Vertices[1];
-                verts[(i * 3) + 2] = faces[collidableFaces[i]].Vertices[2];
-            }
-
-            shape.SetFaces(verts);
             Utils.DrawAnimatedDebugMesh(debugMesh, collidableFaces, faces);
         }
         else
         {
-            shape.SetFaces([]);
-
             ImmediateMesh mesh = (ImmediateMesh)debugMesh.Mesh;
             mesh.ClearSurfaces();
         }
@@ -105,8 +75,12 @@ public partial class ClimbableAnimatedEntity : ClimbableEntity
             else
                 CharacterData = null;
         }
+    }
 
-        iksProcessed = 0;
+    public void ResetCollidableFaces()
+    {
+        collidableFaces.Clear();
+        memoizedFaces.Clear();
     }
 
     public void GetCollidableFaces(List<string> bones)
@@ -127,10 +101,26 @@ public partial class ClimbableAnimatedEntity : ClimbableEntity
         }
     }
 
-    public void ResetCollidableFaces()
+    public void CreateShape()
     {
-        collidableFaces.Clear();
-        memoizedFaces.Clear();
+        if (!destroyed && collidableFaces != null && collidableFaces.Count > 0)
+        {
+            Utils.UpdateAnimatedEntiyFaces(meshDataTool, Skeleton, MeshInstance.Skin, faces, timeSinceCreated, memoizedFaces);
+            Vector3[] verts = new Vector3[collidableFaces.Count * 3];
+
+            for (int i = 0; i < collidableFaces.Count; i++)
+            {
+                verts[i * 3] = faces[collidableFaces[i]].Vertices[0];
+                verts[(i * 3) + 1] = faces[collidableFaces[i]].Vertices[1];
+                verts[(i * 3) + 2] = faces[collidableFaces[i]].Vertices[2];
+            }
+
+            shape.SetFaces(verts);
+        }
+        else
+        {
+            shape.SetFaces([]);
+        }
     }
 
     public override void Destroy()

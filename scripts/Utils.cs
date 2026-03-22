@@ -165,4 +165,41 @@ public static class Utils
         vector.Y = y;
         return vector;
     }
+
+    public static float MoveTowardsAngle(float current, float target, float step)
+    {
+        // 1. Normalize both to 0–360
+        current = current % (2.0f * Mathf.Pi);
+        
+        if (current < 0) 
+            current += 2.0f * Mathf.Pi;
+
+        target = target % (2.0f * Mathf.Pi);
+        
+        if (target < 0) 
+            target += 2.0f * Mathf.Pi;
+
+        // 2. Find shortest signed difference (-180 to 180)
+        float diff = (target - current + Mathf.Pi) % (2.0f * Mathf.Pi);
+        
+        if (diff < 0) 
+            diff += 2.0f * Mathf.Pi;
+        
+        diff -= Mathf.Pi;
+
+        // 3. Snap to target if within step distance
+        if (Mathf.Abs(diff) <= step)
+            return target;
+
+        // 4. Step toward target and wrap again
+        float direction = diff > 0 ? 1f : -1f;
+        float result = current + direction * step;
+
+        result = result % (2.0f * Mathf.Pi);
+        
+        if (result < 0) 
+            result += 2.0f * Mathf.Pi;
+
+        return result;
+    }
 }

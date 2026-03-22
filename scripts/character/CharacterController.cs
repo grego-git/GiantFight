@@ -1,4 +1,3 @@
-using System.Reflection.Metadata;
 using Godot;
 
 public partial class CharacterController : CharacterBody3D

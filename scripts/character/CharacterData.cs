@@ -31,6 +31,8 @@ public partial class CharacterData : Node3D
     [Export]
     public float MaxDash { get; set; }
     [Export]
+    public float MaxDashCooldown { get; set; }
+    [Export]
     public float AccelerationStunThreshold { get; set; }
     [Export]
     public float AccelerationKnockBackThreshold { get; set; }
@@ -46,6 +48,7 @@ public partial class CharacterData : Node3D
     public Meter HealthMeter { get; private set; }
     public Meter StaminaMeter { get; private set; }
     public Meter FatigueMeter { get; private set; }
+    public Meter DashCooldownMeter { get; private set; }
     public Meter DashMeter { get; private set; }
     public Meter DeathMeter { get; private set; }
     public float FatigueNeedleSpeed { get; private set; }
@@ -59,6 +62,7 @@ public partial class CharacterData : Node3D
         StaminaMeter = new Meter(MaxStamina, fill:true);
         DeathMeter = new Meter(5.0f, fill:true);
         FatigueMeter = new Meter(1.0f);
+        DashCooldownMeter = new Meter(MaxDashCooldown, fill:true);
         DashMeter = new Meter(MaxDash);
         CanTakeDamage = true;
         FillFatigueUp = true;
@@ -148,10 +152,9 @@ public partial class CharacterData : Node3D
             IsFatigued = true;
 
         if (!DashMeter.IsEmpty())
-        {
             DashMeter.FillMeter(-delta);
-        }
             
+        DashCooldownMeter.FillMeter(delta);
     }
 
     public bool HasGrip()
@@ -199,7 +202,7 @@ public partial class CharacterData : Node3D
         if (Controller.Sword.IsSwinging())
             return false;
         
-        if (StaminaMeter.IsEmpty() || IsFatigued)
+        if (!DashCooldownMeter.IsFilled())
             return false;
         
         return true;
@@ -253,10 +256,10 @@ public partial class CharacterData : Node3D
         HealthMeter.FillMeter(-damage);
     }
 
-    public void Dash(Vector3 dir)
+    public void Dash()
     {
         DashMeter.FillToMax();
-        StaminaMeter.FillMeter(GetState() == "AIR" ? -7.5f : -5.0f);
+        DashCooldownMeter.Empty();
         CameraController.Shake(0.125f, 2.0f);
 
         if (StaminaMeter.IsEmpty())

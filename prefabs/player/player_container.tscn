@@ -151,7 +151,7 @@ _data = {
 script = ExtResource("1_878l0")
 Speed = 10.0
 ClimbSpeed = 10.0
-JumpSpeed = 15.0
+JumpSpeed = 7.5
 DashSpeed = 50.0
 GripDepleteRate = 2.0
 GripReplenishRate = 4.0
@@ -161,6 +161,7 @@ MaxStamina = 30.0
 MaxStun = 2.0
 MaxAim = 0.25
 MaxDash = 0.25
+MaxDashCooldown = 1.0
 AccelerationStunThreshold = 25.0
 AccelerationKnockBackThreshold = 25.0
 
@@ -235,7 +236,7 @@ Distance = 15.0
 MaxXRotation = 60.0
 NormalFOV = 90.0
 ChargingFOV = 60.0
-DashFOV = 180.0
+DashFOV = 150.0
 ClimbFOV = 120.0
 
 [node name="CameraUpRotation" type="Node3D" parent="CameraOrientation"]
