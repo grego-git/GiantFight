@@ -22,7 +22,7 @@ public class GiantActionTrackClap : IGiantAction
     {
         giant.AnimPlayer.Play(giant.GiantProfile.MidAnimation);
         giant.CurrentState = Giant.State.ACTION;
-        giant.AnimPlayer.AnimationFinished += StompAnimationComplete;
+        giant.AnimPlayer.AnimationFinished += AnimationComplete;
         giant.LeftArmIK.Start();
         giant.RightArmIK.Start();
     }
@@ -39,10 +39,10 @@ public class GiantActionTrackClap : IGiantAction
         giant.RightArmIKTarget.GlobalPosition = clapTarget - (giant.GlobalBasis.X.Normalized() * giant.StompPadding);
     }
 
-    public void StompAnimationComplete(StringName animation)
+    public void AnimationComplete(StringName animation)
     {
         complete = true;
-        giant.AnimPlayer.AnimationFinished -= StompAnimationComplete;
+        giant.AnimPlayer.AnimationFinished -= AnimationComplete;
         giant.LeftArmIK.Stop();
         giant.RightArmIK.Stop();
     }

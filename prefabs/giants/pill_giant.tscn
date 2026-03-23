@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://cbnhcgf14nygg"]
+[gd_scene load_steps=48 format=3 uid="uid://cbnhcgf14nygg"]
 
 [ext_resource type="Script" uid="uid://cxbc5aocp4eyw" path="res://scripts/giant/Giant.cs" id="1_54ejs"]
 [ext_resource type="ArrayMesh" uid="uid://donoiivdco58x" path="res://models/giants/pill_giant/meshes/pill_giant_mesh.res" id="1_ypc5v"]
@@ -19,7 +19,9 @@
 [ext_resource type="Animation" uid="uid://wbvdm6ju5kun" path="res://models/giants/pill_giant/animations/shake_leg_right.res" id="12_i0f1t"]
 [ext_resource type="Script" uid="uid://c8w1nv0h1rurh" path="res://scripts/giant/ClapSphereSpawner.cs" id="12_rwr57"]
 [ext_resource type="PackedScene" uid="uid://dgfhou4rx418s" path="res://prefabs/giants/clap_sphere.tscn" id="13_6neo4"]
+[ext_resource type="Animation" uid="uid://co0nequjwd12j" path="res://models/giants/pill_giant/animations/attack_leg_left.res" id="13_17afl"]
 [ext_resource type="Script" uid="uid://sbueogfis8dk" path="res://scripts/giant/GiantHitBox.cs" id="14_1fl3u"]
+[ext_resource type="Animation" uid="uid://cilkmfyw633y" path="res://models/giants/pill_giant/animations/attack_leg_right.res" id="14_4rsb0"]
 
 [sub_resource type="Skin" id="Skin_0qfme"]
 resource_name = "Skin"
@@ -75,6 +77,10 @@ bind/15/pose = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0.75, -1.49012e-08, 3.875
 bind/16/name = &"LegPoleTarget.R"
 bind/16/bone = -1
 bind/16/pose = Transform3D(1, 3.89414e-07, 0, 0, 0, 1, 3.89414e-07, -1, 0, 0.750001, -5, -2.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_17afl"]
+transparency = 1
+depth_draw_mode = 1
 
 [sub_resource type="Animation" id="Animation_6qws1"]
 length = 0.001
@@ -165,7 +171,7 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("LeftFist/Area3D:monitoring")
+tracks/7/path = NodePath("LeftFist:monitoring")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
@@ -177,10 +183,34 @@ tracks/7/keys = {
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("LeftFist/Area3D:monitorable")
+tracks/8/path = NodePath("LeftFist:monitorable")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("RightFist:monitoring")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("RightFist:monitorable")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -194,6 +224,8 @@ _data = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vqffu"]
 _data = {
+&"attack_leg_left": ExtResource("13_17afl"),
+&"attack_leg_right": ExtResource("14_4rsb0"),
 &"clap": ExtResource("6_w4hiy"),
 &"idle": ExtResource("2_vqffu"),
 &"punch": ExtResource("7_rpoyi"),
@@ -290,11 +322,12 @@ transparency = 1
 shading_mode = 0
 albedo_color = Color(1, 0, 0.983333, 0.12549)
 
-[node name="PillGiant" type="Node3D" node_paths=PackedStringArray("ClimbAnimatedEntities", "LeftLegIK", "LeftArmIK", "RightArmIK")]
+[node name="PillGiant" type="Node3D" node_paths=PackedStringArray("ClimbAnimatedEntities", "ArmLimbs", "LeftLegIK", "LeftArmIK", "RightArmIK")]
 script = ExtResource("1_54ejs")
 GiantJson = "pill_giant.json"
 TurnSpeed = 2.0
 ClimbAnimatedEntities = [NodePath("Armature/Skeleton3D/Sphere_001/AnimatedClimbableEntity")]
+ArmLimbs = [NodePath("LeftUpperarm"), NodePath("LeftForearm"), NodePath("RightUpperarm"), NodePath("RightForearm")]
 LeftLegIK = NodePath("Armature/Skeleton3D/LeftLegIK")
 LeftArmIK = NodePath("Armature/Skeleton3D/LeftArmIK")
 RightArmIK = NodePath("Armature/Skeleton3D/RightArmIK")
@@ -306,22 +339,22 @@ bones/0/name = "Body"
 bones/0/parent = -1
 bones/0/rest = Transform3D(1, 3.78537e-17, -3.2504e-18, -3.78537e-17, 0.985362, -0.170478, -3.2504e-18, 0.170478, 0.985362, 0, -2.11716, -0.492865)
 bones/0/enabled = true
-bones/0/position = Vector3(0, -2.11716, -0.492865)
-bones/0/rotation = Quaternion(0.0855526, -1.2326e-32, -1.89965e-17, 0.996334)
+bones/0/position = Vector3(0, -3.50605, -0.492865)
+bones/0/rotation = Quaternion(0.164431, 0.12096, -0.000194641, 0.978944)
 bones/0/scale = Vector3(1, 1, 1)
 bones/1/name = "Thigh.L"
 bones/1/parent = 0
 bones/1/rest = Transform3D(0.201264, 0.132526, 0.971248, 0.549576, -0.835443, 0.000111185, 0.810839, 0.533358, -0.241156, 0.75, 0.875, 4.3187e-07)
 bones/1/enabled = true
 bones/1/position = Vector3(0.75, 0.875, 4.3187e-07)
-bones/1/rotation = Quaternion(0.754596, 0.225989, 0.590169, 0.176674)
+bones/1/rotation = Quaternion(0.376872, 0.604633, 0.384182, 0.587188)
 bones/1/scale = Vector3(0.99999, 0.999995, 1.00075)
 bones/2/name = "Calf.L"
 bones/2/parent = 1
 bones/2/rest = Transform3D(0.856163, -0.516707, 1.59422e-07, 0.516707, 0.856162, 2.21328e-09, -1.37635e-07, 8.04797e-08, 1, 1.13133e-08, 1.37523, 6.11482e-08)
 bones/2/enabled = true
 bones/2/position = Vector3(1.13133e-08, 1.37523, 6.11482e-08)
-bones/2/rotation = Quaternion(2.03149e-08, 7.70962e-08, 0.268177, 0.96337)
+bones/2/rotation = Quaternion(2.36779e-07, -5.09732e-08, 0.741586, 0.670858)
 bones/2/scale = Vector3(1, 1, 1)
 bones/3/name = "Foot.L"
 bones/3/parent = 2
@@ -356,14 +389,14 @@ bones/7/parent = 0
 bones/7/rest = Transform3D(0.201264, -0.132526, -0.971248, -0.549576, -0.835443, 0.000111242, -0.810839, 0.533358, -0.241156, -0.75, 0.875, 4.3187e-07)
 bones/7/enabled = true
 bones/7/position = Vector3(-0.75, 0.875, 4.3187e-07)
-bones/7/rotation = Quaternion(0.754596, -0.225989, -0.590169, 0.176674)
+bones/7/rotation = Quaternion(0.8299, -0.320763, -0.456483, -0.00124517)
 bones/7/scale = Vector3(0.99999, 0.999995, 1.00075)
 bones/8/name = "Calf.R"
 bones/8/parent = 7
 bones/8/rest = Transform3D(0.856163, 0.516707, -1.51084e-07, -0.516707, 0.856162, -1.0647e-08, 1.23851e-07, 8.71815e-08, 1, -7.08786e-08, 1.37523, 6.11482e-08)
 bones/8/enabled = true
 bones/8/position = Vector3(-7.08786e-08, 1.37523, 6.11482e-08)
-bones/8/rotation = Quaternion(2.52313e-08, -7.12922e-08, -0.268177, 0.96337)
+bones/8/rotation = Quaternion(3.65791e-07, 1.09465e-07, -0.802797, 0.596252)
 bones/8/scale = Vector3(1, 1, 1)
 bones/9/name = "Foot.R"
 bones/9/parent = 8
@@ -397,7 +430,7 @@ bones/13/name = "LegControl.L"
 bones/13/parent = -1
 bones/13/rest = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0.94526, -3.875, -1.49012e-08)
 bones/13/enabled = true
-bones/13/position = Vector3(0.94526, -3.875, -1.49012e-08)
+bones/13/position = Vector3(1.17674, -3.875, 0.925926)
 bones/13/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
 bones/13/scale = Vector3(1, 1, 1)
 bones/14/name = "LegPoleTarget.L"
@@ -411,7 +444,7 @@ bones/15/name = "LegControl.R"
 bones/15/parent = -1
 bones/15/rest = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -0.94526, -3.875, -1.49012e-08)
 bones/15/enabled = true
-bones/15/position = Vector3(-0.94526, -3.875, -1.49012e-08)
+bones/15/position = Vector3(-0.94526, -3.875, -1.15741)
 bones/15/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
 bones/15/scale = Vector3(1, 1, 1)
 bones/16/name = "LegPoleTarget.R"
@@ -425,6 +458,7 @@ bones/16/scale = Vector3(1, 1, 1)
 [node name="Sphere_001" type="MeshInstance3D" parent="Armature/Skeleton3D"]
 mesh = ExtResource("1_ypc5v")
 skin = SubResource("Skin_0qfme")
+surface_material_override/0 = SubResource("StandardMaterial3D_17afl")
 
 [node name="AnimatedClimbableEntity" parent="Armature/Skeleton3D/Sphere_001" instance=ExtResource("2_w8ufm")]
 
@@ -648,22 +682,34 @@ StompCylinder = ExtResource("11_jhlki")
 script = ExtResource("12_rwr57")
 ClapSphere = ExtResource("13_6neo4")
 
-[node name="LeftFist" type="Node3D" parent="." node_paths=PackedStringArray("Skeleton")]
+[node name="LeftFist" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.825, -1.925, -0.29)
-script = ExtResource("4_w8ufm")
-Bone = "Hand.L"
-Skeleton = NodePath("../Armature/Skeleton3D")
-
-[node name="Area3D" type="Area3D" parent="LeftFist"]
 collision_layer = 128
 monitoring = false
 monitorable = false
 script = ExtResource("14_1fl3u")
+Bone = "Hand.L"
+Skeleton = NodePath("../Armature/Skeleton3D")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftFist/Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftFist"]
 shape = SubResource("SphereShape3D_6sbl1")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="LeftFist"]
 mesh = SubResource("SphereMesh_inkpd")
-skeleton = NodePath("../Area3D")
+surface_material_override/0 = SubResource("StandardMaterial3D_48m6s")
+
+[node name="RightFist" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.825, -1.925, -0.29)
+collision_layer = 128
+monitoring = false
+monitorable = false
+script = ExtResource("14_1fl3u")
+Bone = "Hand.R"
+Skeleton = NodePath("../Armature/Skeleton3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RightFist"]
+shape = SubResource("SphereShape3D_6sbl1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RightFist"]
+mesh = SubResource("SphereMesh_inkpd")
 surface_material_override/0 = SubResource("StandardMaterial3D_48m6s")

@@ -22,7 +22,7 @@ public class GiantActionTrackPunch : IGiantAction
     {
         giant.AnimPlayer.Play(giant.GiantProfile.TopAnimation);
         giant.CurrentState = Giant.State.ACTION;
-        giant.AnimPlayer.AnimationFinished += StompAnimationComplete;
+        giant.AnimPlayer.AnimationFinished += AnimationComplete;
         giant.LeftArmIK.Start();
     }
 
@@ -40,10 +40,10 @@ public class GiantActionTrackPunch : IGiantAction
         giant.LeftArmIKTarget.GlobalPosition = shoulderPos + (punchDir * 100.0f);
     }
 
-    public void StompAnimationComplete(StringName animation)
+    public void AnimationComplete(StringName animation)
     {
         complete = true;
-        giant.AnimPlayer.AnimationFinished -= StompAnimationComplete;
+        giant.AnimPlayer.AnimationFinished -= AnimationComplete;
         giant.LeftArmIK.Stop();
     }
 }

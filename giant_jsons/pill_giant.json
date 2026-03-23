@@ -24,6 +24,18 @@
 			"Body"
 		]
 	},
+	"AttackAnimations": {
+		"pill_giant/attack_leg_left": [
+			"Thigh.L",
+			"Calf.L",
+			"Foot.L"
+		],
+		"pill_giant/attack_leg_right": [
+			"Thigh.R",
+			"Calf.R",
+			"Foot.R"
+		]
+	},
 	"FloorAnimation": "pill_giant/stomp",
 	"MidAnimation": "pill_giant/clap",
 	"TopAnimation": "pill_giant/punch",

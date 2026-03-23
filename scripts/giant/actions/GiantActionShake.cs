@@ -26,7 +26,7 @@ public class GiantActionShake : IGiantAction
     {
         giant.AnimPlayer.Play(animation);
         giant.CurrentState = Giant.State.ACTION;
-        giant.AnimPlayer.AnimationFinished += StompAnimationComplete;
+        giant.AnimPlayer.AnimationFinished += AnimationComplete;
     }
 
     public void Update(float delta)
@@ -34,9 +34,9 @@ public class GiantActionShake : IGiantAction
         
     }
 
-    public void StompAnimationComplete(StringName animation)
+    public void AnimationComplete(StringName animation)
     {
         complete = true;
-        giant.AnimPlayer.AnimationFinished -= StompAnimationComplete;
+        giant.AnimPlayer.AnimationFinished -= AnimationComplete;
     }
 }

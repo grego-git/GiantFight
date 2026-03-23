@@ -18,7 +18,9 @@ public partial class LimbChecker : ShapeCast3D
         for (int i = 0; i < GetCollisionCount(); i++)
         {
             GiantLimb limb = (GiantLimb)GetCollider(i);
-            limbsDetected.Add(limb.Bone);
+
+            if (limb.Monitorable)
+                limbsDetected.Add(limb.Bone);
         }
 
         return limbsDetected;

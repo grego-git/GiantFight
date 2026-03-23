@@ -25,6 +25,8 @@ public partial class Giant : Node3D
 
     [Export]
     public ClimbableAnimatedEntity[] ClimbAnimatedEntities { get; set; }
+    [Export]
+    public GiantLimb[] ArmLimbs { get; set; }
 
     [Export]
     public SkeletonIK3D LeftLegIK { get; set; }
@@ -36,14 +38,18 @@ public partial class Giant : Node3D
     public IGiantAction CurrentAction { get; set; }
     public State CurrentState { get; set; }
     public Skeleton3D Skeleton { get; set; }
+    public MeshInstance3D Mesh { get; set; }
     public PlayerDetection PlayerDetection { get; set; }
     public AnimationPlayer AnimPlayer { get; set; }
     public GiantProfile GiantProfile { get; set; }
+    public Meter AgroMeter { get; set; }
+    public HashSet<string> BonesPlayerIsOn { get; set; }
 
     public Node3D LeftLegIKTarget { get; set; }
     public Node3D LeftArmIKTarget { get; set; }
     public Node3D RightArmIKTarget { get; set; }
 
+    private StandardMaterial3D material;
     private float yRot;
 
     public override void _Ready()
@@ -51,6 +57,7 @@ public partial class Giant : Node3D
         base._Ready();
 
         Skeleton = (Skeleton3D)GetNode("Armature/Skeleton3D");
+        Mesh = (MeshInstance3D)Skeleton.GetNode("Sphere_001");
         PlayerDetection = (PlayerDetection)GetNode("PlayerDetection");
         AnimPlayer = (AnimationPlayer)GetNode("AnimationPlayer");
 
@@ -60,27 +67,47 @@ public partial class Giant : Node3D
 
         string json = Godot.FileAccess.GetFileAsString("res://giant_jsons/" + GiantJson);
         GiantProfile = JsonConvert.DeserializeObject<GiantProfile>(json);
+
+        AgroMeter = new Meter(3.0f);
+
+        material = (StandardMaterial3D)Mesh.GetSurfaceOverrideMaterial(0);
     }
 
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
 
-        HashSet<string> bonesPlayerIsOn = GetBonesPlayerIsOn();
+        BonesPlayerIsOn = GetBonesPlayerIsOn();
+
+        if (PlayerDetection.PlayerDetectionZone == PlayerDetection.DetectionZoneAreas.ON_GIANT)
+        {
+            material.AlbedoColor = new Color(1.0f, 1.0f, 1.0f, 0.5f);
+        }
+        else
+        {
+            material.AlbedoColor = Colors.White;
+        }
 
         switch (CurrentState)
         {
             case State.DETERMINING:
-                PlayerDetection.Update(CharacterData, bonesPlayerIsOn);
+                PlayerDetection.Update(CharacterData, BonesPlayerIsOn);
 
                 switch (PlayerDetection.PlayerDetectionZone)
                 {
                     case PlayerDetection.DetectionZoneAreas.NONE:
+                        AgroMeter.FillMeter(-(float)delta);
                         break;
-                    case PlayerDetection.DetectionZoneAreas.ON_GIANT:
-                        string shakeAnimation = GetShakeAnimation(bonesPlayerIsOn);
+                    case PlayerDetection.DetectionZoneAreas.ON_GIANT:                        
+                        string shakeAnimation = GetShakeAnimation(BonesPlayerIsOn);
+                        string attackAnimation = GetAttackAnimation(BonesPlayerIsOn);
 
-                        if (!string.IsNullOrEmpty(shakeAnimation)) 
+                        if (AgroMeter.IsFilled() && !string.IsNullOrEmpty(attackAnimation))
+                        {
+                            CurrentAction = new GiantActionIKAttack(this, attackAnimation, attackAnimation.ToLower().Contains("_left"));
+                            CurrentAction.Init();
+                        }
+                        else if (!string.IsNullOrEmpty(shakeAnimation)) 
                         {
                             CurrentAction = new GiantActionShake(this, shakeAnimation);
                             CurrentAction.Init();
@@ -99,6 +126,7 @@ public partial class Giant : Node3D
                         CurrentAction.Init();
                         break;
                     default:
+                        AgroMeter.FillMeter((float)delta);
                         break;
                 }
                 break;
@@ -107,6 +135,7 @@ public partial class Giant : Node3D
                 {
                     case PlayerDetection.DetectionZoneAreas.NONE:
                     default:
+                        AgroMeter.FillMeter((float)delta);
                         CurrentAction.Update((float)delta);
 
                         if (CurrentAction.Complete())
@@ -158,6 +187,23 @@ public partial class Giant : Node3D
             {
                 if (bonesPlayerIsOn.Contains(bone))
                     return shakeAnimation.Key;
+            }
+        }
+
+        return "";
+    }
+
+    private string GetAttackAnimation(HashSet<string> bonesPlayerIsOn)
+    {
+        if (bonesPlayerIsOn == null || bonesPlayerIsOn.Count == 0)
+            return "";
+
+        foreach (var attackAnimation in GiantProfile.AttackAnimations)
+        {
+            foreach (var bone in attackAnimation.Value)
+            {
+                if (bonesPlayerIsOn.Contains(bone))
+                    return attackAnimation.Key;
             }
         }
 

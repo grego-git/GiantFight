@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class GiantLimb : Node3D
+public partial class GiantLimb : Area3D
 {
     [Export]
     public string Bone { get; set; }

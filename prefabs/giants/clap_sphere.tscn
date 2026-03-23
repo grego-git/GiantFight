@@ -19,10 +19,9 @@ albedo_color = Color(1, 0, 0.983333, 0.12549)
 script = ExtResource("1_yxqua")
 KillTimer = 0.25
 
-[node name="Area3D" type="Area3D" parent="." node_paths=PackedStringArray("Mesh")]
+[node name="Area3D" type="Area3D" parent="."]
 collision_layer = 128
 script = ExtResource("2_bfyra")
-Mesh = NodePath("MeshInstance3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("SphereShape3D_yxqua")
