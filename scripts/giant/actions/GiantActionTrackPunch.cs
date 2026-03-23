@@ -20,7 +20,7 @@ public class GiantActionTrackPunch : IGiantAction
 
     public void Init()
     {
-        giant.AnimPlayer.Play("pill_giant/punch");
+        giant.AnimPlayer.Play(giant.GiantProfile.TopAnimation);
         giant.CurrentState = Giant.State.ACTION;
         giant.AnimPlayer.AnimationFinished += StompAnimationComplete;
         giant.LeftArmIK.Start();

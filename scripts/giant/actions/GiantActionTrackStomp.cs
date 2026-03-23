@@ -20,7 +20,7 @@ public class GiantActionTrackStomp : IGiantAction
 
     public void Init()
     {
-        giant.AnimPlayer.Play("pill_giant/stomp");
+        giant.AnimPlayer.Play(giant.GiantProfile.FloorAnimation);
         giant.CurrentState = Giant.State.ACTION;
         giant.AnimPlayer.AnimationFinished += StompAnimationComplete;
         giant.LeftLegIK.Start();

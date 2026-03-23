@@ -1,0 +1,31 @@
+{
+	"ShakeAnimations": {
+		"pill_giant/shake_arm_left": [
+			"Upperarm.L",
+			"Forearm.L",
+			"Hand.L"
+		],
+		"pill_giant/shake_arm_right": [
+			"Upperarm.R",
+			"Forearm.R",
+			"Hand.R"
+		],
+		"pill_giant/shake_leg_left": [
+			"Thigh.L",
+			"Calf.L",
+			"Foot.L"
+		],
+		"pill_giant/shake_leg_right": [
+			"Thigh.R",
+			"Calf.R",
+			"Foot.R"
+		],
+		"pill_giant/shake": [
+			"Body"
+		]
+	},
+	"FloorAnimation": "pill_giant/stomp",
+	"MidAnimation": "pill_giant/clap",
+	"TopAnimation": "pill_giant/punch",
+	"IdleAnimation": "pill_giant/idle"
+}

@@ -130,6 +130,11 @@ public class CharacterStateClimb : ICharacterState
                 lookAtDir = climbVelocity.Normalized();
             else if (characterData.IsDashing())
                 lookAtDir = characterData.Controller.Velocity.Normalized();
+            else
+            {
+                Vector3 right = lookAtDir.Cross(faceOn.FaceNormal);
+                lookAtDir = faceOn.FaceNormal.Cross(right);    
+            }
             
             characterData.Controller.PositionCharacterToFace(faceOn.FacePoint, faceOn.FaceNormal, lookAtDir, faceOn.FaceNormal);
             

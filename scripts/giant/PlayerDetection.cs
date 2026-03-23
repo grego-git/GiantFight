@@ -23,12 +23,10 @@ public partial class PlayerDetection : Node3D
     public float AngleToPlayer { get; set; }
     public bool FacingPlayer { get; set; }
 
-    public void Update(CharacterData characterData, ClimbableEntity[] climbables)
+    public void Update(CharacterData characterData, HashSet<string> bonesPlayerIsOn)
     {
         PlayerDetectionZone = DetectionZoneAreas.NONE;
         characterData.InGiantProximity = false;
-
-        HashSet<string> bonesPlayerIsOn = GetBonesPlayerIsOn(characterData, climbables);
 
         if (bonesPlayerIsOn != null && bonesPlayerIsOn.Count > 0)
         {
@@ -66,16 +64,5 @@ public partial class PlayerDetection : Node3D
                 }
             }
         }
-    }
-    
-    private HashSet<string> GetBonesPlayerIsOn(CharacterData characterData, ClimbableEntity[] climbables)
-    {
-        foreach (var climbable in climbables)
-        {
-            if (characterData.OnThisEntity(climbable))
-                return characterData.GetBoneImOnFromClimbable();
-        }
-
-        return null;
     }
 }

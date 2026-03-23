@@ -20,7 +20,7 @@ public class GiantActionTrackClap : IGiantAction
 
     public void Init()
     {
-        giant.AnimPlayer.Play("pill_giant/clap");
+        giant.AnimPlayer.Play(giant.GiantProfile.MidAnimation);
         giant.CurrentState = Giant.State.ACTION;
         giant.AnimPlayer.AnimationFinished += StompAnimationComplete;
         giant.LeftArmIK.Start();

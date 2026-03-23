@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://cbnhcgf14nygg"]
+[gd_scene load_steps=45 format=3 uid="uid://cbnhcgf14nygg"]
 
 [ext_resource type="Script" uid="uid://cxbc5aocp4eyw" path="res://scripts/giant/Giant.cs" id="1_54ejs"]
 [ext_resource type="ArrayMesh" uid="uid://donoiivdco58x" path="res://models/giants/pill_giant/meshes/pill_giant_mesh.res" id="1_ypc5v"]
@@ -9,9 +9,14 @@
 [ext_resource type="Script" uid="uid://bdbiac3np3x03" path="res://scripts/giant/PlayerDetection.cs" id="6_3hmej"]
 [ext_resource type="Animation" uid="uid://b8ohce0468siu" path="res://models/giants/pill_giant/animations/clap.res" id="6_w4hiy"]
 [ext_resource type="Animation" uid="uid://dokw7n6j53mjk" path="res://models/giants/pill_giant/animations/punch.res" id="7_rpoyi"]
+[ext_resource type="Animation" uid="uid://j4if27vgpcs8" path="res://models/giants/pill_giant/animations/shake.res" id="8_3h82v"]
+[ext_resource type="Animation" uid="uid://dyk7dxwyxuent" path="res://models/giants/pill_giant/animations/shake_arm_left.res" id="9_ot6uu"]
 [ext_resource type="Script" uid="uid://b1f3u2r5y28rp" path="res://scripts/giant/DetectRing.cs" id="10_6sbl1"]
+[ext_resource type="Animation" uid="uid://1njaicyowsuw" path="res://models/giants/pill_giant/animations/shake_arm_right.res" id="10_17afl"]
 [ext_resource type="Script" uid="uid://dbsf5m0dfmcmg" path="res://scripts/giant/StompCylinderSpawner.cs" id="10_b4fg6"]
+[ext_resource type="Animation" uid="uid://c8jw0n3sxkc24" path="res://models/giants/pill_giant/animations/shake_leg_left.res" id="11_4rsb0"]
 [ext_resource type="PackedScene" uid="uid://nt1dhl7277ke" path="res://prefabs/giants/stomp_cylinder.tscn" id="11_jhlki"]
+[ext_resource type="Animation" uid="uid://wbvdm6ju5kun" path="res://models/giants/pill_giant/animations/shake_leg_right.res" id="12_i0f1t"]
 [ext_resource type="Script" uid="uid://c8w1nv0h1rurh" path="res://scripts/giant/ClapSphereSpawner.cs" id="12_rwr57"]
 [ext_resource type="PackedScene" uid="uid://dgfhou4rx418s" path="res://prefabs/giants/clap_sphere.tscn" id="13_6neo4"]
 [ext_resource type="Script" uid="uid://sbueogfis8dk" path="res://scripts/giant/GiantHitBox.cs" id="14_1fl3u"]
@@ -192,6 +197,11 @@ _data = {
 &"clap": ExtResource("6_w4hiy"),
 &"idle": ExtResource("2_vqffu"),
 &"punch": ExtResource("7_rpoyi"),
+&"shake": ExtResource("8_3h82v"),
+&"shake_arm_left": ExtResource("9_ot6uu"),
+&"shake_arm_right": ExtResource("10_17afl"),
+&"shake_leg_left": ExtResource("11_4rsb0"),
+&"shake_leg_right": ExtResource("12_i0f1t"),
 &"stomp": ExtResource("5_6qws1")
 }
 
@@ -282,6 +292,7 @@ albedo_color = Color(1, 0, 0.983333, 0.12549)
 
 [node name="PillGiant" type="Node3D" node_paths=PackedStringArray("ClimbAnimatedEntities", "LeftLegIK", "LeftArmIK", "RightArmIK")]
 script = ExtResource("1_54ejs")
+GiantJson = "pill_giant.json"
 TurnSpeed = 2.0
 ClimbAnimatedEntities = [NodePath("Armature/Skeleton3D/Sphere_001/AnimatedClimbableEntity")]
 LeftLegIK = NodePath("Armature/Skeleton3D/LeftLegIK")

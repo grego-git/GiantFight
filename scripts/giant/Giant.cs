@@ -1,6 +1,8 @@
 using Godot;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 public partial class Giant : Node3D
 {
@@ -12,6 +14,8 @@ public partial class Giant : Node3D
 
     [Export]
     public CharacterData CharacterData { get; set; }
+    [Export]
+    public string GiantJson { get; set; }
     [Export]
     public float TurnSpeed { get; set; }
     [Export]
@@ -34,6 +38,7 @@ public partial class Giant : Node3D
     public Skeleton3D Skeleton { get; set; }
     public PlayerDetection PlayerDetection { get; set; }
     public AnimationPlayer AnimPlayer { get; set; }
+    public GiantProfile GiantProfile { get; set; }
 
     public Node3D LeftLegIKTarget { get; set; }
     public Node3D LeftArmIKTarget { get; set; }
@@ -52,21 +57,34 @@ public partial class Giant : Node3D
         LeftLegIKTarget = (Node3D)GetNode("LeftLegIKTarget");
         LeftArmIKTarget = (Node3D)GetNode("LeftArmIKTarget");
         RightArmIKTarget = (Node3D)GetNode("RightArmIKTarget");
+
+        string json = Godot.FileAccess.GetFileAsString("res://giant_jsons/" + GiantJson);
+        GiantProfile = JsonConvert.DeserializeObject<GiantProfile>(json);
     }
 
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
 
+        HashSet<string> bonesPlayerIsOn = GetBonesPlayerIsOn();
+
         switch (CurrentState)
         {
             case State.DETERMINING:
-                PlayerDetection.Update(CharacterData, ClimbAnimatedEntities);
+                PlayerDetection.Update(CharacterData, bonesPlayerIsOn);
 
                 switch (PlayerDetection.PlayerDetectionZone)
                 {
                     case PlayerDetection.DetectionZoneAreas.NONE:
+                        break;
                     case PlayerDetection.DetectionZoneAreas.ON_GIANT:
+                        string shakeAnimation = GetShakeAnimation(bonesPlayerIsOn);
+
+                        if (!string.IsNullOrEmpty(shakeAnimation)) 
+                        {
+                            CurrentAction = new GiantActionShake(this, shakeAnimation);
+                            CurrentAction.Init();
+                        }
                         break;
                     case PlayerDetection.DetectionZoneAreas.FLOOR:
                         CurrentAction = new GiantActionTrackStomp(this);
@@ -88,14 +106,12 @@ public partial class Giant : Node3D
                 switch (PlayerDetection.PlayerDetectionZone)
                 {
                     case PlayerDetection.DetectionZoneAreas.NONE:
-                    case PlayerDetection.DetectionZoneAreas.ON_GIANT:
-                        break;
                     default:
                         CurrentAction.Update((float)delta);
 
                         if (CurrentAction.Complete())
                         {
-                            AnimPlayer.Play("pill_giant/idle");
+                            AnimPlayer.Play(GiantProfile.IdleAnimation);
                             CurrentState = State.DETERMINING;
                         }
                         break;
@@ -118,5 +134,33 @@ public partial class Giant : Node3D
 
         yRot = (float)Utils.MoveTowardsAngle(yRot, angleToPoint, TurnSpeed * delta);
         GlobalRotation = new Vector3(GlobalRotation.X, yRot, GlobalRotation.Z);
+    }
+    
+    private HashSet<string> GetBonesPlayerIsOn()
+    {
+        foreach (var climbable in ClimbAnimatedEntities)
+        {
+            if (CharacterData.OnThisEntity(climbable))
+                return CharacterData.GetBoneImOnFromClimbable();
+        }
+
+        return null;
+    }
+
+    private string GetShakeAnimation(HashSet<string> bonesPlayerIsOn)
+    {
+        if (bonesPlayerIsOn == null || bonesPlayerIsOn.Count == 0)
+            return "";
+
+        foreach (var shakeAnimation in GiantProfile.ShakeAnimations)
+        {
+            foreach (var bone in shakeAnimation.Value)
+            {
+                if (bonesPlayerIsOn.Contains(bone))
+                    return shakeAnimation.Key;
+            }
+        }
+
+        return "";
     }
 }

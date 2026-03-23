@@ -13,5 +13,5 @@ public class Constants
         GIANT_HITBOX
     }
 
-    public const bool DEBUG = false;
+    public const bool DEBUG = true;
 }

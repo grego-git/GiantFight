@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Godot;
 
 public partial class CharacterController : CharacterBody3D
@@ -187,6 +188,29 @@ public partial class CharacterController : CharacterBody3D
             return true;
 
         return false;
+    }
+    
+    public bool SurfaceDetectedOnDifferentBone(ClimbableEntity climbableEntity, RayCast3D rayCast3D, HashSet<string> bonesOn)
+    {
+        if (climbableEntity != rayCast3D.GetCollider())
+            return true;
+
+        if (bonesOn == null || bonesOn.Count == 0)
+            return true;
+
+        int newFaceId = climbableEntity.GetActualCollisionFaceID(rayCast3D.GetCollisionFaceIndex());
+        HashSet<string> bonesForNewFace = climbableEntity.GetFaceBones(newFaceId);
+
+        if (bonesForNewFace == null || bonesForNewFace.Count == 0)
+            return true;
+
+        foreach (var bone in bonesOn)
+        {
+            if (bonesForNewFace.Contains(bone))
+                return false;
+        }
+
+        return true;
     }
 
     public Vector3 GetMoveLookAtDirection(Vector2 moveDirection, Vector3 upDir, Vector3 forwardDir)
