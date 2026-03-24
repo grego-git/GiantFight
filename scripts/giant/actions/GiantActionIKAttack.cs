@@ -53,10 +53,10 @@ public class GiantActionIKAttack : IGiantAction
 
         paddingDirLerpWeight = -1.0f;
 
-        foreach (var limb in giant.ArmLimbs)
+        for (int i = useLeftHand ? 0 : 2; i < (useLeftHand ? 2 : 4); i++)
         {
-            limb.Monitorable = false;
-            limb.Monitoring = false;
+            giant.ArmLimbs[i].Monitorable = false;
+            giant.ArmLimbs[i].Monitoring = false;
         }
         
         foreach (var bone in giant.BonesPlayerIsOn)
@@ -118,10 +118,10 @@ public class GiantActionIKAttack : IGiantAction
         ik.Influence = 0.0f;
         ik.UseMagnet = false;
 
-        foreach (var limb in giant.ArmLimbs)
+        for (int i = useLeftHand ? 0 : 2; i < (useLeftHand ? 2 : 4); i++)
         {
-            limb.Monitorable = true;
-            limb.Monitoring = true;
+            giant.ArmLimbs[i].Monitorable = true;
+            giant.ArmLimbs[i].Monitoring = true;
         }
     }
 }

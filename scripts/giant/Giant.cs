@@ -104,7 +104,24 @@ public partial class Giant : Node3D
 
                         if (AgroMeter.IsFilled() && !string.IsNullOrEmpty(attackAnimation))
                         {
-                            CurrentAction = new GiantActionIKAttack(this, attackAnimation, attackAnimation.ToLower().Contains("_left"));
+                            bool useLeftHand;
+
+                            if (attackAnimation.ToLower().Contains("_arm"))
+                            {
+                                if (attackAnimation.ToLower().Contains("_left"))
+                                    useLeftHand = false;
+                                else
+                                    useLeftHand = true;
+                            }
+                            else
+                            {
+                                if (attackAnimation.ToLower().Contains("_left"))
+                                    useLeftHand = true;
+                                else
+                                    useLeftHand = false;
+                            }
+
+                            CurrentAction = new GiantActionIKAttack(this, attackAnimation,  useLeftHand);
                             CurrentAction.Init();
                         }
                         else if (!string.IsNullOrEmpty(shakeAnimation)) 

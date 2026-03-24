@@ -34,6 +34,16 @@
 			"Thigh.R",
 			"Calf.R",
 			"Foot.R"
+		],
+		"pill_giant/attack_arm_left": [
+			"Upperarm.L",
+			"Forearm.L",
+			"Hand.L"
+		],
+		"pill_giant/attack_arm_right": [
+			"Upperarm.R",
+			"Forearm.R",
+			"Hand.R"
 		]
 	},
 	"FloorAnimation": "pill_giant/stomp",
