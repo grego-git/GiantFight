@@ -1,9 +1,10 @@
 [gd_scene load_steps=50 format=3 uid="uid://cbnhcgf14nygg"]
 
 [ext_resource type="Script" uid="uid://cxbc5aocp4eyw" path="res://scripts/giant/Giant.cs" id="1_54ejs"]
-[ext_resource type="ArrayMesh" uid="uid://donoiivdco58x" path="res://models/giants/pill_giant/meshes/pill_giant_mesh.res" id="1_ypc5v"]
 [ext_resource type="Animation" uid="uid://bk4jchgawo4uh" path="res://models/giants/pill_giant/animations/idle.res" id="2_vqffu"]
 [ext_resource type="PackedScene" uid="uid://c06728ka5lnsp" path="res://prefabs/climb/animated_climbable_entity.tscn" id="2_w8ufm"]
+[ext_resource type="ArrayMesh" uid="uid://cysawa8e4w4ig" path="res://models/giants/pill_giant/meshes/pill_giant.res" id="2_xuk4y"]
+[ext_resource type="Material" uid="uid://dutmx3taniira" path="res://models/giants/pill_giant/material/pill_giant.tres" id="3_ncafl"]
 [ext_resource type="Script" uid="uid://btmifgegnirye" path="res://scripts/giant/GiantLimb.cs" id="4_w8ufm"]
 [ext_resource type="Animation" uid="uid://be7yr7oa7dngc" path="res://models/giants/pill_giant/animations/stomp.res" id="5_6qws1"]
 [ext_resource type="Script" uid="uid://bdbiac3np3x03" path="res://scripts/giant/PlayerDetection.cs" id="6_3hmej"]
@@ -79,10 +80,6 @@ bind/15/pose = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0.75, -1.49012e-08, 3.875
 bind/16/name = &"LegPoleTarget.R"
 bind/16/bone = -1
 bind/16/pose = Transform3D(1, 3.89414e-07, 0, 0, 0, 1, 3.89414e-07, -1, 0, 0.750001, -5, -2.5)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_17afl"]
-transparency = 1
-depth_draw_mode = 1
 
 [sub_resource type="Animation" id="Animation_6qws1"]
 length = 0.001
@@ -460,9 +457,9 @@ bones/16/rotation = Quaternion(0.707107, 1.37679e-07, 1.37679e-07, 0.707107)
 bones/16/scale = Vector3(1, 1, 1)
 
 [node name="Sphere_001" type="MeshInstance3D" parent="Armature/Skeleton3D"]
-mesh = ExtResource("1_ypc5v")
+mesh = ExtResource("2_xuk4y")
 skin = SubResource("Skin_0qfme")
-surface_material_override/0 = SubResource("StandardMaterial3D_17afl")
+surface_material_override/0 = ExtResource("3_ncafl")
 
 [node name="AnimatedClimbableEntity" parent="Armature/Skeleton3D/Sphere_001" instance=ExtResource("2_w8ufm")]
 

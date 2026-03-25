@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 public class CharacterStateClimb : ICharacterState
@@ -29,10 +30,24 @@ public class CharacterStateClimb : ICharacterState
         }
         else
         {
+
             faceOn = ClimbFace.CreateClimbFaceFromRayCast(characterData.Controller.ClimbRayCast);
             lookAtDir = Vector3.Up;
 
-            characterData.DashMeter.Empty();
+            if (characterData.IsDashing())
+            {
+                switch (characterData.GetState())
+                {
+                    case "CLIMB":
+                    case "CRAWL":
+                    case "HANG":
+                        dashDir = characterData.Controller.Velocity.Normalized();
+                        break;
+                    default:
+                    characterData.DashMeter.Empty();
+                        break;
+                }
+            }
         }
         
         refDir = -Vector3.Up;

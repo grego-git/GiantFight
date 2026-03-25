@@ -28,7 +28,21 @@ public class CharacterStateHang : ICharacterState
         else
         {
             faceOn = HangFace.CreateHangFaceFromRayCast(characterData.Controller.HangRayCast, characterData.CameraController);
-            characterData.DashMeter.Empty();
+
+            if (characterData.IsDashing())
+            {
+                switch (characterData.GetState())
+                {
+                    case "CLIMB":
+                    case "CRAWL":
+                    case "HANG":
+                        dashDir = characterData.Controller.Velocity.Normalized();
+                        break;
+                    default:
+                    characterData.DashMeter.Empty();
+                        break;
+                }
+            }
         }
 
         if (characterData.GetState() == "CLIMB")

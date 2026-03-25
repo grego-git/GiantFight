@@ -29,7 +29,7 @@ public class GiantActionTrackClap : IGiantAction
 
     public void Update(float delta)
     {
-        if (giant.PlayerDetection.PlayerDetectionZone != PlayerDetection.DetectionZoneAreas.NEGATE && giant.TrackPlayer)
+        if (giant.PlayerDetection.PlayerDetectionZone == PlayerDetection.DetectionZoneAreas.MIDDLE && giant.TrackPlayer)
             clapTarget = giant.CharacterData.Controller.GlobalPosition + (Vector3.Down * 15.0f);
 
         if (giant.PlayerDetection.PlayerDetectionZone != PlayerDetection.DetectionZoneAreas.NEGATE && giant.TrackPlayer)
