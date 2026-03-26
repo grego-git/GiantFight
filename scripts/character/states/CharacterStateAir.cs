@@ -56,6 +56,8 @@ public class CharacterStateAir : ICharacterState
             horizontalVelocity = characterData.Controller.CalculateMoveVelocity(moveDirection, Vector3.Up, characterData.CameraController.CameraUpRotation.GlobalBasis.Z, characterData.Speed);
             velocity = horizontalVelocity + (verticalVelocity * Vector3.Up);
         }
+        else if (characterData.IsStunned())
+            velocity = verticalVelocity * Vector3.Up;
         else if (characterData.IsDashing())
             velocity = characterData.DashSpeed * dashTransform.Basis.Z * Mathf.Min(characterData.DashMeter.NormalizedFill() * 2.0f, 1.0f);
         else

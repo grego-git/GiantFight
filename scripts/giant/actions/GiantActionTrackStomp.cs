@@ -4,6 +4,7 @@ public class GiantActionTrackStomp : IGiantAction
 {
     private Giant giant;
     private Vector3 stompTarget;
+    private Vector3 rotatePoint;
     private bool complete;
 
     public GiantActionTrackStomp(Giant giant)
@@ -29,11 +30,14 @@ public class GiantActionTrackStomp : IGiantAction
     public void Update(float delta)
     {
         if (giant.PlayerDetection.PlayerDetectionZone != PlayerDetection.DetectionZoneAreas.NEGATE && giant.TrackPlayer)
-            stompTarget = Utils.GetFlatSpatialVector(giant.CharacterData.Controller.GlobalPosition, 1.5f);
+            stompTarget = Utils.GetFlatSpatialVector(giant.PlayerDetection.PlayerPosition, 1.5f);
 
-        if (giant.PlayerDetection.PlayerDetectionZone != PlayerDetection.DetectionZoneAreas.NEGATE && giant.TrackPlayer)
-            giant.RotateTowardsPoint(delta, stompTarget);
-
+        if (giant.PlayerDetection.PlayerDetectionZone != PlayerDetection.DetectionZoneAreas.NEGATE &&
+            giant.PlayerDetection.PlayerDetectionZone != PlayerDetection.DetectionZoneAreas.ON_GIANT &&
+            giant.TrackPlayer)
+            rotatePoint = giant.PlayerDetection.PlayerPosition;
+        
+        giant.RotateTowardsPoint(delta, rotatePoint);
         giant.LeftLegIKTarget.GlobalPosition = stompTarget + (Vector3.Up * giant.StompPadding);
     }
 

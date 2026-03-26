@@ -5,6 +5,8 @@ using Godot;
 public partial class CharacterData : Node3D
 {
     [Export]
+    public World World { get; set; }
+    [Export]
     public float Speed { get; set; }
     [Export]
     public float ClimbSpeed { get; set; }
@@ -46,6 +48,7 @@ public partial class CharacterData : Node3D
     public bool IsFatigued { get; set; }
     public bool InGiantProximity { get; set; }
     public Meter HealthMeter { get; private set; }
+    public Meter StunMeter { get; private set; }
     public Meter StaminaMeter { get; private set; }
     public Meter FatigueMeter { get; private set; }
     public Meter DashCooldownMeter { get; private set; }
@@ -64,6 +67,7 @@ public partial class CharacterData : Node3D
         FatigueMeter = new Meter(1.0f);
         DashCooldownMeter = new Meter(MaxDashCooldown, fill:true);
         DashMeter = new Meter(MaxDash);
+        StunMeter = new Meter(MaxStun);
         CanTakeDamage = true;
         FillFatigueUp = true;
 
@@ -157,6 +161,7 @@ public partial class CharacterData : Node3D
             DashMeter.FillMeter(-delta);
             
         DashCooldownMeter.FillMeter(delta);
+        StunMeter.FillMeter(-delta);
     }
 
     public bool HasGrip()
@@ -174,9 +179,17 @@ public partial class CharacterData : Node3D
         return !DashMeter.IsEmpty();
     }
 
+    public bool IsStunned()
+    {
+        return !StunMeter.IsEmpty();
+    }
+
     public bool CanControl()
     {
         if (IsDashing())
+            return false;
+
+        if (IsStunned())
             return false;
 
         if (Controller.Sword.IsSwinging())
@@ -200,6 +213,9 @@ public partial class CharacterData : Node3D
     {
         if (IsDashing())
             return false;
+        
+        if (IsStunned())
+            return false;
 
         if (Controller.Sword.IsSwinging())
             return false;
@@ -213,6 +229,9 @@ public partial class CharacterData : Node3D
     public bool CanSwingSword()
     {
         if (IsDashing())
+            return false;
+        
+        if (IsStunned())
             return false;
         
         if (Controller.Sword.IsSwinging())
@@ -263,6 +282,7 @@ public partial class CharacterData : Node3D
         DashMeter.FillToMax();
         DashCooldownMeter.Empty();
         CameraController.Shake(0.125f, 2.0f);
+        World.SlowDown(0.5f);
 
         if (StaminaMeter.IsEmpty())
             IsFatigued = true;
@@ -295,7 +315,7 @@ public partial class CharacterData : Node3D
 
     public void Stun()
     {
-        
+        StunMeter.FillToMax();
     }
 
     public string GetState()

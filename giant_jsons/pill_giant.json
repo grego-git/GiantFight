@@ -46,6 +46,57 @@
 			"Hand.R"
 		]
 	},
+	"StunBones": {
+		"pill_giant/shake_arm_left": [
+			"Upperarm.L",
+			"Forearm.L",
+			"Hand.L",
+			"Body"
+		],
+		"pill_giant/shake_arm_right": [
+			"Upperarm.R",
+			"Forearm.R",
+			"Hand.R",
+			"Body"
+		],
+		"pill_giant/shake_leg_left": [
+			"Thigh.L",
+			"Calf.L",
+			"Foot.L"
+		],
+		"pill_giant/shake_leg_right": [
+			"Thigh.R",
+			"Calf.R",
+			"Foot.R"
+		],
+		"pill_giant/shake": [
+			"Body",
+			"Upperarm.L",
+			"Upperarm.R",
+			"Forearm.L",
+			"Forearm.R"
+		],
+		"pill_giant/attack_leg_left": [
+			"Thigh.L",
+			"Calf.L",
+			"Foot.L"
+		],
+		"pill_giant/attack_leg_right": [
+			"Thigh.R",
+			"Calf.R",
+			"Foot.R"
+		],
+		"pill_giant/attack_arm_left": [
+			"Upperarm.L",
+			"Forearm.L",
+			"Hand.L"
+		],
+		"pill_giant/attack_arm_right": [
+			"Upperarm.R",
+			"Forearm.R",
+			"Hand.R"
+		]
+	},
 	"FloorAnimation": "pill_giant/stomp",
 	"MidAnimation": "pill_giant/clap",
 	"TopAnimation": "pill_giant/punch",

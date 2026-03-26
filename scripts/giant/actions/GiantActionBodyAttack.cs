@@ -1,7 +1,7 @@
 using System.Linq;
 using Godot;
 
-public class GiantActionIKAttack : IGiantAction
+public class GiantActionBodyAttack : IGiantAction
 {
     private Giant giant;
     private SkeletonIK3D ik;
@@ -16,7 +16,7 @@ public class GiantActionIKAttack : IGiantAction
     private bool complete;
     private bool useLeftHand;
 
-    public GiantActionIKAttack(Giant giant, string animation, bool useLeftHand)
+    public GiantActionBodyAttack(Giant giant, string animation, bool useLeftHand)
     {
         this.giant = giant;
         this.animation = animation;
@@ -52,12 +52,6 @@ public class GiantActionIKAttack : IGiantAction
         ik.UseMagnet = true;
 
         paddingDirLerpWeight = -1.0f;
-
-        for (int i = useLeftHand ? 0 : 2; i < (useLeftHand ? 2 : 4); i++)
-        {
-            giant.ArmLimbs[i].Monitorable = false;
-            giant.ArmLimbs[i].Monitoring = false;
-        }
         
         foreach (var bone in giant.BonesPlayerIsOn)
         {
@@ -69,16 +63,32 @@ public class GiantActionIKAttack : IGiantAction
 
     public void Update(float delta)
     {
-        if (giant.TrackPlayer && giant.BonesPlayerIsOn != null && giant.BonesPlayerIsOn.Count > 0)
+        if (giant.TrackPlayer)
         {
-            foreach (var bone in giant.BonesPlayerIsOn)
+            if (giant.PlayerDetection.PlayerDetectionZone == PlayerDetection.DetectionZoneAreas.ON_GIANT){
+                foreach (var bone in giant.BonesPlayerIsOn)
+                {
+                    if (!giant.GiantProfile.AttackAnimations[animation].Contains(bone))
+                        continue;
+
+                    targetTransform = giant.CharacterData.Controller.GlobalTransform;
+                    lastBoneOne = bone;
+                    break;
+                }
+            }
+
+            for (int i = useLeftHand ? 0 : 2; i < (useLeftHand ? 2 : 4); i++)
             {
-                if (!giant.GiantProfile.AttackAnimations[animation].Contains(bone))
-                    continue;
-                
-                targetTransform = giant.CharacterData.Controller.GlobalTransform;
-                lastBoneOne = bone;
-                break;
+                giant.ArmLimbs[i].Monitorable = false;
+                giant.ArmLimbs[i].Monitoring = false;
+            }
+        }
+        else
+        {
+            for (int i = useLeftHand ? 0 : 2; i < (useLeftHand ? 2 : 4); i++)
+            {
+                giant.ArmLimbs[i].Monitorable = true;
+                giant.ArmLimbs[i].Monitoring = true;
             }
         }
         
@@ -87,8 +97,6 @@ public class GiantActionIKAttack : IGiantAction
         Vector3 up = currentBoneTransform.Basis.Y.Normalized();
 
         float dot = right.Dot(targetTransform.Basis.Y.Normalized());
-
-        GD.Print("DOT: " + dot);
 
         Vector3 displacementFromBase = Utils.ProjectOntoLine(targetTransform.Origin - currentBoneTransform.Origin, up);
         Vector3 pointUpBone = currentBoneTransform.Origin + displacementFromBase;
@@ -117,11 +125,5 @@ public class GiantActionIKAttack : IGiantAction
         ik.Stop();
         ik.Influence = 0.0f;
         ik.UseMagnet = false;
-
-        for (int i = useLeftHand ? 0 : 2; i < (useLeftHand ? 2 : 4); i++)
-        {
-            giant.ArmLimbs[i].Monitorable = true;
-            giant.ArmLimbs[i].Monitoring = true;
-        }
     }
 }

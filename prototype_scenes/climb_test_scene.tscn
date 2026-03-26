@@ -1,13 +1,15 @@
-[gd_scene load_steps=16 format=3 uid="uid://bk8g6ww5x571i"]
+[gd_scene load_steps=18 format=3 uid="uid://bk8g6ww5x571i"]
 
 [ext_resource type="Script" uid="uid://762odk34n8kn" path="res://scripts/ui/StateLabel.cs" id="1_awone"]
 [ext_resource type="Script" uid="uid://ykvsm1kkb6uj" path="res://scripts/climb/CreateCollisionShape.cs" id="1_dqwrh"]
 [ext_resource type="PackedScene" uid="uid://cbnhcgf14nygg" path="res://prefabs/giants/pill_giant.tscn" id="1_gtjjn"]
+[ext_resource type="Script" uid="uid://dw4e5naidgovb" path="res://scripts/World.cs" id="1_tlxtn"]
 [ext_resource type="PackedScene" uid="uid://didvpehlarxml" path="res://prefabs/player/player_container.tscn" id="2_gtjjn"]
 [ext_resource type="Script" uid="uid://ctitt2qrhgui7" path="res://scripts/ui/FPS.cs" id="2_ke55c"]
 [ext_resource type="Script" uid="uid://p2ulqxveulw4" path="res://scripts/ui/StaminaLabel.cs" id="3_niqrx"]
 [ext_resource type="Script" uid="uid://dspakg42jctrl" path="res://scripts/ui/DashCooldownLabel.cs" id="4_hr506"]
 [ext_resource type="Script" uid="uid://dj7i8ts6h6d2s" path="res://scripts/ui/DetectLabel.cs" id="5_07aob"]
+[ext_resource type="Script" uid="uid://drqwf5d27s12x" path="res://scripts/ui/GiantHPLabel.cs" id="6_7mi5p"]
 [ext_resource type="Texture2D" uid="uid://cn3xcck2xva54" path="res://textures/texture_09.png" id="6_fdj5p"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_awone"]
@@ -30,6 +32,10 @@ uv1_scale = Vector3(50, 50, 50)
 texture_filter = 0
 
 [node name="ClimbTestScene" type="Node3D"]
+
+[node name="World" type="Node3D" parent="."]
+process_mode = 3
+script = ExtResource("1_tlxtn")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -82,13 +88,27 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.966667, 0, 1, 1)
 
-[node name="GiantDetectionZone" type="RichTextLabel" parent="CanvasLayer" node_paths=PackedStringArray("Giant")]
+[node name="GiantHP" type="RichTextLabel" parent="CanvasLayer" node_paths=PackedStringArray("Giant")]
 modulate = Color(0.964706, 0, 1, 1)
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -256.0
 offset_bottom = 64.0
+grow_horizontal = 0
+text = "HP: "
+horizontal_alignment = 2
+script = ExtResource("6_7mi5p")
+Giant = NodePath("../../PillGiant")
+
+[node name="GiantDetectionZone" type="RichTextLabel" parent="CanvasLayer" node_paths=PackedStringArray("Giant")]
+modulate = Color(0.964706, 0, 1, 1)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -256.0
+offset_top = 32.0
+offset_bottom = 96.0
 grow_horizontal = 0
 text = "DETECT ZONE: "
 horizontal_alignment = 2
@@ -122,5 +142,6 @@ script = ExtResource("1_dqwrh")
 CharacterData = NodePath("../PlayerContainer")
 Giant = NodePath("../PillGiant")
 
-[node name="PlayerContainer" parent="." instance=ExtResource("2_gtjjn")]
+[node name="PlayerContainer" parent="." node_paths=PackedStringArray("World") instance=ExtResource("2_gtjjn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 150)
+World = NodePath("../World")

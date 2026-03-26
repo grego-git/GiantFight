@@ -4,6 +4,7 @@ public class GiantActionTrackClap : IGiantAction
 {
     private Giant giant;
     private Vector3 clapTarget;
+    private Vector3 rotatePoint;
     private bool complete;
 
     public GiantActionTrackClap(Giant giant)
@@ -30,13 +31,21 @@ public class GiantActionTrackClap : IGiantAction
     public void Update(float delta)
     {
         if (giant.PlayerDetection.PlayerDetectionZone == PlayerDetection.DetectionZoneAreas.MIDDLE && giant.TrackPlayer)
-            clapTarget = giant.CharacterData.Controller.GlobalPosition + (Vector3.Down * 15.0f);
+            clapTarget = giant.PlayerDetection.PlayerPosition;
 
-        if (giant.PlayerDetection.PlayerDetectionZone != PlayerDetection.DetectionZoneAreas.NEGATE && giant.TrackPlayer)
-            giant.RotateTowardsPoint(delta, clapTarget);
-
-        giant.LeftArmIKTarget.GlobalPosition = clapTarget + (giant.GlobalBasis.X.Normalized() * giant.StompPadding);
-        giant.RightArmIKTarget.GlobalPosition = clapTarget - (giant.GlobalBasis.X.Normalized() * giant.StompPadding);
+        if (giant.PlayerDetection.PlayerDetectionZone != PlayerDetection.DetectionZoneAreas.NEGATE &&
+            giant.PlayerDetection.PlayerDetectionZone != PlayerDetection.DetectionZoneAreas.ON_GIANT && 
+            giant.TrackPlayer)
+            rotatePoint = giant.PlayerDetection.PlayerPosition;
+        
+        giant.RotateTowardsPoint(delta, rotatePoint);
+        giant.LeftArmIKTarget.GlobalPosition = clapTarget + 
+            (giant.PlayerDetection.PlayerDetectionZone == PlayerDetection.DetectionZoneAreas.MIDDLE ? Vector3.Down * 15.0f : Vector3.Zero) + 
+            (giant.GlobalBasis.X.Normalized() * giant.StompPadding);
+        
+        giant.RightArmIKTarget.GlobalPosition = clapTarget + 
+            (giant.PlayerDetection.PlayerDetectionZone == PlayerDetection.DetectionZoneAreas.MIDDLE ? Vector3.Down * 15.0f : Vector3.Zero) - 
+            (giant.GlobalBasis.X.Normalized() * giant.StompPadding);
     }
 
     public void AnimationComplete(StringName animation)

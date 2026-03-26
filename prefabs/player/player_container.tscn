@@ -1,12 +1,127 @@
-[gd_scene load_steps=26 format=3 uid="uid://didvpehlarxml"]
+[gd_scene load_steps=31 format=3 uid="uid://didvpehlarxml"]
 
 [ext_resource type="Script" uid="uid://dte2ro7bsxaov" path="res://scripts/character/CharacterData.cs" id="1_878l0"]
 [ext_resource type="Script" uid="uid://df846gkbqrlvn" path="res://scripts/character/CharacterController.cs" id="2_828ix"]
 [ext_resource type="Script" uid="uid://71ylt0i7qy56" path="res://scripts/character/CameraController.cs" id="3_6wvb2"]
+[ext_resource type="Script" uid="uid://c5qvtjojna5j6" path="res://scripts/character/CapsuleModel.cs" id="3_xe0wy"]
 [ext_resource type="PackedScene" uid="uid://cgmqbcxtjcg42" path="res://prefabs/player/sword.tscn" id="4_nj2e3"]
 [ext_resource type="Script" uid="uid://b88c7kconot4w" path="res://scripts/character/CameraTarget.cs" id="4_tghw6"]
 [ext_resource type="Script" uid="uid://b0phulapw04cv" path="res://scripts/character/Sword.cs" id="5_46u0n"]
 [ext_resource type="Script" uid="uid://nguijowt7053" path="res://scripts/character/LimbChecker.cs" id="5_nx1cc"]
+
+[sub_resource type="Animation" id="Animation_puyl3"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape3D/MeshInstance3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape3D/MeshInstance3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CollisionShape3D/MeshInstance3D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_qejok"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape3D/MeshInstance3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape3D/MeshInstance3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CollisionShape3D/MeshInstance3D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_8nbtj"]
+resource_name = "stun"
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape3D/MeshInstance3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, -0.5), Vector3(0.5, 0, 0), Vector3(-0.5, 0, 0.5), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape3D/MeshInstance3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.55, 0.7, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.261799, 0, 0), Vector3(0.174533, 0, -0.261799), Vector3(0.174533, 0, 0.523599), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ak4ba"]
+_data = {
+&"RESET": SubResource("Animation_qejok"),
+&"idle": SubResource("Animation_puyl3"),
+&"stun": SubResource("Animation_8nbtj")
+}
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6wvb2"]
 
@@ -177,13 +292,13 @@ script = ExtResource("1_878l0")
 Speed = 10.0
 ClimbSpeed = 10.0
 JumpSpeed = 7.5
-DashSpeed = 75.0
+DashSpeed = 80.0
 GripDepleteRate = 2.0
 GripReplenishRate = 4.0
 FatigueReplenishRate = 5.0
 MaxHealth = 3.0
 MaxStamina = 30.0
-MaxStun = 2.0
+MaxStun = 0.5
 MaxAim = 0.25
 MaxDash = 0.25
 MaxDashCooldown = 1.0
@@ -195,11 +310,19 @@ collision_mask = 103
 script = ExtResource("2_828ix")
 Feet = NodePath("../Feet")
 
+[node name="CapsuleAnimPlayer" type="AnimationPlayer" parent="CharacterController"]
+libraries = {
+&"": SubResource("AnimationLibrary_ak4ba")
+}
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterController"]
 shape = SubResource("CapsuleShape3D_6wvb2")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterController/CollisionShape3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterController/CollisionShape3D" node_paths=PackedStringArray("CharacterData", "AnimPlayer")]
 mesh = SubResource("CapsuleMesh_tghw6")
+script = ExtResource("3_xe0wy")
+CharacterData = NodePath("../../..")
+AnimPlayer = NodePath("../../CapsuleAnimPlayer")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterController/CollisionShape3D/MeshInstance3D"]
 transform = Transform3D(0.5, 0, 0, 0, 0.25, 0, 0, 0, 0.5, 0, 0.5, -0.5)
@@ -258,12 +381,12 @@ Camera3D = NodePath("../CharacterCamera")
 Target = NodePath("../CameraTarget")
 TargetToCameraRayCast = NodePath("../PlayerToCameraRayCast")
 PanSpeed = 4.0
-Distance = 15.0
+Distance = 20.0
 MaxXRotation = 60.0
 NormalFOV = 90.0
 ChargingFOV = 60.0
 DashFOV = 180.0
-ClimbFOV = 135.0
+ClimbFOV = 145.0
 
 [node name="CameraUpRotation" type="Node3D" parent="CameraOrientation"]
 

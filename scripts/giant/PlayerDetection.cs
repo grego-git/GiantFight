@@ -28,7 +28,11 @@ public partial class PlayerDetection : Node3D
         PlayerDetectionZone = DetectionZoneAreas.NONE;
         characterData.InGiantProximity = false;
 
-        if (bonesPlayerIsOn != null && bonesPlayerIsOn.Count > 0)
+        if (characterData.GetState() == "DEAD")
+        {
+            PlayerDetectionZone = DetectionZoneAreas.NONE;
+        }
+        else if (bonesPlayerIsOn != null && bonesPlayerIsOn.Count > 0)
         {
             PlayerDetectionZone = DetectionZoneAreas.ON_GIANT;
             PlayerPosition = characterData.Controller.GlobalPosition;

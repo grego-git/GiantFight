@@ -61,6 +61,8 @@ public class CharacterStateGrounded : ICharacterState
             horizontalVelocity = characterData.Controller.CalculateMoveVelocity(moveDirection, groundNormal, characterData.CameraController.CameraUpRotation.GlobalBasis.Z, characterData.Speed);
             velocity = horizontalVelocity + (verticalVelocity * Vector3.Up);
         }
+        else if (characterData.IsStunned())
+            velocity = verticalVelocity * Vector3.Up;
         else if (characterData.IsDashing())
         {
             if (faceOn != null)

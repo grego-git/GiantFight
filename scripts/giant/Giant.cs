@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 public partial class Giant : Node3D
 {
@@ -22,11 +23,15 @@ public partial class Giant : Node3D
     public float StompPadding { get; set; }
     [Export]
     public bool TrackPlayer { get; set; }
+    [Export]
+    public bool StunPlayer { get; set; }
 
     [Export]
     public ClimbableAnimatedEntity[] ClimbAnimatedEntities { get; set; }
     [Export]
     public GiantLimb[] ArmLimbs { get; set; }
+    [Export]
+    public GiantHitPoint[] HitPoints  { get; set; }
 
     [Export]
     public SkeletonIK3D LeftLegIK { get; set; }
@@ -44,6 +49,9 @@ public partial class Giant : Node3D
     public GiantProfile GiantProfile { get; set; }
     public Meter AgroMeter { get; set; }
     public HashSet<string> BonesPlayerIsOn { get; set; }
+
+    public int MaxHP { get; private set; }
+    public int CurrentHP { get; private set; }
 
     public Node3D LeftLegIKTarget { get; set; }
     public Node3D LeftArmIKTarget { get; set; }
@@ -70,7 +78,13 @@ public partial class Giant : Node3D
 
         AgroMeter = new Meter(3.0f);
 
-        material = (StandardMaterial3D)Mesh.GetSurfaceOverrideMaterial(0);
+        material = (StandardMaterial3D)Mesh.Mesh.SurfaceGetMaterial(0);
+        
+        foreach (var hitPoint in HitPoints)
+        {
+            MaxHP += hitPoint.HP;
+            CurrentHP += hitPoint.HP;
+        }
     }
 
     public override void _PhysicsProcess(double delta)
@@ -78,6 +92,11 @@ public partial class Giant : Node3D
         base._PhysicsProcess(delta);
 
         BonesPlayerIsOn = GetBonesPlayerIsOn();
+
+        CurrentHP = 0;
+
+        foreach (var hitPoint in HitPoints)
+            CurrentHP += hitPoint.HP;
 
         if (PlayerDetection.PlayerDetectionZone == PlayerDetection.DetectionZoneAreas.ON_GIANT)
         {
@@ -88,11 +107,33 @@ public partial class Giant : Node3D
             material.AlbedoColor = Colors.White;
         }
 
+        if (StunPlayer && !string.IsNullOrEmpty(AnimPlayer.CurrentAnimation) && BonesPlayerIsOn != null && BonesPlayerIsOn.Count > 0)
+        {
+            foreach (var stunBones in GiantProfile.StunBones)
+            {
+                bool stunnedPlayer = false;
+
+                if (AnimPlayer.CurrentAnimation == stunBones.Key)
+                {
+                    foreach (var boneOn in BonesPlayerIsOn)
+                    {
+                        if (stunBones.Value.Contains(boneOn))
+                            CharacterData.Stun();
+                            stunnedPlayer = true;
+                            break;
+                    }
+                }
+
+                if (stunnedPlayer)
+                    break;
+            }
+        }
+        
+        PlayerDetection.Update(CharacterData, BonesPlayerIsOn);
+
         switch (CurrentState)
         {
             case State.DETERMINING:
-                PlayerDetection.Update(CharacterData, BonesPlayerIsOn);
-
                 switch (PlayerDetection.PlayerDetectionZone)
                 {
                     case PlayerDetection.DetectionZoneAreas.NONE:
@@ -121,7 +162,7 @@ public partial class Giant : Node3D
                                     useLeftHand = false;
                             }
 
-                            CurrentAction = new GiantActionIKAttack(this, attackAnimation,  useLeftHand);
+                            CurrentAction = new GiantActionBodyAttack(this, attackAnimation,  useLeftHand);
                             CurrentAction.Init();
                         }
                         else if (!string.IsNullOrEmpty(shakeAnimation)) 
@@ -153,14 +194,18 @@ public partial class Giant : Node3D
                     case PlayerDetection.DetectionZoneAreas.NONE:
                     default:
                         AgroMeter.FillMeter((float)delta);
-                        CurrentAction.Update((float)delta);
-
-                        if (CurrentAction.Complete())
-                        {
-                            AnimPlayer.Play(GiantProfile.IdleAnimation);
-                            CurrentState = State.DETERMINING;
-                        }
                         break;
+                }
+
+                if (CurrentAction != null)
+                {
+                    CurrentAction.Update((float)delta);
+
+                    if (CurrentAction.Complete())
+                    {
+                        AnimPlayer.Play(GiantProfile.IdleAnimation);
+                        CurrentState = State.DETERMINING;
+                    }
                 }
                 break;
         }

@@ -4,6 +4,7 @@ public class GiantActionTrackPunch : IGiantAction
 {
     private Giant giant;
     private Vector3 punchTarget;
+    private Vector3 rotatePoint;
     private bool complete;
 
     public GiantActionTrackPunch(Giant giant)
@@ -28,15 +29,18 @@ public class GiantActionTrackPunch : IGiantAction
 
     public void Update(float delta)
     {        
-        if (giant.PlayerDetection.PlayerDetectionZone != PlayerDetection.DetectionZoneAreas.NEGATE && giant.TrackPlayer)
-            punchTarget = giant.CharacterData.Controller.GlobalPosition + (Vector3.Down * 15.0f);
+        if (giant.PlayerDetection.PlayerDetectionZone == PlayerDetection.DetectionZoneAreas.TOP && giant.TrackPlayer)
+            punchTarget = giant.PlayerDetection.PlayerPosition + (Vector3.Down * 15.0f);
 
-        if (giant.PlayerDetection.PlayerDetectionZone != PlayerDetection.DetectionZoneAreas.NEGATE && giant.TrackPlayer)
-            giant.RotateTowardsPoint(delta, punchTarget);
+        if (giant.PlayerDetection.PlayerDetectionZone != PlayerDetection.DetectionZoneAreas.NEGATE && 
+            giant.PlayerDetection.PlayerDetectionZone != PlayerDetection.DetectionZoneAreas.ON_GIANT && 
+            giant.TrackPlayer)
+            rotatePoint = giant.PlayerDetection.PlayerPosition;
 
         Vector3 shoulderPos = (giant.Skeleton.GlobalTransform * giant.Skeleton.GetBoneGlobalPose(giant.Skeleton.FindBone("Upperarm.L"))).Origin;
         Vector3 punchDir = (punchTarget - shoulderPos).Normalized();
 
+        giant.RotateTowardsPoint(delta, rotatePoint);
         giant.LeftArmIKTarget.GlobalPosition = shoulderPos + (punchDir * 100.0f);
     }
 

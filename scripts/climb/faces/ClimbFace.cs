@@ -64,6 +64,6 @@ public class ClimbFace : SpecialFace
         if (normal.Length() < Mathf.Epsilon)
             return false;
 
-        return Mathf.Abs(normal.Dot(Vector3.Up)) <= 0.85f;
+        return Mathf.Abs(normal.Dot(Vector3.Up)) <= 0.75f;
     }
 }

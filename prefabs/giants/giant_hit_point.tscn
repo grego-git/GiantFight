@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://b3y03b005tnj5"]
+
+[ext_resource type="Script" uid="uid://cm3ihboqh2p03" path="res://scripts/giant/GiantHitPoint.cs" id="1_uwiwy"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_i0f1t"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_xuk4y"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ncafl"]
+resource_local_to_scene = true
+albedo_color = Color(1, 0, 0, 1)
+
+[node name="HitPoint" type="StaticBody3D"]
+collision_layer = 64
+script = ExtResource("1_uwiwy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_i0f1t")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_xuk4y")
+surface_material_override/0 = SubResource("StandardMaterial3D_ncafl")

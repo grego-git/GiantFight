@@ -16,6 +16,7 @@ public partial class Sword : Node3D
     public State CurrentState { get; set; }
 
     private Area3D swordBox;
+    private bool hit;
 
     private string[] SWING_ANIMATIONS =
     {
@@ -45,6 +46,7 @@ public partial class Sword : Node3D
                 swordBox.Monitorable = false;
                 swordBox.Monitoring = false;
                 anim.Play("idle");
+                hit = false;
                 break;
             case State.SWING:
                 swordBox.Monitorable = true;
@@ -75,6 +77,15 @@ public partial class Sword : Node3D
 
     public void BodyEntered(Node3D node)
     {
+        if (hit)
+            return;
+        
         GD.Print("HIT: " + node.Name);
+
+        if (node.Name.ToString().ToLower().Contains("hitpoint"))
+        {
+            GiantHitPoint giantHitPoint = (GiantHitPoint)node;
+            giantHitPoint.Hit(1);
+        }
     }
 }

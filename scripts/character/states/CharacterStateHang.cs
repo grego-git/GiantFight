@@ -80,11 +80,11 @@ public class CharacterStateHang : ICharacterState
         {
             return new CharacterStateAir(characterData, Vector3.Zero, 0.0f, false);
         }
-        else if (characterData.Controller.DetectedClimbableWall())
+        else if (!characterData.IsStunned() && characterData.Controller.DetectedClimbableWall())
         {
             return new CharacterStateClimb(characterData);
         }
-        else if (characterData.Controller.DetectedHangableCeiling())
+        else if (!characterData.IsStunned() && characterData.Controller.DetectedHangableCeiling())
         {
             return new CharacterStateHang(characterData);
         }
@@ -102,6 +102,11 @@ public class CharacterStateHang : ICharacterState
             climbVelocity = characterData.Controller.CalculateMoveVelocity(moveDirection, faceOn.FaceNormal, characterData.CameraController.CameraUpRotation.GlobalBasis.Z, characterData.ClimbSpeed);
             velocity = climbVelocity;
         }
+        else if (characterData.IsStunned())
+        {
+            climbVelocity = Vector3.Zero;
+            velocity = Vector3.Zero;
+        }
         else if (characterData.IsDashing())
             velocity = characterData.DashSpeed * Utils.ProjectOntoPlane(dashDir, faceOn.FaceNormal).Normalized() * Mathf.Min(characterData.DashMeter.NormalizedFill() * 2.0f, 1.0f);
         else 
@@ -116,21 +121,26 @@ public class CharacterStateHang : ICharacterState
         {
             if (climbVelocity != Vector3.Zero)
                 lookAtDir = climbVelocity.Normalized();
-            else if (characterData.IsDashing())
+            else if (!characterData.IsStunned() && characterData.IsDashing())
                 lookAtDir = characterData.Controller.Velocity.Normalized();
             else
             {
                 Vector3 right = lookAtDir.Cross(faceOn.FaceNormal);
-                lookAtDir = faceOn.FaceNormal.Cross(right);    
+                Vector3 forward = faceOn.FaceNormal.Cross(right);    
+
+                if (forward != Vector3.Zero)
+                    lookAtDir = forward; 
             }
             
-            characterData.Controller.PositionCharacterToFace(faceOn.FacePoint, faceOn.FaceNormal, lookAtDir, faceOn.FaceNormal);
+            if (lookAtDir != Vector3.Zero)
+                characterData.Controller.PositionCharacterToFace(faceOn.FacePoint, faceOn.FaceNormal, lookAtDir, faceOn.FaceNormal);
         }
     }
 
     public void Update(float delta)
     {
-        characterData.Controller.PositionCharacterToFace(faceOn.FacePoint, faceOn.FaceNormal, lookAtDir, faceOn.FaceNormal);
+        if (lookAtDir != Vector3.Zero)
+            characterData.Controller.PositionCharacterToFace(faceOn.FacePoint, faceOn.FaceNormal, lookAtDir, faceOn.FaceNormal);
         
         if (characterData.CanDash() && characterData.Controller.DashInput())
         {
@@ -175,7 +185,10 @@ public class CharacterStateHang : ICharacterState
     public void UpdatePositionAfterPoseUpdate()
     {
         faceOn.Update();
-        characterData.Controller.PositionCharacterToFace(faceOn.FacePoint, faceOn.FaceNormal, lookAtDir, faceOn.FaceNormal);
+        
+        if (lookAtDir != Vector3.Zero)
+            characterData.Controller.PositionCharacterToFace(faceOn.FacePoint, faceOn.FaceNormal, lookAtDir, faceOn.FaceNormal);
+        
         characterData.UpdateAfterGiantsPoseUpdate();
     }
 }

@@ -4,7 +4,6 @@
 [ext_resource type="Animation" uid="uid://bk4jchgawo4uh" path="res://models/giants/pill_giant/animations/idle.res" id="2_vqffu"]
 [ext_resource type="PackedScene" uid="uid://c06728ka5lnsp" path="res://prefabs/climb/animated_climbable_entity.tscn" id="2_w8ufm"]
 [ext_resource type="ArrayMesh" uid="uid://cysawa8e4w4ig" path="res://models/giants/pill_giant/meshes/pill_giant.res" id="2_xuk4y"]
-[ext_resource type="Material" uid="uid://dutmx3taniira" path="res://models/giants/pill_giant/material/pill_giant.tres" id="3_ncafl"]
 [ext_resource type="Script" uid="uid://btmifgegnirye" path="res://scripts/giant/GiantLimb.cs" id="4_w8ufm"]
 [ext_resource type="Animation" uid="uid://be7yr7oa7dngc" path="res://models/giants/pill_giant/animations/stomp.res" id="5_6qws1"]
 [ext_resource type="Script" uid="uid://bdbiac3np3x03" path="res://scripts/giant/PlayerDetection.cs" id="6_3hmej"]
@@ -25,6 +24,7 @@
 [ext_resource type="Animation" uid="uid://cilkmfyw633y" path="res://models/giants/pill_giant/animations/attack_leg_right.res" id="14_4rsb0"]
 [ext_resource type="Animation" uid="uid://d2x0pytf3axbc" path="res://models/giants/pill_giant/animations/attack_arm_left.res" id="15_i0f1t"]
 [ext_resource type="Animation" uid="uid://bd4byf6gdsmsa" path="res://models/giants/pill_giant/animations/attack_arm_right.res" id="16_xuk4y"]
+[ext_resource type="PackedScene" uid="uid://b3y03b005tnj5" path="res://prefabs/giants/giant_hit_point.tscn" id="25_ncafl"]
 
 [sub_resource type="Skin" id="Skin_0qfme"]
 resource_name = "Skin"
@@ -215,6 +215,18 @@ tracks/10/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath(".:StunPlayer")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_w4hiy"]
 _data = {
@@ -265,6 +277,18 @@ radius = 0.65
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_54ejs"]
 radius = 0.65
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_6sbl1"]
+radius = 0.6
+
+[sub_resource type="SphereMesh" id="SphereMesh_inkpd"]
+radius = 0.6
+height = 1.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_48m6s"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1, 0, 0.983333, 0.12549)
+
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_6qws1"]
 height = 3.0
 radius = 3.5
@@ -311,24 +335,13 @@ transparency = 1
 shading_mode = 0
 albedo_color = Color(0, 0.25, 1, 0.25098)
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_6sbl1"]
-radius = 0.6
-
-[sub_resource type="SphereMesh" id="SphereMesh_inkpd"]
-radius = 0.6
-height = 1.2
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_48m6s"]
-transparency = 1
-shading_mode = 0
-albedo_color = Color(1, 0, 0.983333, 0.12549)
-
-[node name="PillGiant" type="Node3D" node_paths=PackedStringArray("ClimbAnimatedEntities", "ArmLimbs", "LeftLegIK", "LeftArmIK", "RightArmIK")]
+[node name="PillGiant" type="Node3D" node_paths=PackedStringArray("ClimbAnimatedEntities", "ArmLimbs", "HitPoints", "LeftLegIK", "LeftArmIK", "RightArmIK")]
 script = ExtResource("1_54ejs")
 GiantJson = "pill_giant.json"
 TurnSpeed = 2.0
 ClimbAnimatedEntities = [NodePath("Armature/Skeleton3D/Sphere_001/AnimatedClimbableEntity")]
 ArmLimbs = [NodePath("LeftUpperarm"), NodePath("LeftForearm"), NodePath("RightUpperarm"), NodePath("RightForearm")]
+HitPoints = [NodePath("ElbowHitPoint"), NodePath("HandHitPoint"), NodePath("FootHitPoint"), NodePath("KneeHitPoint")]
 LeftLegIK = NodePath("Armature/Skeleton3D/LeftLegIK")
 LeftArmIK = NodePath("Armature/Skeleton3D/LeftArmIK")
 RightArmIK = NodePath("Armature/Skeleton3D/RightArmIK")
@@ -459,7 +472,6 @@ bones/16/scale = Vector3(1, 1, 1)
 [node name="Sphere_001" type="MeshInstance3D" parent="Armature/Skeleton3D"]
 mesh = ExtResource("2_xuk4y")
 skin = SubResource("Skin_0qfme")
-surface_material_override/0 = ExtResource("3_ncafl")
 
 [node name="AnimatedClimbableEntity" parent="Armature/Skeleton3D/Sphere_001" instance=ExtResource("2_w8ufm")]
 
@@ -625,6 +637,38 @@ mesh = SubResource("CapsuleMesh_54ejs")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_6qws1")
 
+[node name="LeftFist" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.825, -1.925, -0.29)
+collision_layer = 128
+monitoring = false
+monitorable = false
+script = ExtResource("14_1fl3u")
+Bone = "Hand.L"
+Skeleton = NodePath("../Armature/Skeleton3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftFist"]
+shape = SubResource("SphereShape3D_6sbl1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LeftFist"]
+mesh = SubResource("SphereMesh_inkpd")
+surface_material_override/0 = SubResource("StandardMaterial3D_48m6s")
+
+[node name="RightFist" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.825, -1.925, -0.29)
+collision_layer = 128
+monitoring = false
+monitorable = false
+script = ExtResource("14_1fl3u")
+Bone = "Hand.R"
+Skeleton = NodePath("../Armature/Skeleton3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RightFist"]
+shape = SubResource("SphereShape3D_6sbl1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RightFist"]
+mesh = SubResource("SphereMesh_inkpd")
+surface_material_override/0 = SubResource("StandardMaterial3D_48m6s")
+
 [node name="PlayerDetection" type="Node3D" parent="." node_paths=PackedStringArray("DetectionZones")]
 script = ExtResource("6_3hmej")
 DetectionZones = [NodePath("../NegateDetectRing"), NodePath("../TopDetectRing"), NodePath("../MidDetectRing"), NodePath("../FloorDetectRing")]
@@ -683,34 +727,26 @@ StompCylinder = ExtResource("11_jhlki")
 script = ExtResource("12_rwr57")
 ClapSphere = ExtResource("13_6neo4")
 
-[node name="LeftFist" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.825, -1.925, -0.29)
-collision_layer = 128
-monitoring = false
-monitorable = false
-script = ExtResource("14_1fl3u")
+[node name="ElbowHitPoint" parent="." node_paths=PackedStringArray("Skeleton") instance=ExtResource("25_ncafl")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -1.85, -1.475, -0.525)
+HP = 25
+Bone = "Forearm.R"
+Skeleton = NodePath("../Armature/Skeleton3D")
+
+[node name="HandHitPoint" parent="." node_paths=PackedStringArray("Skeleton") instance=ExtResource("25_ncafl")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 2.275, -1.95, -0.275)
+HP = 25
 Bone = "Hand.L"
 Skeleton = NodePath("../Armature/Skeleton3D")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftFist"]
-shape = SubResource("SphereShape3D_6sbl1")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="LeftFist"]
-mesh = SubResource("SphereMesh_inkpd")
-surface_material_override/0 = SubResource("StandardMaterial3D_48m6s")
-
-[node name="RightFist" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.825, -1.925, -0.29)
-collision_layer = 128
-monitoring = false
-monitorable = false
-script = ExtResource("14_1fl3u")
-Bone = "Hand.R"
+[node name="FootHitPoint" parent="." node_paths=PackedStringArray("Skeleton") instance=ExtResource("25_ncafl")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -0.95, -3.5, 0.3)
+HP = 25
+Bone = "Foot.R"
 Skeleton = NodePath("../Armature/Skeleton3D")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RightFist"]
-shape = SubResource("SphereShape3D_6sbl1")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RightFist"]
-mesh = SubResource("SphereMesh_inkpd")
-surface_material_override/0 = SubResource("StandardMaterial3D_48m6s")
+[node name="KneeHitPoint" parent="." node_paths=PackedStringArray("Skeleton") instance=ExtResource("25_ncafl")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0.65, -2.5, 0.3)
+HP = 25
+Bone = "Thigh.L"
+Skeleton = NodePath("../Armature/Skeleton3D")

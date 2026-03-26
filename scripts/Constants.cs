@@ -10,7 +10,8 @@ public class Constants
         SWORD = 5,
         GROUND,
         GIANT_LIMB,
-        GIANT_HITBOX
+        GIANT_HITBOX,
+        GIANT_HURTBOX
     }
 
     public const bool DEBUG = false;

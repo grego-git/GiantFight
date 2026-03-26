@@ -18,7 +18,7 @@ albedo_color = Color(1, 0, 0, 1)
 [node name="SwordBox" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
 collision_layer = 16
-collision_mask = 38
+collision_mask = 102
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SwordBox"]
 shape = SubResource("BoxShape3D_3s8ln")
