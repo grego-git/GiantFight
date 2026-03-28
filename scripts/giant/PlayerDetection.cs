@@ -11,7 +11,8 @@ public partial class PlayerDetection : Node3D
         MIDDLE,
         FLOOR,
         ON_GIANT,
-        NONE
+        NONE,
+        DEAD
     }
 
     [Export]
@@ -25,12 +26,9 @@ public partial class PlayerDetection : Node3D
 
     public void Update(CharacterData characterData, HashSet<string> bonesPlayerIsOn)
     {
-        PlayerDetectionZone = DetectionZoneAreas.NONE;
-        characterData.InGiantProximity = false;
-
         if (characterData.GetState() == "DEAD")
         {
-            PlayerDetectionZone = DetectionZoneAreas.NONE;
+            PlayerDetectionZone = DetectionZoneAreas.DEAD;
         }
         else if (bonesPlayerIsOn != null && bonesPlayerIsOn.Count > 0)
         {
@@ -43,6 +41,9 @@ public partial class PlayerDetection : Node3D
         }
         else 
         {
+            PlayerDetectionZone = DetectionZoneAreas.NONE;
+            characterData.InGiantProximity = false;
+            
             for (int i = 0; i < DetectionZones.Length; i++)
             {
                 DetectionZones[i].ForceUpdateTransform();

@@ -31,6 +31,8 @@ public partial class Giant : Node3D
     [Export]
     public GiantLimb[] ArmLimbs { get; set; }
     [Export]
+    public GiantHitBox[] Fists { get; set; }
+    [Export]
     public GiantHitPoint[] HitPoints  { get; set; }
 
     [Export]
@@ -137,6 +139,7 @@ public partial class Giant : Node3D
                 switch (PlayerDetection.PlayerDetectionZone)
                 {
                     case PlayerDetection.DetectionZoneAreas.NONE:
+                    case PlayerDetection.DetectionZoneAreas.DEAD:
                         AgroMeter.FillMeter(-(float)delta);
                         break;
                     case PlayerDetection.DetectionZoneAreas.ON_GIANT:                        

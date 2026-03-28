@@ -16,8 +16,9 @@ shading_mode = 0
 albedo_color = Color(1, 0, 0.983333, 0.12549)
 
 [node name="ClapSphere" type="Node3D"]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0)
 script = ExtResource("1_yxqua")
-KillTimer = 0.25
+KillTimer = 0.1
 
 [node name="Area3D" type="Area3D" parent="."]
 collision_layer = 128

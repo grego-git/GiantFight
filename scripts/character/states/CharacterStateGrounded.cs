@@ -108,11 +108,18 @@ public class CharacterStateGrounded : ICharacterState
             verticalVelocity = 0.0f;
             characterData.Dash();
         }
-        else if (characterData.CanSwingSword() && characterData.Controller.SwingSwordInput())
+        else if (characterData.CanSwingSword())
         {
-            characterData.Controller.LookAt(characterData.Controller.GlobalPosition - characterData.CameraController.CameraUpRotation.GlobalBasis.Z, Vector3.Up);
-            horizontalVelocity = Vector3.Zero;
-            characterData.Controller.Sword.Swing();
+            if (characterData.Controller.ChargeSwordInput())
+            {
+                characterData.Controller.LookAt(characterData.Controller.GlobalPosition - characterData.CameraController.CameraUpRotation.GlobalBasis.Z, Vector3.Up);
+                characterData.Controller.Sword.Charge(delta);
+                horizontalVelocity = Vector3.Zero;
+            }
+            else
+            {
+                characterData.Controller.Sword.Swing();
+            }
         }
 
         faceOn = characterData.Controller.UpdateAndValidateGroundedFace(faceOn);

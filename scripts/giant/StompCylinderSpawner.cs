@@ -8,6 +8,8 @@ public partial class StompCylinderSpawner : Node3D
 
     [Export]
     public PackedScene StompCylinder;
+    [Export]
+    public PackedScene StompParticles;
 
     private Giant giant;
 
@@ -30,6 +32,12 @@ public partial class StompCylinderSpawner : Node3D
             
             giant.AddChild(spawnedCylinder);
             spawnedCylinder.GlobalPosition = GlobalPosition;
+            
+            var spawnedParticles = (KillOneShotParticle)StompParticles.Instantiate();
+
+            giant.GetParent().AddChild(spawnedParticles);
+            spawnedParticles.GlobalPosition = GlobalPosition;
+            spawnedParticles.Start();
 
             Spawn = false;
         }

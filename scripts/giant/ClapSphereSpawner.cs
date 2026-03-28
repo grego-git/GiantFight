@@ -8,6 +8,8 @@ public partial class ClapSphereSpawner : Node3D
 
     [Export]
     public PackedScene ClapSphere;
+    [Export]
+    public PackedScene ClapParticles;
 
     private Giant giant;
 
@@ -22,7 +24,7 @@ public partial class ClapSphereSpawner : Node3D
     {
         base._PhysicsProcess(delta);
         
-        GlobalPosition = giant.LeftArmIKTarget.GlobalPosition.Lerp(giant.RightArmIKTarget.GlobalPosition, 0.5f);
+        GlobalPosition = giant.Fists[0].GlobalPosition.Lerp(giant.Fists[1].GlobalPosition, 0.5f);
 
         if (Spawn)
         {
@@ -30,6 +32,13 @@ public partial class ClapSphereSpawner : Node3D
             
             giant.AddChild(spawnedSphere);
             spawnedSphere.GlobalPosition = GlobalPosition;
+            
+            var spawnedParticles = (KillOneShotParticle)ClapParticles.Instantiate();
+
+            giant.GetParent().AddChild(spawnedParticles);
+            spawnedParticles.GlobalPosition = GlobalPosition;
+            spawnedParticles.Start();
+            spawnedParticles.LookAt(giant.Fists[0].GlobalPosition);
 
             Spawn = false;
         }

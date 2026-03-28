@@ -139,9 +139,14 @@ public partial class CharacterController : CharacterBody3D
         return Input.IsActionPressed("right_click");
     }
 
-    public bool SwingSwordInput()
+    public bool ChargeSwordInput()
     {
-        return Input.IsActionJustPressed("click");
+        return Input.IsActionPressed("click");
+    }
+
+    public bool ChargeSwordInputRelease()
+    {
+        return !Input.IsActionPressed("click");
     }
 
     public bool RelieveFatigueInput()

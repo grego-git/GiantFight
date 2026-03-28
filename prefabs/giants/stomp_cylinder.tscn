@@ -17,7 +17,7 @@ albedo_color = Color(1, 0, 0.983333, 0.12549)
 
 [node name="StompCylinder" type="Node3D"]
 script = ExtResource("1_qnjrp")
-KillTimer = 0.25
+KillTimer = 0.1
 
 [node name="Area3D" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

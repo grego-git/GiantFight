@@ -15,7 +15,9 @@ public partial class Sword : Node3D
 
     public State CurrentState { get; set; }
 
+    private Meter chargeMeter;
     private Area3D swordBox;
+    private int damage;
     private bool hit;
 
     private string[] SWING_ANIMATIONS =
@@ -32,6 +34,8 @@ public partial class Sword : Node3D
 
         swordBox = (Area3D)GetNode("SwordBox");
 
+        chargeMeter = new Meter(1.5f);
+
         anim.AnimationFinished += AnimationFinished;
         swordBox.BodyEntered += BodyEntered;
     }
@@ -43,9 +47,13 @@ public partial class Sword : Node3D
         switch(CurrentState)
         {
             case State.IDLE:
+                if (chargeMeter.Value > 0.25f)
+                    anim.PlaySection("charge", chargeMeter.Value);
+                else
+                    anim.Play("idle");
+
                 swordBox.Monitorable = false;
                 swordBox.Monitoring = false;
-                anim.Play("idle");
                 hit = false;
                 break;
             case State.SWING:
@@ -60,12 +68,39 @@ public partial class Sword : Node3D
         return CurrentState == State.SWING;
     }
 
+    public bool ChargingMeter()
+    {
+        return !chargeMeter.IsEmpty();
+    }
+
+    public void Charge(float charge)
+    {
+        chargeMeter.FillMeter(charge);
+    }
+
+    public void EmptyCharge()
+    {
+        chargeMeter.Empty();
+    }
+
     public void Swing()
     {
-        anim.Play(SWING_ANIMATIONS[swing_index]);
+        if (chargeMeter.IsEmpty())
+            return;
+        
+        if (chargeMeter.Value > 0.25f)
+        {
+            damage = 2 + (int)(chargeMeter.NormalizedFill() * 3.0f);
+            anim.Play("charge_swing");
+        }
+        else 
+        {
+            damage = 1;
+            anim.Play(SWING_ANIMATIONS[swing_index]);
+            swing_index = swing_index + 1 == SWING_ANIMATIONS.Length ? 0 : (swing_index + 1);
+        }
 
-        swing_index = swing_index + 1 == SWING_ANIMATIONS.Length ? 0 : (swing_index + 1);
-
+        chargeMeter.Empty();
         CurrentState = State.SWING;
     }
 
@@ -85,7 +120,8 @@ public partial class Sword : Node3D
         if (node.Name.ToString().ToLower().Contains("hitpoint"))
         {
             GiantHitPoint giantHitPoint = (GiantHitPoint)node;
-            giantHitPoint.Hit(1);
+            giantHitPoint.Hit(damage);
+            hit = true;
         }
     }
 }

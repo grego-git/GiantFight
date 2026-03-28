@@ -120,9 +120,6 @@ public class CharacterStateThrown : ICharacterState
 
             if (knockBackVelocity.Length() > 100.0f)
             {
-                if (collider.GetCollisionLayerValue((int)Constants.COLLIDER_LAYERS.GROUND) && collision.GetNormal(i).Dot(Vector3.Up) > 0.95f)
-                    characterData.TakeDamage(1.0f);
-                
                 ChangeLookAt();
             }
             break;

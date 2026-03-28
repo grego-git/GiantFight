@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://cbnhcgf14nygg"]
+[gd_scene load_steps=52 format=3 uid="uid://cbnhcgf14nygg"]
 
 [ext_resource type="Script" uid="uid://cxbc5aocp4eyw" path="res://scripts/giant/Giant.cs" id="1_54ejs"]
 [ext_resource type="Animation" uid="uid://bk4jchgawo4uh" path="res://models/giants/pill_giant/animations/idle.res" id="2_vqffu"]
@@ -24,7 +24,9 @@
 [ext_resource type="Animation" uid="uid://cilkmfyw633y" path="res://models/giants/pill_giant/animations/attack_leg_right.res" id="14_4rsb0"]
 [ext_resource type="Animation" uid="uid://d2x0pytf3axbc" path="res://models/giants/pill_giant/animations/attack_arm_left.res" id="15_i0f1t"]
 [ext_resource type="Animation" uid="uid://bd4byf6gdsmsa" path="res://models/giants/pill_giant/animations/attack_arm_right.res" id="16_xuk4y"]
+[ext_resource type="PackedScene" uid="uid://xlcff124lcuv" path="res://prefabs/giants/particles/stomp_particles.tscn" id="23_ncafl"]
 [ext_resource type="PackedScene" uid="uid://b3y03b005tnj5" path="res://prefabs/giants/giant_hit_point.tscn" id="25_ncafl"]
+[ext_resource type="PackedScene" uid="uid://x5mfva81oeay" path="res://prefabs/giants/particles/clap_particles.tscn" id="26_x0iyg"]
 
 [sub_resource type="Skin" id="Skin_0qfme"]
 resource_name = "Skin"
@@ -335,12 +337,13 @@ transparency = 1
 shading_mode = 0
 albedo_color = Color(0, 0.25, 1, 0.25098)
 
-[node name="PillGiant" type="Node3D" node_paths=PackedStringArray("ClimbAnimatedEntities", "ArmLimbs", "HitPoints", "LeftLegIK", "LeftArmIK", "RightArmIK")]
+[node name="PillGiant" type="Node3D" node_paths=PackedStringArray("ClimbAnimatedEntities", "ArmLimbs", "Fists", "HitPoints", "LeftLegIK", "LeftArmIK", "RightArmIK")]
 script = ExtResource("1_54ejs")
 GiantJson = "pill_giant.json"
 TurnSpeed = 2.0
 ClimbAnimatedEntities = [NodePath("Armature/Skeleton3D/Sphere_001/AnimatedClimbableEntity")]
 ArmLimbs = [NodePath("LeftUpperarm"), NodePath("LeftForearm"), NodePath("RightUpperarm"), NodePath("RightForearm")]
+Fists = [NodePath("LeftFist"), NodePath("RightFist")]
 HitPoints = [NodePath("ElbowHitPoint"), NodePath("HandHitPoint"), NodePath("FootHitPoint"), NodePath("KneeHitPoint")]
 LeftLegIK = NodePath("Armature/Skeleton3D/LeftLegIK")
 LeftArmIK = NodePath("Armature/Skeleton3D/LeftArmIK")
@@ -722,10 +725,12 @@ surface_material_override/0 = SubResource("StandardMaterial3D_rpoyi")
 [node name="StompCylinderSpawner" type="Node3D" parent="."]
 script = ExtResource("10_b4fg6")
 StompCylinder = ExtResource("11_jhlki")
+StompParticles = ExtResource("23_ncafl")
 
 [node name="ClapSphereSpawn" type="Node3D" parent="."]
 script = ExtResource("12_rwr57")
 ClapSphere = ExtResource("13_6neo4")
+ClapParticles = ExtResource("26_x0iyg")
 
 [node name="ElbowHitPoint" parent="." node_paths=PackedStringArray("Skeleton") instance=ExtResource("25_ncafl")]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -1.85, -1.475, -0.525)
@@ -746,7 +751,7 @@ Bone = "Foot.R"
 Skeleton = NodePath("../Armature/Skeleton3D")
 
 [node name="KneeHitPoint" parent="." node_paths=PackedStringArray("Skeleton") instance=ExtResource("25_ncafl")]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0.65, -2.5, 0.3)
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 1.2, -2.5, 0.3)
 HP = 25
 Bone = "Thigh.L"
 Skeleton = NodePath("../Armature/Skeleton3D")

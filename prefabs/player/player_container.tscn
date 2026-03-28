@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://didvpehlarxml"]
+[gd_scene load_steps=33 format=3 uid="uid://didvpehlarxml"]
 
 [ext_resource type="Script" uid="uid://dte2ro7bsxaov" path="res://scripts/character/CharacterData.cs" id="1_878l0"]
 [ext_resource type="Script" uid="uid://df846gkbqrlvn" path="res://scripts/character/CharacterController.cs" id="2_828ix"]
@@ -9,9 +9,8 @@
 [ext_resource type="Script" uid="uid://b0phulapw04cv" path="res://scripts/character/Sword.cs" id="5_46u0n"]
 [ext_resource type="Script" uid="uid://nguijowt7053" path="res://scripts/character/LimbChecker.cs" id="5_nx1cc"]
 
-[sub_resource type="Animation" id="Animation_puyl3"]
-resource_name = "idle"
-loop_mode = 1
+[sub_resource type="Animation" id="Animation_qejok"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -49,8 +48,9 @@ tracks/2/keys = {
 "values": [Vector3(1, 1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_qejok"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_puyl3"]
+resource_name = "idle"
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -250,9 +250,68 @@ tracks/1/keys = {
 "values": [Vector3(0, 0, 0), Vector3(-0.785398, 1.5708, 2.0944), Vector3(-2.0944, 1.5708, -3.49066), Vector3(-2.0944, 1.5708, -3.49066), Vector3(0, 0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_ak4ba"]
+resource_name = "charge"
+length = 1.5
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sword:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(1, 0, 0), Vector3(-0.25, 0, -1.5), Vector3(-1.5, 0, 0), Vector3(-1, 0, 0.5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sword:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-1.5708, 3.14159, 0), Vector3(-1.5708, 3.49066, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_t0l7h"]
+resource_name = "charge_swing"
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sword:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.6, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-1, 0, 0.5), Vector3(0, 0, -1.5), Vector3(1.5, 0, 0), Vector3(1.5, 0, 0.25), Vector3(1, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sword:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.6, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-1.5708, 3.49066, 0), Vector3(-1.5708, 0, 0), Vector3(-1.5708, -2.26893, 0), Vector3(-1.5708, -2.79253, 0), Vector3(0, 0, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1jhq6"]
 _data = {
 &"RESET": SubResource("Animation_46u0n"),
+&"charge": SubResource("Animation_ak4ba"),
+&"charge_swing": SubResource("Animation_t0l7h"),
 &"idle": SubResource("Animation_xe0wy"),
 &"sword_swing": SubResource("Animation_nj2e3"),
 &"sword_swing_2": SubResource("Animation_1jhq6")

@@ -9,6 +9,7 @@ public class CharacterStateAir : ICharacterState
     private Vector3 horizontalVelocity;
     private float verticalVelocity;
     private float coyoteTime;
+    private float upDashBuffer;
 
     public CharacterStateAir(CharacterData characterData, Vector3 horizontalVelocity, float verticalVelocity, bool fromJump, float coyoteTime = 0.0f, bool fromChargeJump = false)
     {
@@ -80,9 +81,17 @@ public class CharacterStateAir : ICharacterState
         {
             if (characterData.IsDashing())
                 characterData.Controller.LookAt(characterData.Controller.GlobalPosition + lookAtDir, dashTransform.Basis.Y);
-            else
-                characterData.Controller.LookAt(characterData.Controller.GlobalPosition + lookAtDir, Vector3.Up);
+            else 
+            {
+                if (lookAtDir == Vector3.Up)
+                    characterData.Controller.LookAt(characterData.Controller.GlobalPosition - characterData.CameraController.CameraUpRotation.GlobalBasis.Z, characterData.CameraController.CameraUpRotation.GlobalBasis.Y);
+                else 
+                    characterData.Controller.LookAt(characterData.Controller.GlobalPosition + lookAtDir, Vector3.Up);   
+            }
         }
+
+        upDashBuffer -= delta;
+        upDashBuffer = Mathf.Max(upDashBuffer, 0.0f);
         
         if (characterData.CanDash() && characterData.Controller.DashInput())
         {
@@ -90,13 +99,38 @@ public class CharacterStateAir : ICharacterState
             dashTransform = dashTransform.LookingAt(dashTransform.Origin + dashTransform.Basis.Z, dashTransform.Basis.Y);
             horizontalVelocity = Vector3.Zero;
             verticalVelocity = 0.0f;
+            upDashBuffer = 0.0f;
             characterData.Dash();
         }
-        else if (characterData.CanSwingSword() && characterData.Controller.SwingSwordInput())
+        else if (characterData.CanDash() && characterData.Controller.GroundedJumpInput())
         {
-            characterData.Controller.LookAt(characterData.Controller.GlobalPosition - characterData.CameraController.CameraUpRotation.GlobalBasis.Z, Vector3.Up);
-            horizontalVelocity = Vector3.Zero;
-            characterData.Controller.Sword.Swing();
+            if (upDashBuffer > 0.0f)
+            {
+                dashTransform = characterData.CameraController.CameraUpRotation.GlobalTransform;
+                dashTransform = dashTransform.LookingAt(dashTransform.Origin - Vector3.Up, dashTransform.Basis.Z);
+                horizontalVelocity = Vector3.Zero;
+                verticalVelocity = 0.0f;
+                upDashBuffer = 0.0f;
+                characterData.Dash();
+            }
+            else
+            {
+                upDashBuffer = 0.5f;
+            }
+        }
+        else if (characterData.CanSwingSword())
+        {
+            if (characterData.Controller.ChargeSwordInput())
+            {
+                characterData.Controller.LookAt(characterData.Controller.GlobalPosition - characterData.CameraController.CameraUpRotation.GlobalBasis.Z, Vector3.Up);
+                characterData.Controller.Sword.Charge(delta);
+                horizontalVelocity = Vector3.Zero;
+                upDashBuffer = 0.0f;
+            }
+            else
+            {
+                characterData.Controller.Sword.Swing();
+            }
         }
         
         if (!characterData.IsDashing())

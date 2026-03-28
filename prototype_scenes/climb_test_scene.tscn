@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bk8g6ww5x571i"]
+[gd_scene load_steps=19 format=3 uid="uid://bk8g6ww5x571i"]
 
 [ext_resource type="Script" uid="uid://762odk34n8kn" path="res://scripts/ui/StateLabel.cs" id="1_awone"]
 [ext_resource type="Script" uid="uid://ykvsm1kkb6uj" path="res://scripts/climb/CreateCollisionShape.cs" id="1_dqwrh"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://dj7i8ts6h6d2s" path="res://scripts/ui/DetectLabel.cs" id="5_07aob"]
 [ext_resource type="Script" uid="uid://drqwf5d27s12x" path="res://scripts/ui/GiantHPLabel.cs" id="6_7mi5p"]
 [ext_resource type="Texture2D" uid="uid://cn3xcck2xva54" path="res://textures/texture_09.png" id="6_fdj5p"]
+[ext_resource type="PackedScene" uid="uid://c0dtdw4tsi2e8" path="res://prefabs/ui/fatigue_needle.tscn" id="8_6wvul"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_awone"]
 
@@ -114,6 +115,9 @@ text = "DETECT ZONE: "
 horizontal_alignment = 2
 script = ExtResource("5_07aob")
 Giant = NodePath("../../PillGiant")
+
+[node name="FatigueNeedle" parent="CanvasLayer" node_paths=PackedStringArray("CharacterData") instance=ExtResource("8_6wvul")]
+CharacterData = NodePath("../../PlayerContainer")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_ke55c")

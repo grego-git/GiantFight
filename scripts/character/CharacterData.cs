@@ -136,14 +136,14 @@ public partial class CharacterData : Node3D
                     RelieveFatigue();
                 break;
             case "HANG":
-                //StaminaMeter.FillMeter(-GripDepleteRate * 1.25f * delta);
+                StaminaMeter.FillMeter(-GripDepleteRate * 1.25f * delta);
                 break;
             case "CRAWL":
-                //StaminaMeter.FillMeter(GripDepleteRate * 0.5f * delta);
+                StaminaMeter.FillMeter(GripDepleteRate * 0.5f * delta);
                 break;
             case "CLIMB":
             case "LEDGE":
-                //StaminaMeter.FillMeter(-GripDepleteRate * delta);
+                StaminaMeter.FillMeter(-GripDepleteRate * delta);
                 break;
             case "GRABBED":
                 break;
@@ -192,6 +192,9 @@ public partial class CharacterData : Node3D
         if (IsStunned())
             return false;
 
+        if (Controller.Sword.ChargingMeter())
+            return false;
+        
         if (Controller.Sword.IsSwinging())
             return false;
         
@@ -215,6 +218,9 @@ public partial class CharacterData : Node3D
             return false;
         
         if (IsStunned())
+            return false;
+
+        if (Controller.Sword.ChargingMeter())
             return false;
 
         if (Controller.Sword.IsSwinging())
@@ -242,56 +248,30 @@ public partial class CharacterData : Node3D
         
         return true;
     }
-
-    public bool CanEnterStun(float acceleration)
-    {
-        if (acceleration > AccelerationStunThreshold)
-            return true;
-        
-        return false;
-    }
-
-    public bool CanEnterKnockedBack(float acceleration)
-    {
-        return acceleration > AccelerationKnockBackThreshold;
-    }
-
-    public void TakeDamageFromFall(float fallSpeed)
-    {
-        if (!CanTakeDamage)
-            return;
-        
-        float damage = Mathf.Lerp(0.0f, MaxHealth, Mathf.Clamp((fallSpeed / 25.0f) - 1.0f, 0.0f, 1.0f));
-
-        TakeDamage(damage);
-
-        if (damage > MaxHealth * 0.25f)
-            Stun();
-    }
-
-    public void TakeDamage(float damage)
-    {
-        if (!CanTakeDamage)
-            return;
-        
-        HealthMeter.FillMeter(-damage);
-    }
-
+    
     public void Dash()
     {
         DashMeter.FillToMax();
         DashCooldownMeter.Empty();
+        Controller.Sword.EmptyCharge();
+
         CameraController.Shake(0.125f, 2.0f);
         World.SlowDown(0.5f);
-
-        if (StaminaMeter.IsEmpty())
-            IsFatigued = true;
     }
 
     public void EnterFatigue()
     {
         StaminaMeter.Empty();
+        DashMeter.Empty();
+        Controller.Sword.EmptyCharge();
         IsFatigued = true;
+    }
+
+    public void Stun()
+    {
+        StunMeter.FillToMax();
+        DashMeter.Empty();
+        Controller.Sword.EmptyCharge();
     }
 
     public void RelieveFatigue()
@@ -311,11 +291,6 @@ public partial class CharacterData : Node3D
         }
         
         CanRelieveFatigue = false;
-    }
-
-    public void Stun()
-    {
-        StunMeter.FillToMax();
     }
 
     public string GetState()
