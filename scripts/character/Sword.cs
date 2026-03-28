@@ -90,7 +90,7 @@ public partial class Sword : Node3D
         
         if (chargeMeter.Value > 0.25f)
         {
-            damage = 2 + (int)(chargeMeter.NormalizedFill() * 3.0f);
+            damage = 3 + (int)(chargeMeter.NormalizedFill() * 3.0f);
             anim.Play("charge_swing");
         }
         else 

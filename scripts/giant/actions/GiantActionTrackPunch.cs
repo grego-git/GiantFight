@@ -49,5 +49,6 @@ public class GiantActionTrackPunch : IGiantAction
         complete = true;
         giant.AnimPlayer.AnimationFinished -= AnimationComplete;
         giant.LeftArmIK.Stop();
+        giant.AgroMeter.Empty();
     }
 }

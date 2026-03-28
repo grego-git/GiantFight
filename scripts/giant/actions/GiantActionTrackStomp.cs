@@ -46,5 +46,6 @@ public class GiantActionTrackStomp : IGiantAction
         complete = true;
         giant.AnimPlayer.AnimationFinished -= AnimationComplete;
         giant.LeftLegIK.Stop();
+        giant.AgroMeter.Empty();
     }
 }
