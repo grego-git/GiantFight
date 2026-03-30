@@ -39,6 +39,8 @@ public partial class StompCylinderSpawner : Node3D
             spawnedParticles.GlobalPosition = GlobalPosition;
             spawnedParticles.Start();
 
+            giant.CharacterData.CameraController.Shake(1.0f, 5.0f);
+
             Spawn = false;
         }
     }

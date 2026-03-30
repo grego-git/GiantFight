@@ -352,5 +352,6 @@ public partial class CharacterData : Node3D
     public void Hit()
     {
         HealthMeter.Empty();
+        CameraController.Shake(0.25f, 2.0f);
     }
 }

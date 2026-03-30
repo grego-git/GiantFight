@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://cbnhcgf14nygg"]
+[gd_scene load_steps=56 format=3 uid="uid://cbnhcgf14nygg"]
 
 [ext_resource type="Script" uid="uid://cxbc5aocp4eyw" path="res://scripts/giant/Giant.cs" id="1_54ejs"]
 [ext_resource type="Animation" uid="uid://bk4jchgawo4uh" path="res://models/giants/pill_giant/animations/idle.res" id="2_vqffu"]
@@ -24,9 +24,13 @@
 [ext_resource type="Animation" uid="uid://cilkmfyw633y" path="res://models/giants/pill_giant/animations/attack_leg_right.res" id="14_4rsb0"]
 [ext_resource type="Animation" uid="uid://d2x0pytf3axbc" path="res://models/giants/pill_giant/animations/attack_arm_left.res" id="15_i0f1t"]
 [ext_resource type="Animation" uid="uid://bd4byf6gdsmsa" path="res://models/giants/pill_giant/animations/attack_arm_right.res" id="16_xuk4y"]
+[ext_resource type="Animation" uid="uid://cxu3fcbe3rtsm" path="res://models/giants/pill_giant/animations/slam.res" id="17_b258w"]
 [ext_resource type="PackedScene" uid="uid://xlcff124lcuv" path="res://prefabs/giants/particles/stomp_particles.tscn" id="23_ncafl"]
+[ext_resource type="Script" uid="uid://bb5tg5gglsjh7" path="res://scripts/giant/SlamCylinderSpawner.cs" id="25_31rsb"]
 [ext_resource type="PackedScene" uid="uid://b3y03b005tnj5" path="res://prefabs/giants/giant_hit_point.tscn" id="25_ncafl"]
+[ext_resource type="PackedScene" uid="uid://dmoj302457sms" path="res://prefabs/giants/slam_cylinder.tscn" id="26_g8f6m"]
 [ext_resource type="PackedScene" uid="uid://x5mfva81oeay" path="res://prefabs/giants/particles/clap_particles.tscn" id="26_x0iyg"]
+[ext_resource type="PackedScene" uid="uid://cr7t0wm5jdwaj" path="res://prefabs/giants/particles/slam_particles.tscn" id="27_d0r62"]
 
 [sub_resource type="Skin" id="Skin_0qfme"]
 resource_name = "Skin"
@@ -229,6 +233,30 @@ tracks/11/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("SlamCylinderSpawner:position")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, -4.5, 0)]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("SlamCylinderSpawner:Spawn")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_w4hiy"]
 _data = {
@@ -249,6 +277,7 @@ _data = {
 &"shake_arm_right": ExtResource("10_17afl"),
 &"shake_leg_left": ExtResource("11_4rsb0"),
 &"shake_leg_right": ExtResource("12_i0f1t"),
+&"slam": ExtResource("17_b258w"),
 &"stomp": ExtResource("5_6qws1")
 }
 
@@ -726,6 +755,12 @@ surface_material_override/0 = SubResource("StandardMaterial3D_rpoyi")
 script = ExtResource("10_b4fg6")
 StompCylinder = ExtResource("11_jhlki")
 StompParticles = ExtResource("23_ncafl")
+
+[node name="SlamCylinderSpawner" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.5, 0)
+script = ExtResource("25_31rsb")
+SlamCylinder = ExtResource("26_g8f6m")
+SlamParticles = ExtResource("27_d0r62")
 
 [node name="ClapSphereSpawn" type="Node3D" parent="."]
 script = ExtResource("12_rwr57")

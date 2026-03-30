@@ -50,6 +50,7 @@ public partial class Giant : Node3D
     public AnimationPlayer AnimPlayer { get; set; }
     public GiantProfile GiantProfile { get; set; }
     public Meter AgroMeter { get; set; }
+    public Meter SlamTimer { get; set; }
     public HashSet<string> BonesPlayerIsOn { get; set; }
 
     public int MaxHP { get; private set; }
@@ -79,6 +80,7 @@ public partial class Giant : Node3D
         GiantProfile = JsonConvert.DeserializeObject<GiantProfile>(json);
 
         AgroMeter = new Meter(3.0f);
+        SlamTimer = new Meter(10.0f);
 
         material = (StandardMaterial3D)Mesh.Mesh.SurfaceGetMaterial(0);
         
@@ -140,9 +142,11 @@ public partial class Giant : Node3D
                 {
                     case PlayerDetection.DetectionZoneAreas.NONE:
                     case PlayerDetection.DetectionZoneAreas.DEAD:
+                        SlamTimer.Empty();
                         AgroMeter.FillMeter(-(float)delta);
                         break;
-                    case PlayerDetection.DetectionZoneAreas.ON_GIANT:                        
+                    case PlayerDetection.DetectionZoneAreas.ON_GIANT:  
+                        SlamTimer.Empty();                      
                         string shakeAnimation = GetShakeAnimation(BonesPlayerIsOn);
                         string attackAnimation = GetAttackAnimation(BonesPlayerIsOn);
 
@@ -175,18 +179,32 @@ public partial class Giant : Node3D
                         }
                         break;
                     case PlayerDetection.DetectionZoneAreas.FLOOR:
+                        SlamTimer.Empty();
                         CurrentAction = new GiantActionTrackStomp(this);
                         CurrentAction.Init();
                         break;
                     case PlayerDetection.DetectionZoneAreas.MIDDLE:
+                        SlamTimer.Empty();
                         CurrentAction = new GiantActionTrackClap(this);
                         CurrentAction.Init();
                         break;
                     case PlayerDetection.DetectionZoneAreas.TOP:
+                        SlamTimer.Empty();
                         CurrentAction = new GiantActionTrackPunch(this);
                         CurrentAction.Init();
                         break;
+                    case PlayerDetection.DetectionZoneAreas.NEGATE:
+                        SlamTimer.FillMeter((float)delta);
+
+                        if (SlamTimer.IsFilled())
+                        {
+                            SlamTimer.Empty();
+                            CurrentAction = new GiantActionPlayAnimation(this, GiantProfile.SlamAnimation);
+                            CurrentAction.Init();
+                        }
+                        break;
                     default:
+                        SlamTimer.Empty();
                         AgroMeter.FillMeter((float)delta);
                         break;
                 }
@@ -195,6 +213,11 @@ public partial class Giant : Node3D
                 switch (PlayerDetection.PlayerDetectionZone)
                 {
                     case PlayerDetection.DetectionZoneAreas.NONE:
+                        break;
+                    case PlayerDetection.DetectionZoneAreas.NEGATE:
+                        AgroMeter.FillMeter((float)delta);
+                        SlamTimer.FillMeter((float)delta);
+                        break;
                     default:
                         AgroMeter.FillMeter((float)delta);
                         break;

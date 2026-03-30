@@ -1,15 +1,15 @@
 using Godot;
 using System;
 
-public partial class ClapSphereSpawner : Node3D
+public partial class SlamCylinderSpawner : Node3D
 {
     [Export]
     public bool Spawn { get; set; }
 
     [Export]
-    public PackedScene ClapSphere;
+    public PackedScene SlamCylinder;
     [Export]
-    public PackedScene ClapParticles;
+    public PackedScene SlamParticles;
 
     private Giant giant;
 
@@ -24,21 +24,20 @@ public partial class ClapSphereSpawner : Node3D
     {
         base._PhysicsProcess(delta);
         
-        GlobalPosition = giant.Fists[0].GlobalPosition.Lerp(giant.Fists[1].GlobalPosition, 0.5f);
+        GlobalPosition = giant.LeftLegIKTarget.GlobalPosition + (Vector3.Down  * giant.StompPadding);
 
         if (Spawn)
         {
-            var spawnedSphere = (Node3D)ClapSphere.Instantiate();
+            var spawnedCylinder = (Node3D)SlamCylinder.Instantiate();
             
-            giant.AddChild(spawnedSphere);
-            spawnedSphere.GlobalPosition = GlobalPosition;
+            giant.AddChild(spawnedCylinder);
+            spawnedCylinder.GlobalPosition = GlobalPosition;
             
-            var spawnedParticles = (KillOneShotParticle)ClapParticles.Instantiate();
+            var spawnedParticles = (KillOneShotParticle)SlamParticles.Instantiate();
 
             giant.GetParent().AddChild(spawnedParticles);
             spawnedParticles.GlobalPosition = GlobalPosition;
             spawnedParticles.Start();
-            spawnedParticles.LookAt(giant.Fists[0].GlobalPosition);
 
             giant.CharacterData.CameraController.Shake(1.0f, 5.0f);
 
