@@ -11,7 +11,8 @@ public class Constants
         GROUND,
         GIANT_LIMB,
         GIANT_HITBOX,
-        GIANT_HURTBOX
+        GIANT_HURTBOX,
+        RUBBLE
     }
 
     public const bool DEBUG = false;

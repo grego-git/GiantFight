@@ -75,7 +75,7 @@ public class CharacterStateCrawl : ICharacterState
         {
             return new CharacterStateClimb(characterData, faceOn);
         }
-        else if (characterData.HasLostGrip() || !characterData.Controller.GripInput() || !validCrawlFace)
+        else if (characterData.HasLostGrip() || (!characterData.IsStunned() && !characterData.Controller.GripInput()) || !validCrawlFace)
         {
             return new CharacterStateAir(characterData, Vector3.Zero, 0.0f, false);
         }

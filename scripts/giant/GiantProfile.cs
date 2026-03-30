@@ -10,4 +10,5 @@ public class GiantProfile
     public string MidAnimation { get; set; }
     public string TopAnimation { get; set; }
     public string IdleAnimation { get; set; }
+    public string ExternalAttackAnimation { get; set; }
 }

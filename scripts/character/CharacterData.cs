@@ -255,7 +255,7 @@ public partial class CharacterData : Node3D
         DashCooldownMeter.Empty();
         Controller.Sword.EmptyCharge();
 
-        CameraController.Shake(0.125f, 2.0f);
+        CameraController.Shake(DashMeter.MaxValue, 3.0f);
         World.SlowDown(0.5f);
     }
 
@@ -352,6 +352,6 @@ public partial class CharacterData : Node3D
     public void Hit()
     {
         HealthMeter.Empty();
-        CameraController.Shake(0.25f, 2.0f);
+        CameraController.Shake(1.0f, 3.0f);
     }
 }

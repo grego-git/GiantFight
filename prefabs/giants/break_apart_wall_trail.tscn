@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://4akc6iql5kwk"]
+
+[ext_resource type="Script" uid="uid://wu0burd3hmsd" path="res://scripts/giant/BreakApartWallTrail.cs" id="1_tbeab"]
+[ext_resource type="PackedScene" uid="uid://bclmyeyh7vbct" path="res://prefabs/giants/break_apart_wall.tscn" id="2_7bn4e"]
+
+[node name="BreakApartWallTrail" type="Node3D"]
+script = ExtResource("1_tbeab")
+Increment = 20.0
+BreakApartWallScene = ExtResource("2_7bn4e")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+target_position = Vector3(0, -2, 0)
+collision_mask = 32

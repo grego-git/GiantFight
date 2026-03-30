@@ -23,7 +23,7 @@ background_mode = 2
 sky = SubResource("Sky_dqwrh")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_klrrp"]
-size = Vector3(500, 1, 500)
+size = Vector3(1000, 1, 1000)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_fdj5p"]
 
@@ -147,5 +147,5 @@ CharacterData = NodePath("../PlayerContainer")
 Giant = NodePath("../PillGiant")
 
 [node name="PlayerContainer" parent="." node_paths=PackedStringArray("World") instance=ExtResource("2_gtjjn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 150)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 200)
 World = NodePath("../World")

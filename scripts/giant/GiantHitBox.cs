@@ -30,7 +30,7 @@ public partial class GiantHitBox : Area3D
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
-        mesh.Visible = true;
+        mesh.Visible = Constants.DEBUG;
     }
 
     public void HitSomething(Node3D body)

@@ -52,22 +52,24 @@ public partial class PlayerDetection : Node3D
                 {
                     PlayerDetectionZone = (DetectionZoneAreas)i;
                     PlayerPosition = ((Node3D)DetectionZones[i].GetCollider(0)).GlobalPosition;
-
-                    Vector3 flatPlayerPosition = Utils.GetFlatSpatialVector(PlayerPosition, GlobalPosition.Y);
-                    Vector3 toPlayer = flatPlayerPosition - GlobalPosition;
-
-                    FacingPlayer = GlobalBasis.Z.Normalized().AngleTo(toPlayer.Normalized()) < Mathf.DegToRad(15.0f);
-
-                    DistanceToPlayer = toPlayer.Length();
-                    AngleToPlayer = Vector3.Back.SignedAngleTo(toPlayer.Normalized(), Vector3.Up);
-
-                    if (AngleToPlayer < 0.0f)
-                        AngleToPlayer = (2.0f * Mathf.Pi) + AngleToPlayer;
-                    
                     characterData.InGiantProximity = true;
                     break;
                 }
             }
+
+            if (PlayerDetectionZone == DetectionZoneAreas.NONE)
+                PlayerPosition = characterData.Controller.GlobalPosition;
+
+            Vector3 flatPlayerPosition = Utils.GetFlatSpatialVector(PlayerPosition, GlobalPosition.Y);
+            Vector3 toPlayer = flatPlayerPosition - GlobalPosition;
+
+            FacingPlayer = GlobalBasis.Z.Normalized().AngleTo(toPlayer.Normalized()) < Mathf.DegToRad(15.0f);
+
+            DistanceToPlayer = toPlayer.Length();
+            AngleToPlayer = Vector3.Back.SignedAngleTo(toPlayer.Normalized(), Vector3.Up);
+
+            if (AngleToPlayer < 0.0f)
+                AngleToPlayer = (2.0f * Mathf.Pi) + AngleToPlayer;
         }
     }
 }

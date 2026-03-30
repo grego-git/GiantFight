@@ -28,12 +28,18 @@ public class GiantActionPlayAnimation : IGiantAction
 
     public void Update(float delta)
     {
-        
+        if (giant.PlayerDetection.PlayerDetectionZone != PlayerDetection.DetectionZoneAreas.NEGATE &&
+            giant.PlayerDetection.PlayerDetectionZone != PlayerDetection.DetectionZoneAreas.ON_GIANT && 
+            giant.TrackPlayer)
+        {
+            giant.RotateTowardsPoint(delta, giant.PlayerDetection.PlayerPosition);
+        }
     }
 
     public void AnimationComplete(StringName animation)
     {
         complete = true;
         giant.AnimPlayer.AnimationFinished -= AnimationComplete;
+        giant.AgroMeter.Empty();
     }
 }

@@ -140,13 +140,28 @@ public partial class Giant : Node3D
             case State.DETERMINING:
                 switch (PlayerDetection.PlayerDetectionZone)
                 {
+                    case PlayerDetection.DetectionZoneAreas.NEGATE:
+                        SlamTimer.FillMeter((float)delta);
+
+                        if (SlamTimer.IsFilled())
+                        {
+                            SlamTimer.Empty();
+                            CurrentAction = new GiantActionPlayAnimation(this, GiantProfile.SlamAnimation);
+                            CurrentAction.Init();
+                        }
+                        break;
                     case PlayerDetection.DetectionZoneAreas.NONE:
-                    case PlayerDetection.DetectionZoneAreas.DEAD:
                         SlamTimer.Empty();
-                        AgroMeter.FillMeter(-(float)delta);
+                        AgroMeter.FillMeter((float)delta);
+
+                        if (AgroMeter.IsFilled())
+                        {
+                            CurrentAction = new GiantActionPlayAnimation(this, GiantProfile.ExternalAttackAnimation);
+                            CurrentAction.Init();
+                        }
                         break;
                     case PlayerDetection.DetectionZoneAreas.ON_GIANT:  
-                        SlamTimer.Empty();                      
+                        SlamTimer.Empty();
                         string shakeAnimation = GetShakeAnimation(BonesPlayerIsOn);
                         string attackAnimation = GetAttackAnimation(BonesPlayerIsOn);
 
@@ -193,31 +208,14 @@ public partial class Giant : Node3D
                         CurrentAction = new GiantActionTrackPunch(this);
                         CurrentAction.Init();
                         break;
-                    case PlayerDetection.DetectionZoneAreas.NEGATE:
-                        SlamTimer.FillMeter((float)delta);
-
-                        if (SlamTimer.IsFilled())
-                        {
-                            SlamTimer.Empty();
-                            CurrentAction = new GiantActionPlayAnimation(this, GiantProfile.SlamAnimation);
-                            CurrentAction.Init();
-                        }
-                        break;
-                    default:
+                    case PlayerDetection.DetectionZoneAreas.DEAD:
                         SlamTimer.Empty();
-                        AgroMeter.FillMeter((float)delta);
                         break;
                 }
                 break;
             case State.ACTION:
                 switch (PlayerDetection.PlayerDetectionZone)
                 {
-                    case PlayerDetection.DetectionZoneAreas.NONE:
-                        break;
-                    case PlayerDetection.DetectionZoneAreas.NEGATE:
-                        AgroMeter.FillMeter((float)delta);
-                        SlamTimer.FillMeter((float)delta);
-                        break;
                     default:
                         AgroMeter.FillMeter((float)delta);
                         break;

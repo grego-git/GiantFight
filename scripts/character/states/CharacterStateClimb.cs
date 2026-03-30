@@ -95,7 +95,7 @@ public class CharacterStateClimb : ICharacterState
         {
             return new CharacterStateHang(characterData, faceOn);
         }
-        else if (characterData.HasLostGrip() || !characterData.Controller.GripInput() || !validClimbFace)
+        else if (characterData.HasLostGrip() || (!characterData.IsStunned() && !characterData.Controller.GripInput()) || !validClimbFace)
         {
             return new CharacterStateAir(characterData, Vector3.Zero, 0.0f, false);
         }

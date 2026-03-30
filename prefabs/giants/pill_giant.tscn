@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://cbnhcgf14nygg"]
+[gd_scene load_steps=59 format=3 uid="uid://cbnhcgf14nygg"]
 
 [ext_resource type="Script" uid="uid://cxbc5aocp4eyw" path="res://scripts/giant/Giant.cs" id="1_54ejs"]
 [ext_resource type="Animation" uid="uid://bk4jchgawo4uh" path="res://models/giants/pill_giant/animations/idle.res" id="2_vqffu"]
@@ -25,12 +25,15 @@
 [ext_resource type="Animation" uid="uid://d2x0pytf3axbc" path="res://models/giants/pill_giant/animations/attack_arm_left.res" id="15_i0f1t"]
 [ext_resource type="Animation" uid="uid://bd4byf6gdsmsa" path="res://models/giants/pill_giant/animations/attack_arm_right.res" id="16_xuk4y"]
 [ext_resource type="Animation" uid="uid://cxu3fcbe3rtsm" path="res://models/giants/pill_giant/animations/slam.res" id="17_b258w"]
+[ext_resource type="Animation" uid="uid://dxfkr7qla4skf" path="res://models/giants/pill_giant/animations/external_attack.res" id="18_kw77t"]
 [ext_resource type="PackedScene" uid="uid://xlcff124lcuv" path="res://prefabs/giants/particles/stomp_particles.tscn" id="23_ncafl"]
 [ext_resource type="Script" uid="uid://bb5tg5gglsjh7" path="res://scripts/giant/SlamCylinderSpawner.cs" id="25_31rsb"]
 [ext_resource type="PackedScene" uid="uid://b3y03b005tnj5" path="res://prefabs/giants/giant_hit_point.tscn" id="25_ncafl"]
 [ext_resource type="PackedScene" uid="uid://dmoj302457sms" path="res://prefabs/giants/slam_cylinder.tscn" id="26_g8f6m"]
 [ext_resource type="PackedScene" uid="uid://x5mfva81oeay" path="res://prefabs/giants/particles/clap_particles.tscn" id="26_x0iyg"]
 [ext_resource type="PackedScene" uid="uid://cr7t0wm5jdwaj" path="res://prefabs/giants/particles/slam_particles.tscn" id="27_d0r62"]
+[ext_resource type="Script" uid="uid://62urb04xfll4" path="res://scripts/giant/BreakApartWallTrailSpawner.cs" id="32_1pmgu"]
+[ext_resource type="PackedScene" uid="uid://4akc6iql5kwk" path="res://prefabs/giants/break_apart_wall_trail.tscn" id="33_vqy42"]
 
 [sub_resource type="Skin" id="Skin_0qfme"]
 resource_name = "Skin"
@@ -257,6 +260,30 @@ tracks/13/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("BreakApartWallTrailSpawner:position")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("BreakApartWallTrailSpawner:Spawn")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_w4hiy"]
 _data = {
@@ -270,6 +297,7 @@ _data = {
 &"attack_leg_left": ExtResource("13_17afl"),
 &"attack_leg_right": ExtResource("14_4rsb0"),
 &"clap": ExtResource("6_w4hiy"),
+&"external_attack": ExtResource("18_kw77t"),
 &"idle": ExtResource("2_vqffu"),
 &"punch": ExtResource("7_rpoyi"),
 &"shake": ExtResource("8_3h82v"),
@@ -766,6 +794,10 @@ SlamParticles = ExtResource("27_d0r62")
 script = ExtResource("12_rwr57")
 ClapSphere = ExtResource("13_6neo4")
 ClapParticles = ExtResource("26_x0iyg")
+
+[node name="BreakApartWallTrailSpawner" type="Node3D" parent="."]
+script = ExtResource("32_1pmgu")
+TrailScene = ExtResource("33_vqy42")
 
 [node name="ElbowHitPoint" parent="." node_paths=PackedStringArray("Skeleton") instance=ExtResource("25_ncafl")]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -1.85, -1.475, -0.525)

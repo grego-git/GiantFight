@@ -101,5 +101,6 @@
 	"FloorAnimation": "pill_giant/stomp",
 	"MidAnimation": "pill_giant/clap",
 	"TopAnimation": "pill_giant/punch",
-	"IdleAnimation": "pill_giant/idle"
+	"IdleAnimation": "pill_giant/idle",
+	"ExternalAttackAnimation": "pill_giant/external_attack"
 }
