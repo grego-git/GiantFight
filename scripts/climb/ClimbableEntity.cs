@@ -17,6 +17,7 @@ public partial class ClimbableEntity : StaticBody3D
     public string BoneHit { get; set; }
     public Dictionary<string, string[]> StunBonesPerAnimation { get; set; }
     public string AnimationLibrary { get; set; }
+    public bool Destroyed { get; protected set; }
     public MeshInstance3D MeshInstance { get; private set; }
     public Dictionary<int, int> EdgeFaceDicitonary { get; private set; }
     public Dictionary<int, int> CounterpartEdges { get; private set; }
@@ -100,14 +101,9 @@ public partial class ClimbableEntity : StaticBody3D
         return meshDataTool.GetEdgeFaces(faceId);
     }
 
-    public void Stabbed(float damage)
-    {
-        
-    }
-
     public virtual void Destroy()
     {
-        ((Node3D)GetParent()).Visible = false;
+        Destroyed = true;
     }
 
     public virtual Vector3 GetWorldFaceNormal(int faceId)

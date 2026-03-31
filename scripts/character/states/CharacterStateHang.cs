@@ -72,11 +72,11 @@ public class CharacterStateHang : ICharacterState
             Vector3 horizontalVelocity = Utils.GetFlatDirectionalVector(climbVelocity) * characterData.ClimbSpeed;
             return new CharacterStateAir(characterData, horizontalVelocity, -characterData.JumpSpeed, false, fromChargeJump: true);
         }
-        else if (faceOn.ChangeToClimb)
+        else if (!faceOn.ClimbableEntity.Destroyed && faceOn.ChangeToClimb)
         {
             return new CharacterStateClimb(characterData, faceOn);
         }
-        else if (characterData.HasLostGrip() || (!characterData.IsStunned() && !characterData.Controller.GripInput()) || !validHangFace)
+        else if (faceOn.ClimbableEntity.Destroyed || characterData.HasLostGrip() || (!characterData.IsStunned() && !characterData.Controller.GripInput()) || !validHangFace)
         {
             return new CharacterStateAir(characterData, Vector3.Zero, 0.0f, false);
         }

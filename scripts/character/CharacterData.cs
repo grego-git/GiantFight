@@ -77,6 +77,7 @@ public partial class CharacterData : Node3D
         CurrentCharacterState = new CharacterStateGrounded(this, Vector3.Zero);
     
         Controller.Hit += Hit;
+        Controller.Sword.HitSomething += HitSomething;
         
         Controller.Feet.Visible = Constants.DEBUG;
     }
@@ -84,9 +85,6 @@ public partial class CharacterData : Node3D
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
-
-        //if (Controller.DebugInput())
-        //    Debug = !Debug;
         
         FillMeters((float)delta);
         ChangeState();
@@ -255,7 +253,7 @@ public partial class CharacterData : Node3D
         DashCooldownMeter.Empty();
         Controller.Sword.EmptyCharge();
 
-        CameraController.Shake(DashMeter.MaxValue, 3.0f);
+        CameraController.Shake(DashMeter.MaxValue, 4.0f);
         World.SlowDown(0.5f);
     }
 
@@ -352,6 +350,11 @@ public partial class CharacterData : Node3D
     public void Hit()
     {
         HealthMeter.Empty();
-        CameraController.Shake(1.0f, 3.0f);
+        CameraController.Shake(1.0f, 6.0f);
+    }
+
+    public void HitSomething()
+    {
+        CameraController.Shake(0.25f, (float)Controller.Sword.Damage * 2.0f);
     }
 }

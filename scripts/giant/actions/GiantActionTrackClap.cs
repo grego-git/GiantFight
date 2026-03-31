@@ -31,20 +31,18 @@ public class GiantActionTrackClap : IGiantAction
     public void Update(float delta)
     {
         if ((giant.PlayerDetection.PlayerDetectionZone == PlayerDetection.DetectionZoneAreas.MIDDLE || giant.PlayerDetection.PlayerDetectionZone == PlayerDetection.DetectionZoneAreas.TOP) && giant.TrackPlayer)
-            clapTarget = giant.PlayerDetection.PlayerPosition;
+            clapTarget = giant.PlayerDetection.PlayerPosition + (Vector3.Down * 15.0f);
 
         if (giant.PlayerDetection.PlayerDetectionZone != PlayerDetection.DetectionZoneAreas.NEGATE &&
             giant.PlayerDetection.PlayerDetectionZone != PlayerDetection.DetectionZoneAreas.ON_GIANT && 
             giant.TrackPlayer)
-            rotatePoint = giant.PlayerDetection.PlayerPosition;
+            rotatePoint = giant.PlayerDetection.PlayerPosition + (Vector3.Down * 15.0f);
         
         giant.RotateTowardsPoint(delta, rotatePoint);
         giant.LeftArmIKTarget.GlobalPosition = clapTarget + 
-            (Vector3.Down * 15.0f) + 
             (giant.GlobalBasis.X.Normalized() * giant.StompPadding);
         
-        giant.RightArmIKTarget.GlobalPosition = clapTarget + 
-            (Vector3.Down * 15.0f) - 
+        giant.RightArmIKTarget.GlobalPosition = clapTarget - 
             (giant.GlobalBasis.X.Normalized() * giant.StompPadding);
     }
 

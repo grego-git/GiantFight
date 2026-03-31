@@ -3,6 +3,9 @@ using System;
 
 public partial class Sword : Node3D
 {
+    [Signal]
+    public delegate void HitSomethingEventHandler();
+
     public enum State
     {
         IDLE,
@@ -14,10 +17,11 @@ public partial class Sword : Node3D
     public AnimationPlayer anim { get; set; }
 
     public State CurrentState { get; set; }
+    
+    public int Damage { get; private set; }
 
     private Meter chargeMeter;
     private Area3D swordBox;
-    private int damage;
     private bool hit;
 
     private string[] SWING_ANIMATIONS =
@@ -90,12 +94,12 @@ public partial class Sword : Node3D
         
         if (chargeMeter.Value > 0.25f)
         {
-            damage = 3 + (int)(chargeMeter.NormalizedFill() * 3.0f);
+            Damage = 3 + (int)(chargeMeter.NormalizedFill() * 3.0f);
             anim.Play("charge_swing");
         }
         else 
         {
-            damage = 1;
+            Damage = 1;
             anim.Play(SWING_ANIMATIONS[swing_index]);
             swing_index = swing_index + 1 == SWING_ANIMATIONS.Length ? 0 : (swing_index + 1);
         }
@@ -120,7 +124,8 @@ public partial class Sword : Node3D
         if (node.Name.ToString().ToLower().Contains("hitpoint"))
         {
             GiantHitPoint giantHitPoint = (GiantHitPoint)node;
-            giantHitPoint.Hit(damage);
+            giantHitPoint.Hit(Damage);
+            EmitSignal("HitSomething");
             hit = true;
         }
     }

@@ -15,7 +15,6 @@ public partial class ClimbableAnimatedEntity : ClimbableEntity
     private ConcavePolygonShape3D shape;
 
     private float timeSinceCreated;
-    private bool destroyed;
 
     public override void _Ready()
     {
@@ -54,7 +53,7 @@ public partial class ClimbableAnimatedEntity : ClimbableEntity
 
     public void Update()
     {
-        if (destroyed)
+        if (Destroyed)
             return;
         
         if (Constants.DEBUG && collidableFaces != null && collidableFaces.Count > 0)
@@ -84,7 +83,7 @@ public partial class ClimbableAnimatedEntity : ClimbableEntity
 
     public void GetCollidableFaces(List<string> bones)
     {
-        if (destroyed)
+        if (Destroyed)
             return;
         
         foreach (var face in faces)
@@ -102,7 +101,7 @@ public partial class ClimbableAnimatedEntity : ClimbableEntity
 
     public void CreateShape()
     {
-        if (!destroyed && collidableFaces != null && collidableFaces.Count > 0)
+        if (!Destroyed && collidableFaces != null && collidableFaces.Count > 0)
         {
             Utils.UpdateAnimatedEntiyFaces(meshDataTool, Skeleton, MeshInstance.Skin, faces, timeSinceCreated, memoizedFaces);
             Vector3[] verts = new Vector3[collidableFaces.Count * 3];
@@ -124,9 +123,13 @@ public partial class ClimbableAnimatedEntity : ClimbableEntity
 
     public override void Destroy()
     {
-        destroyed = true;
+        Destroyed = true;
+
+        ResetCollidableFaces();
+        CreateShape();
         
-        ((Node3D)GetParent()).Visible = false;
+        ImmediateMesh mesh = (ImmediateMesh)debugMesh.Mesh;
+        mesh.ClearSurfaces();
     }
 
     public override Vector3 GetWorldFaceNormal(int faceId)

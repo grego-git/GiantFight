@@ -95,45 +95,41 @@ public partial class Giant : Node3D
     {
         base._PhysicsProcess(delta);
 
-        BonesPlayerIsOn = GetBonesPlayerIsOn();
-
+        bool dead;
+        
         CurrentHP = 0;
 
         foreach (var hitPoint in HitPoints)
             CurrentHP += hitPoint.HP;
 
-        if (PlayerDetection.PlayerDetectionZone == PlayerDetection.DetectionZoneAreas.ON_GIANT)
+        dead = CurrentHP <= 0;
+
+        if (!dead) 
         {
-            material.AlbedoColor = new Color(1.0f, 1.0f, 1.0f, 0.5f);
+            BonesPlayerIsOn = GetBonesPlayerIsOn();
+
+            if (PlayerDetection.PlayerDetectionZone == PlayerDetection.DetectionZoneAreas.ON_GIANT)
+                material.AlbedoColor = new Color(1.0f, 1.0f, 1.0f, 0.5f);
+            else
+                material.AlbedoColor = Colors.White;
+
+            if (StunPlayer && !string.IsNullOrEmpty(AnimPlayer.CurrentAnimation) && BonesPlayerIsOn != null && BonesPlayerIsOn.Count > 0)
+                StunPlayerOnGiant();
+
+            PlayerDetection.Update(CharacterData, BonesPlayerIsOn);
         }
         else
         {
-            material.AlbedoColor = Colors.White;
-        }
-
-        if (StunPlayer && !string.IsNullOrEmpty(AnimPlayer.CurrentAnimation) && BonesPlayerIsOn != null && BonesPlayerIsOn.Count > 0)
-        {
-            foreach (var stunBones in GiantProfile.StunBones)
+            if (CurrentAction.GetType() != typeof(GiantActionDead))
             {
-                bool stunnedPlayer = false;
-
-                if (AnimPlayer.CurrentAnimation == stunBones.Key)
-                {
-                    foreach (var boneOn in BonesPlayerIsOn)
-                    {
-                        if (stunBones.Value.Contains(boneOn))
-                            CharacterData.Stun();
-                            stunnedPlayer = true;
-                            break;
-                    }
-                }
-
-                if (stunnedPlayer)
-                    break;
+                CurrentAction = new GiantActionDead(this, GiantProfile.DeadAnimation);
+                CurrentAction.Init();
             }
+
+            material.AlbedoColor = Colors.White;
+
+            CharacterData.InGiantProximity = false;
         }
-        
-        PlayerDetection.Update(CharacterData, BonesPlayerIsOn);
 
         switch (CurrentState)
         {
@@ -236,12 +232,6 @@ public partial class Giant : Node3D
         
     }
 
-    public void RotateTowardsPlayer(float delta)
-    {
-        yRot = (float)Utils.MoveTowardsAngle(yRot, PlayerDetection.AngleToPlayer, TurnSpeed * delta);
-        GlobalRotation = new Vector3(GlobalRotation.X, yRot, GlobalRotation.Z);
-    }
-
     public void RotateTowardsPoint(float delta, Vector3 point)
     {
         Vector3 toPoint = Utils.GetFlatSpatialVector(point, GlobalPosition.Y) - GlobalPosition;
@@ -249,6 +239,28 @@ public partial class Giant : Node3D
 
         yRot = (float)Utils.MoveTowardsAngle(yRot, angleToPoint, TurnSpeed * delta);
         GlobalRotation = new Vector3(GlobalRotation.X, yRot, GlobalRotation.Z);
+    }
+
+    private void StunPlayerOnGiant()
+    {
+        foreach (var stunBones in GiantProfile.StunBones)
+        {
+            bool stunnedPlayer = false;
+
+            if (AnimPlayer.CurrentAnimation == stunBones.Key)
+            {
+                foreach (var boneOn in BonesPlayerIsOn)
+                {
+                    if (stunBones.Value.Contains(boneOn))
+                        CharacterData.Stun();
+                        stunnedPlayer = true;
+                        break;
+                }
+            }
+
+            if (stunnedPlayer)
+                break;
+        }
     }
     
     private HashSet<string> GetBonesPlayerIsOn()
