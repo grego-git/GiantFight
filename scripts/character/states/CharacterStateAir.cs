@@ -52,7 +52,7 @@ public class CharacterStateAir : ICharacterState
     {
         Vector3 velocity;
 
-        if (characterData.CanControl() && verticalVelocity <= 0.0f)
+        if (characterData.CanControl())
         {
             horizontalVelocity = characterData.Controller.CalculateMoveVelocity(moveDirection, Vector3.Up, characterData.CameraController.CameraUpRotation.GlobalBasis.Z, characterData.Speed);
             velocity = horizontalVelocity + (verticalVelocity * Vector3.Up);
