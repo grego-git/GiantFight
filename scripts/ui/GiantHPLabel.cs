@@ -6,9 +6,9 @@ public partial class GiantHPLabel : RichTextLabel
     [Export]
     public Giant Giant { get; set; }
 
-    public override void _PhysicsProcess(double delta)
+    public override void _Process(double delta)
     {
-        base._PhysicsProcess(delta);
+        base._Process(delta);
 
         Text = "GIANT HP: " + Giant.CurrentHP;
     }

@@ -16,6 +16,8 @@ public partial class Giant : Node3D
     [Export]
     public CharacterData CharacterData { get; set; }
     [Export]
+    public AudioStreamPlayer3D StompSound { get; set; }
+    [Export]
     public string GiantJson { get; set; }
     [Export]
     public float TurnSpeed { get; set; }
@@ -25,6 +27,8 @@ public partial class Giant : Node3D
     public bool TrackPlayer { get; set; }
     [Export]
     public bool StunPlayer { get; set; }
+    [Export]
+    public bool ShakeCamera { get; set; }
 
     [Export]
     public ClimbableAnimatedEntity[] ClimbAnimatedEntities { get; set; }
@@ -117,6 +121,14 @@ public partial class Giant : Node3D
                 StunPlayerOnGiant();
 
             PlayerDetection.Update(CharacterData, BonesPlayerIsOn);
+
+            if (ShakeCamera)
+            {
+                if (BonesPlayerIsOn != null && BonesPlayerIsOn.Count > 0)
+                    CharacterData.CameraController.Shake(1.0f, 5.0f);
+                
+                ShakeCamera = false;
+            }
         }
         else
         {

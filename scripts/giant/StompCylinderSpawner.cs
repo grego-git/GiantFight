@@ -5,6 +5,8 @@ public partial class StompCylinderSpawner : Node3D
 {
     [Export]
     public bool Spawn { get; set; }
+    [Export]
+    public AudioStreamPlayer3D Sound { get; set; }
 
     [Export]
     public PackedScene StompCylinder;
@@ -25,6 +27,7 @@ public partial class StompCylinderSpawner : Node3D
         base._PhysicsProcess(delta);
         
         GlobalPosition = giant.LeftLegIKTarget.GlobalPosition + (Vector3.Down  * giant.StompPadding);
+        Sound.GlobalPosition = GlobalPosition;
 
         if (Spawn)
         {

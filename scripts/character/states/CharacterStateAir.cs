@@ -95,12 +95,23 @@ public class CharacterStateAir : ICharacterState
         
         if (characterData.CanDash() && characterData.Controller.DashInput())
         {
+            Vector3 dashDir;
             dashTransform = characterData.CameraController.CameraRightRotation.GlobalTransform;
-            dashTransform = dashTransform.LookingAt(dashTransform.Origin + dashTransform.Basis.Z, dashTransform.Basis.Y);
+
+            if (horizontalVelocity != Vector3.Zero) 
+            {
+                Transform3D flatCameraTransform = characterData.CameraController.CameraUpRotation.GlobalTransform;
+                float angleToHorizontalVel = flatCameraTransform.Basis.Z.SignedAngleTo(-horizontalVelocity.Normalized(), flatCameraTransform.Basis.Y.Normalized());
+                dashDir = dashTransform.Basis.Z.Rotated(dashTransform.Basis.Y.Normalized(), angleToHorizontalVel);
+            }
+            else 
+                dashDir = dashTransform.Basis.Z;
+
+            dashTransform = dashTransform.LookingAt(dashTransform.Origin + dashDir, dashTransform.Basis.Y);
             horizontalVelocity = Vector3.Zero;
             verticalVelocity = 0.0f;
             upDashBuffer = 0.0f;
-            characterData.Dash();
+            characterData.Dash(dashTransform.Basis.Z);
         }
         else if (characterData.CanDash() && characterData.Controller.GroundedJumpInput())
         {
@@ -111,7 +122,7 @@ public class CharacterStateAir : ICharacterState
                 horizontalVelocity = Vector3.Zero;
                 verticalVelocity = 0.0f;
                 upDashBuffer = 0.0f;
-                characterData.Dash();
+                characterData.Dash(dashTransform.Basis.Z);
             }
             else
             {

@@ -247,13 +247,20 @@ public partial class CharacterData : Node3D
         return true;
     }
     
-    public void Dash()
+    public void Dash(Vector3 dir)
     {
         DashMeter.FillToMax();
         DashCooldownMeter.Empty();
         Controller.Sword.EmptyCharge();
+        Controller.DashSound.Play();
+        
+        var wavesInstantiated = (DashWave)Controller.WaveParticles.Instantiate();
 
-        CameraController.Shake(DashMeter.MaxValue, 4.0f);
+        GetParent().AddChild(wavesInstantiated);
+        wavesInstantiated.GlobalPosition = Controller.GlobalPosition;
+        wavesInstantiated.LookAt(wavesInstantiated.GlobalPosition + dir, Controller.GlobalBasis.Y);
+
+        CameraController.Shake(DashMeter.MaxValue, 2.0f);
         World.SlowDown(0.5f);
     }
 
@@ -281,11 +288,14 @@ public partial class CharacterData : Node3D
         {
             ShakeStaminaMeterTime = 1.0f;
             StaminaMeter.FillMeter(7.5f);
+            Controller.BoostStaminaParticles.Emitting = true;
+            Controller.BoostSound.Play();
         }
-        else if (Mathf.Abs(needlePoint) < 0.75f)
+        else if (Mathf.Abs(needlePoint) < 0.5f)
         {
             ShakeStaminaMeterTime = 0.5f;
             StaminaMeter.FillMeter(5.0f);
+            Controller.SmallBoostSound.Play();
         }
         
         CanRelieveFatigue = false;
@@ -355,6 +365,7 @@ public partial class CharacterData : Node3D
 
     public void HitSomething()
     {
+        Controller.PunchSound.Play();
         CameraController.Shake(0.25f, (float)Controller.Sword.Damage * 2.0f);
     }
 }

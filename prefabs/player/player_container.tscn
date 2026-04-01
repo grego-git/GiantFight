@@ -1,13 +1,19 @@
-[gd_scene load_steps=35 format=3 uid="uid://didvpehlarxml"]
+[gd_scene load_steps=41 format=3 uid="uid://didvpehlarxml"]
 
 [ext_resource type="Script" uid="uid://dte2ro7bsxaov" path="res://scripts/character/CharacterData.cs" id="1_878l0"]
 [ext_resource type="Script" uid="uid://df846gkbqrlvn" path="res://scripts/character/CharacterController.cs" id="2_828ix"]
 [ext_resource type="Script" uid="uid://71ylt0i7qy56" path="res://scripts/character/CameraController.cs" id="3_6wvb2"]
+[ext_resource type="PackedScene" uid="uid://gvcrvxoc03sd" path="res://prefabs/player/particles/wave_particles.tscn" id="3_t0l7h"]
 [ext_resource type="Script" uid="uid://c5qvtjojna5j6" path="res://scripts/character/CapsuleModel.cs" id="3_xe0wy"]
 [ext_resource type="PackedScene" uid="uid://cgmqbcxtjcg42" path="res://prefabs/player/sword.tscn" id="4_nj2e3"]
 [ext_resource type="Script" uid="uid://b88c7kconot4w" path="res://scripts/character/CameraTarget.cs" id="4_tghw6"]
 [ext_resource type="Script" uid="uid://b0phulapw04cv" path="res://scripts/character/Sword.cs" id="5_46u0n"]
 [ext_resource type="Script" uid="uid://nguijowt7053" path="res://scripts/character/LimbChecker.cs" id="5_nx1cc"]
+[ext_resource type="PackedScene" uid="uid://bxeix5beo86lk" path="res://prefabs/player/particles/boost_particles.tscn" id="7_1jhq6"]
+[ext_resource type="AudioStream" uid="uid://csttqf6dv8h2x" path="res://sounds/Dash.wav" id="8_puyl3"]
+[ext_resource type="AudioStream" uid="uid://cvuo0hxrjc23j" path="res://sounds/SmallBoost.wav" id="9_8nbtj"]
+[ext_resource type="AudioStream" uid="uid://s0xwnwg3loab" path="res://sounds/Boost.wav" id="10_ak4ba"]
+[ext_resource type="AudioStream" uid="uid://ckbuysprlga75" path="res://sounds/Punch.wav" id="11_ak4ba"]
 
 [sub_resource type="Animation" id="Animation_qejok"]
 length = 0.001
@@ -372,6 +378,7 @@ AccelerationKnockBackThreshold = 25.0
 collision_mask = 103
 script = ExtResource("2_828ix")
 Feet = NodePath("../Feet")
+WaveParticles = ExtResource("3_t0l7h")
 
 [node name="CapsuleAnimPlayer" type="AnimationPlayer" parent="CharacterController"]
 libraries = {
@@ -432,6 +439,23 @@ libraries = {
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 1, 0, 0)
 script = ExtResource("5_46u0n")
 anim = NodePath("../SwordAnimPlayer")
+
+[node name="BoostParticles" parent="CharacterController" instance=ExtResource("7_1jhq6")]
+
+[node name="DashSound" type="AudioStreamPlayer3D" parent="CharacterController"]
+stream = ExtResource("8_puyl3")
+volume_db = 2.0
+
+[node name="SmallBoostSound" type="AudioStreamPlayer3D" parent="CharacterController"]
+stream = ExtResource("9_8nbtj")
+
+[node name="BoostSound" type="AudioStreamPlayer3D" parent="CharacterController"]
+stream = ExtResource("10_ak4ba")
+
+[node name="PunchSound" type="AudioStreamPlayer3D" parent="CharacterController"]
+stream = ExtResource("11_ak4ba")
+volume_db = -5.0
+pitch_scale = 1.5
 
 [node name="Feet" type="Node3D" parent="."]
 

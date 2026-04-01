@@ -161,7 +161,7 @@ public partial class CameraController : Node3D
             float weight = Mathf.Min(characterData.DashMeter.NormalizedFill() * 2.0f, 1.0f);
             targetFOV = Mathf.Lerp(NormalFOV, DashFOV, weight);
         }
-        else if (characterData.InGiantProximity)
+        else if (characterData.InGiantProximity && !characterData.IsFatigued)
         {
             targetFOV = ClimbFOV;
         }

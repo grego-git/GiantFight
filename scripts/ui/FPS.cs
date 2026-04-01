@@ -7,7 +7,9 @@ public partial class FPS : RichTextLabel
     {
         base._Process(delta);
 
-        float fps = 1.0f / (float)delta;
+        Visible = Constants.DEBUG;
+
+        float fps = 1.0f / (float)(delta / Engine.TimeScale);
     
         Text = "FPS: " + fps.ToString("F2");
 

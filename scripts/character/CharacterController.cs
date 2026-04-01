@@ -10,6 +10,8 @@ public partial class CharacterController : CharacterBody3D
 
     [Export]
     public Node3D Feet { get; set; }
+    [Export]
+    public PackedScene WaveParticles { get; set; }
 
     public Sword Sword { get; private set; }
     public RayCast3D GroundRayCast { get; private set; }
@@ -17,6 +19,13 @@ public partial class CharacterController : CharacterBody3D
     public RayCast3D CrawlRayCast { get; private set; }
     public RayCast3D HangRayCast { get; private set; }
     public LimbChecker LimbChecker { get; private set; }
+
+    public GpuParticles3D BoostStaminaParticles { get; private set; }
+
+    public AudioStreamPlayer3D PunchSound { get; private set; }
+    public AudioStreamPlayer3D DashSound { get; private set; }
+    public AudioStreamPlayer3D SmallBoostSound { get; private set; }
+    public AudioStreamPlayer3D BoostSound { get; private set; }
 
     private Node3D initParent;
     private RandomNumberGenerator rng;
@@ -29,6 +38,13 @@ public partial class CharacterController : CharacterBody3D
         CrawlRayCast = (RayCast3D)GetNode("CrawlRayCast");
         HangRayCast = (RayCast3D)GetNode("HangRayCast");
         LimbChecker = (LimbChecker)GetNode("LimbChecker");
+
+        BoostStaminaParticles = (GpuParticles3D)GetNode("BoostParticles");
+
+        PunchSound = (AudioStreamPlayer3D)GetNode("PunchSound");
+        DashSound = (AudioStreamPlayer3D)GetNode("DashSound");
+        SmallBoostSound = (AudioStreamPlayer3D)GetNode("SmallBoostSound");
+        BoostSound = (AudioStreamPlayer3D)GetNode("BoostSound");
 
         initParent = (Node3D)GetParent();
 

@@ -23,7 +23,7 @@ public partial class FatigueNeedle : HSlider
         float negativeOneToOne = (zeroToOne - 0.5f) * 2.0f;
         Value = zeroToOne * 100.0f;
 
-        Modulate = CharacterData.CanRelieveFatigue ? Colors.Green.Lerp(Colors.White, Mathf.Abs(negativeOneToOne)) : Colors.Gray;
+        Modulate = CharacterData.CanRelieveFatigue ? Colors.Cyan.Lerp(Colors.White, Mathf.Abs(negativeOneToOne)) : Colors.Gray;
     }
 
 }

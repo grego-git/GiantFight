@@ -113,6 +113,7 @@ public class GiantActionBodyAttack : IGiantAction
 
         Vector3 targetPoint = pointUpBone + ((-right).Rotated(up, (-right).AngleTo(right) * paddingDirLerpWeight) * giant.StompPadding);
 
+        giant.StompSound.GlobalPosition = giant.Fists[useLeftHand ? 0 : 1].GlobalPosition;
         ikTarget.GlobalPosition = targetPoint;
     }
 

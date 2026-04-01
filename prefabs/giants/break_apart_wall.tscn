@@ -1,8 +1,9 @@
-[gd_scene load_steps=57 format=4 uid="uid://bclmyeyh7vbct"]
+[gd_scene load_steps=58 format=4 uid="uid://bclmyeyh7vbct"]
 
 [ext_resource type="Script" uid="uid://btw3c00tyoml0" path="res://scripts/giant/BreakApartWall.cs" id="1_56f67"]
 [ext_resource type="Script" uid="uid://dt8s7iu6v4b8j" path="res://scripts/giant/BreakApartWallPiece.cs" id="2_60mes"]
 [ext_resource type="Script" uid="uid://sbueogfis8dk" path="res://scripts/giant/GiantHitBox.cs" id="3_60mes"]
+[ext_resource type="AudioStream" uid="uid://o4st0sp0g35b" path="res://sounds/Clap.wav" id="4_m2w05"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0kfb6"]
 resource_name = "Material"
@@ -1000,3 +1001,8 @@ shape = SubResource("BoxShape3D_m2w05")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="HitBox"]
 mesh = SubResource("BoxMesh_j0pu7")
 surface_material_override/0 = SubResource("StandardMaterial3D_lndov")
+
+[node name="BreakSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_m2w05")
+pitch_scale = 2.0
+autoplay = true

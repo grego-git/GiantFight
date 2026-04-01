@@ -106,7 +106,7 @@ public class CharacterStateGrounded : ICharacterState
             dashDir = horizontalVelocity != Vector3.Zero ? horizontalVelocity.Normalized() : -characterData.CameraController.CameraUpRotation.GlobalBasis.Z;
             horizontalVelocity = Vector3.Zero;
             verticalVelocity = 0.0f;
-            characterData.Dash();
+            characterData.Dash(dashDir);
         }
         else if (characterData.CanSwingSword())
         {

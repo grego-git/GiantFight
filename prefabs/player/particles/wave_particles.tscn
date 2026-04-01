@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://gvcrvxoc03sd"]
+
+[ext_resource type="Texture2D" uid="uid://7cfa556ms8bx" path="res://textures/hit_marker_indicator.tres" id="1_1vu60"]
+[ext_resource type="Script" uid="uid://h702wvr3vmb1" path="res://scripts/character/DashWave.cs" id="2_1vu60"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_8gye4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1vu60"]
+resource_local_to_scene = true
+transparency = 1
+blend_mode = 1
+cull_mode = 2
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_1vu60")
+texture_filter = 0
+billboard_keep_scale = true
+
+[node name="Waves" type="MeshInstance3D"]
+mesh = SubResource("QuadMesh_8gye4")
+surface_material_override/0 = SubResource("StandardMaterial3D_1vu60")
+script = ExtResource("2_1vu60")
+TimerDuration = 1.0
+ExpandSpeed = 10.0
+InitialScale = 1.0
+TargetScale = 10.0

@@ -5,6 +5,8 @@ public partial class ClapSphereSpawner : Node3D
 {
     [Export]
     public bool Spawn { get; set; }
+    [Export]
+    public AudioStreamPlayer3D Sound { get; set; }
 
     [Export]
     public PackedScene ClapSphere;
@@ -25,6 +27,7 @@ public partial class ClapSphereSpawner : Node3D
         base._PhysicsProcess(delta);
         
         GlobalPosition = giant.Fists[0].GlobalPosition.Lerp(giant.Fists[1].GlobalPosition, 0.5f);
+        Sound.GlobalPosition = GlobalPosition;
 
         if (Spawn)
         {
