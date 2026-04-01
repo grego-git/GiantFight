@@ -24,8 +24,8 @@ public partial class CapsuleModel : MeshInstance3D
         if (!CharacterData.StunMeter.IsEmpty())
         {
             AnimPlayer.Play("stun");
-            ((StandardMaterial3D)GetSurfaceOverrideMaterial(0)).AlbedoColor = Colors.DarkGray.Lerp(Colors.Blue, CharacterData.StunMeter.NormalizedFill());
-            ((StandardMaterial3D)visor.GetSurfaceOverrideMaterial(0)).AlbedoColor = Colors.DarkGray.Lerp(Colors.Blue, CharacterData.StunMeter.NormalizedFill());
+            ((StandardMaterial3D)GetSurfaceOverrideMaterial(0)).AlbedoColor = Colors.DarkGray.Lerp(Colors.Cyan, CharacterData.StunMeter.NormalizedFill());
+            ((StandardMaterial3D)visor.GetSurfaceOverrideMaterial(0)).AlbedoColor = Colors.DarkGray.Lerp(Colors.Cyan, CharacterData.StunMeter.NormalizedFill());
         }
         else
         {
