@@ -1,0 +1,30 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://2mmx61w7a0xh"]
+
+[ext_resource type="Shader" uid="uid://cal57alwp36gx" path="res://scripts/shaders/x_ray.gdshader" id="1_lwnb0"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3s8ln"]
+render_priority = 1
+transparency = 1
+depth_draw_mode = 1
+albedo_color = Color(1, 0, 0, 1)
+
+[resource]
+render_priority = 0
+next_pass = SubResource("StandardMaterial3D_3s8ln")
+shader = ExtResource("1_lwnb0")
+shader_parameter/enable_glow = true
+shader_parameter/enable_lines = false
+shader_parameter/enable_flicker = false
+shader_parameter/enable_pattern = false
+shader_parameter/base_color = Color(1, 0.984314, 0, 1)
+shader_parameter/glow_color = Color(1, 1, 1, 1)
+shader_parameter/glow_itensity = 4.5
+shader_parameter/glow_amount = 4.5
+shader_parameter/flickering = 0.55
+shader_parameter/line_width = 0.005
+shader_parameter/line_blur = 0.2
+shader_parameter/line_speed = 0.02
+shader_parameter/straight_lines = true
+shader_parameter/interrupt_width = 0.5
+shader_parameter/interrupt_blur = 0.25
+shader_parameter/interrupt_speed = 0.2

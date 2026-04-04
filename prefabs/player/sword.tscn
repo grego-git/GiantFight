@@ -1,15 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://cgmqbcxtjcg42"]
+[gd_scene load_steps=5 format=3 uid="uid://cgmqbcxtjcg42"]
+
+[ext_resource type="Material" uid="uid://2mmx61w7a0xh" path="res://materials/sword.tres" id="1_f11ua"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3s8ln"]
 size = Vector3(1, 2, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_f11ua"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3s8ln"]
-albedo_color = Color(1, 0, 0, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f11ua"]
-albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="PrismMesh" id="PrismMesh_bymap"]
 
@@ -28,19 +24,19 @@ shape = SubResource("BoxShape3D_3s8ln")
 [node name="Middle" type="MeshInstance3D" parent="Model"]
 transform = Transform3D(0.5, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0.375, 0)
 mesh = SubResource("BoxMesh_f11ua")
-surface_material_override/0 = SubResource("StandardMaterial3D_3s8ln")
+surface_material_override/0 = ExtResource("1_f11ua")
 
 [node name="Shaft" type="MeshInstance3D" parent="Model"]
 transform = Transform3D(0.1, 0, 0, 0, 0.5, 0, 0, 0, 0.1, 0, 0, 0)
 mesh = SubResource("BoxMesh_f11ua")
-surface_material_override/0 = SubResource("StandardMaterial3D_f11ua")
+surface_material_override/0 = ExtResource("1_f11ua")
 
 [node name="Blade" type="MeshInstance3D" parent="Model"]
 transform = Transform3D(0.45, 0, 0, 0, 1, 0, 0, 0, 0.05, 0, 0.875, 0)
 mesh = SubResource("BoxMesh_f11ua")
-surface_material_override/0 = SubResource("StandardMaterial3D_f11ua")
+surface_material_override/0 = ExtResource("1_f11ua")
 
 [node name="BladeTip" type="MeshInstance3D" parent="Model"]
 transform = Transform3D(0.45, 0, 0, 0, 0.25, 0, 0, 0, 0.05, 0, 1.5, 0)
 mesh = SubResource("PrismMesh_bymap")
-surface_material_override/0 = SubResource("StandardMaterial3D_f11ua")
+surface_material_override/0 = ExtResource("1_f11ua")

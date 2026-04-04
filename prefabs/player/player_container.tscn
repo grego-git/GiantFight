@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://didvpehlarxml"]
+[gd_scene load_steps=40 format=3 uid="uid://didvpehlarxml"]
 
 [ext_resource type="Script" uid="uid://dte2ro7bsxaov" path="res://scripts/character/CharacterData.cs" id="1_878l0"]
 [ext_resource type="Script" uid="uid://df846gkbqrlvn" path="res://scripts/character/CharacterController.cs" id="2_828ix"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://gvcrvxoc03sd" path="res://prefabs/player/particles/wave_particles.tscn" id="3_t0l7h"]
 [ext_resource type="Script" uid="uid://c5qvtjojna5j6" path="res://scripts/character/CapsuleModel.cs" id="3_xe0wy"]
 [ext_resource type="PackedScene" uid="uid://cgmqbcxtjcg42" path="res://prefabs/player/sword.tscn" id="4_nj2e3"]
+[ext_resource type="Material" uid="uid://c0d8k40tw6t1t" path="res://materials/player.tres" id="4_qla2t"]
 [ext_resource type="Script" uid="uid://b88c7kconot4w" path="res://scripts/character/CameraTarget.cs" id="4_tghw6"]
 [ext_resource type="Script" uid="uid://b0phulapw04cv" path="res://scripts/character/Sword.cs" id="5_46u0n"]
 [ext_resource type="Script" uid="uid://nguijowt7053" path="res://scripts/character/LimbChecker.cs" id="5_nx1cc"]
@@ -133,11 +134,7 @@ _data = {
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_tghw6"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xe0wy"]
-
 [sub_resource type="BoxMesh" id="BoxMesh_828ix"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1jhq6"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_tghw6"]
 
@@ -390,7 +387,7 @@ shape = SubResource("CapsuleShape3D_6wvb2")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterController/CollisionShape3D" node_paths=PackedStringArray("CharacterData", "AnimPlayer")]
 mesh = SubResource("CapsuleMesh_tghw6")
-surface_material_override/0 = SubResource("StandardMaterial3D_xe0wy")
+surface_material_override/0 = ExtResource("4_qla2t")
 script = ExtResource("3_xe0wy")
 CharacterData = NodePath("../../..")
 AnimPlayer = NodePath("../../CapsuleAnimPlayer")
@@ -398,7 +395,7 @@ AnimPlayer = NodePath("../../CapsuleAnimPlayer")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterController/CollisionShape3D/MeshInstance3D"]
 transform = Transform3D(0.5, 0, 0, 0, 0.25, 0, 0, 0, 0.5, 0, 0.5, -0.5)
 mesh = SubResource("BoxMesh_828ix")
-surface_material_override/0 = SubResource("StandardMaterial3D_1jhq6")
+surface_material_override/0 = ExtResource("4_qla2t")
 
 [node name="GroundRayCast" type="RayCast3D" parent="CharacterController"]
 target_position = Vector3(0, -3, 0)

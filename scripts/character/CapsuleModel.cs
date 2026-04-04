@@ -24,14 +24,14 @@ public partial class CapsuleModel : MeshInstance3D
         if (!CharacterData.StunMeter.IsEmpty())
         {
             AnimPlayer.Play("stun");
-            ((StandardMaterial3D)GetSurfaceOverrideMaterial(0)).AlbedoColor = Colors.DarkGray.Lerp(Colors.Cyan, CharacterData.StunMeter.NormalizedFill());
-            ((StandardMaterial3D)visor.GetSurfaceOverrideMaterial(0)).AlbedoColor = Colors.DarkGray.Lerp(Colors.Cyan, CharacterData.StunMeter.NormalizedFill());
+            ((StandardMaterial3D)GetSurfaceOverrideMaterial(0).NextPass).AlbedoColor = Colors.DarkGray.Lerp(Colors.Cyan, CharacterData.StunMeter.NormalizedFill());
+            ((StandardMaterial3D)visor.GetSurfaceOverrideMaterial(0).NextPass).AlbedoColor = Colors.DarkGray.Lerp(Colors.Cyan, CharacterData.StunMeter.NormalizedFill());
         }
         else
         {
             AnimPlayer.Play("idle");
-            ((StandardMaterial3D)GetSurfaceOverrideMaterial(0)).AlbedoColor = Colors.DarkGray;
-            ((StandardMaterial3D)visor.GetSurfaceOverrideMaterial(0)).AlbedoColor = Colors.DarkGray;
+            ((StandardMaterial3D)GetSurfaceOverrideMaterial(0).NextPass).AlbedoColor = Colors.DarkGray;
+            ((StandardMaterial3D)visor.GetSurfaceOverrideMaterial(0).NextPass).AlbedoColor = Colors.DarkGray;
         }
     }
 }

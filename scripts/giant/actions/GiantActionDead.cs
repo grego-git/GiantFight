@@ -47,5 +47,7 @@ public class GiantActionDead : IGiantAction
         {
             entity.Destroy();
         }
+
+        giant.CharacterData.World.StageEnd = true;
     }
 }

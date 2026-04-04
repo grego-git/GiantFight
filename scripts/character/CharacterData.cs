@@ -340,6 +340,9 @@ public partial class CharacterData : Node3D
 
     public void CheckForDeath()
     {
+        if (Controller.GlobalPosition.Y < -100.0f)
+            HealthMeter.Empty();
+
         if (HealthMeter.Value <= 0.0f)
         {
             if (GetState() != "DEAD")

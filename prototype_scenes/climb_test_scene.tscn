@@ -1,11 +1,13 @@
-[gd_scene load_steps=19 format=3 uid="uid://bk8g6ww5x571i"]
+[gd_scene load_steps=21 format=3 uid="uid://bk8g6ww5x571i"]
 
 [ext_resource type="Script" uid="uid://762odk34n8kn" path="res://scripts/ui/StateLabel.cs" id="1_awone"]
 [ext_resource type="Script" uid="uid://ykvsm1kkb6uj" path="res://scripts/climb/CreateCollisionShape.cs" id="1_dqwrh"]
 [ext_resource type="PackedScene" uid="uid://cbnhcgf14nygg" path="res://prefabs/giants/pill_giant.tscn" id="1_gtjjn"]
 [ext_resource type="Script" uid="uid://dw4e5naidgovb" path="res://scripts/World.cs" id="1_tlxtn"]
 [ext_resource type="PackedScene" uid="uid://didvpehlarxml" path="res://prefabs/player/player_container.tscn" id="2_gtjjn"]
+[ext_resource type="Script" uid="uid://malwywbfl2rv" path="res://scripts/ui/ResetLabel.cs" id="2_htewc"]
 [ext_resource type="Script" uid="uid://ctitt2qrhgui7" path="res://scripts/ui/FPS.cs" id="2_ke55c"]
+[ext_resource type="Script" uid="uid://ddyrpchrdol72" path="res://scripts/ui/PauseLabel.cs" id="3_gcak2"]
 [ext_resource type="Script" uid="uid://p2ulqxveulw4" path="res://scripts/ui/StaminaLabel.cs" id="3_niqrx"]
 [ext_resource type="Script" uid="uid://dspakg42jctrl" path="res://scripts/ui/DashCooldownLabel.cs" id="4_hr506"]
 [ext_resource type="Script" uid="uid://dj7i8ts6h6d2s" path="res://scripts/ui/DetectLabel.cs" id="5_07aob"]
@@ -39,6 +41,44 @@ process_mode = 3
 script = ExtResource("1_tlxtn")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Reset" type="RichTextLabel" parent="CanvasLayer" node_paths=PackedStringArray("World")]
+process_mode = 3
+modulate = Color(0.964706, 0, 1, 1)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -255.0
+offset_top = 16.0
+offset_right = 257.0
+offset_bottom = 80.0
+grow_horizontal = 2
+theme_override_font_sizes/normal_font_size = 28
+text = "PRESS 'R' TO RESET"
+horizontal_alignment = 1
+script = ExtResource("2_htewc")
+World = NodePath("../../World")
+
+[node name="Pause" type="RichTextLabel" parent="CanvasLayer"]
+process_mode = 3
+modulate = Color(0.964706, 0, 1, 1)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -32.0
+offset_right = 256.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/normal_font_size = 28
+text = "PAUSED"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("3_gcak2")
 
 [node name="FPS" type="RichTextLabel" parent="CanvasLayer"]
 modulate = Color(0.964706, 0, 1, 1)
