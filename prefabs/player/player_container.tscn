@@ -472,7 +472,7 @@ MaxXRotation = 60.0
 NormalFOV = 90.0
 ChargingFOV = 60.0
 DashFOV = 180.0
-ClimbFOV = 145.0
+ClimbFOV = 120.0
 
 [node name="CameraUpRotation" type="Node3D" parent="CameraOrientation"]
 

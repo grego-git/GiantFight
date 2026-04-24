@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="GiantFight"
-run/main_scene="uid://bk8g6ww5x571i"
+run/main_scene="uid://b61lxvb7ghrgt"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 

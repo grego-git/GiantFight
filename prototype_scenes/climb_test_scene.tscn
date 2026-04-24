@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bk8g6ww5x571i"]
+[gd_scene load_steps=23 format=3 uid="uid://bk8g6ww5x571i"]
 
 [ext_resource type="Script" uid="uid://762odk34n8kn" path="res://scripts/ui/StateLabel.cs" id="1_awone"]
 [ext_resource type="Script" uid="uid://ykvsm1kkb6uj" path="res://scripts/climb/CreateCollisionShape.cs" id="1_dqwrh"]
@@ -14,6 +14,8 @@
 [ext_resource type="Script" uid="uid://drqwf5d27s12x" path="res://scripts/ui/GiantHPLabel.cs" id="6_7mi5p"]
 [ext_resource type="Texture2D" uid="uid://cn3xcck2xva54" path="res://textures/texture_09.png" id="6_fdj5p"]
 [ext_resource type="PackedScene" uid="uid://c0dtdw4tsi2e8" path="res://prefabs/ui/fatigue_needle.tscn" id="8_6wvul"]
+[ext_resource type="PackedScene" uid="uid://du1k0c5uambax" path="res://prefabs/practice/controls_ui.tscn" id="11_jyslu"]
+[ext_resource type="Script" uid="uid://blbr1rr2iwir0" path="res://scripts/ui/FadeIn.cs" id="12_u82uo"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_awone"]
 
@@ -44,7 +46,6 @@ script = ExtResource("1_tlxtn")
 
 [node name="Reset" type="RichTextLabel" parent="CanvasLayer" node_paths=PackedStringArray("World")]
 process_mode = 3
-modulate = Color(0.964706, 0, 1, 1)
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -53,6 +54,8 @@ offset_top = 16.0
 offset_right = 257.0
 offset_bottom = 80.0
 grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
 theme_override_font_sizes/normal_font_size = 28
 text = "PRESS 'R' TO RESET"
 horizontal_alignment = 1
@@ -61,7 +64,8 @@ World = NodePath("../../World")
 
 [node name="Pause" type="RichTextLabel" parent="CanvasLayer"]
 process_mode = 3
-modulate = Color(0.964706, 0, 1, 1)
+visible = false
+clip_contents = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -74,14 +78,38 @@ offset_bottom = 32.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
 theme_override_font_sizes/normal_font_size = 28
 text = "PAUSED"
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("3_gcak2")
 
+[node name="Controls" parent="CanvasLayer/Pause" instance=ExtResource("11_jyslu")]
+layout_mode = 1
+offset_left = 69.0
+offset_right = 320.0
+
+[node name="Return" type="RichTextLabel" parent="CanvasLayer/Pause"]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -256.0
+offset_top = 128.0
+offset_right = 256.0
+offset_bottom = 256.0
+grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/normal_font_size = 16
+text = "PRESS 'BACKSPACE' TO 
+RETURN TO TUTORIAL"
+horizontal_alignment = 1
+
 [node name="FPS" type="RichTextLabel" parent="CanvasLayer"]
-modulate = Color(0.964706, 0, 1, 1)
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -90,12 +118,13 @@ offset_top = -80.0
 offset_right = 272.0
 offset_bottom = -16.0
 grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
 text = "FPS: "
 vertical_alignment = 2
 script = ExtResource("2_ke55c")
 
 [node name="CharacterState" type="RichTextLabel" parent="CanvasLayer" node_paths=PackedStringArray("CharacterData")]
-modulate = Color(0.964706, 0, 1, 1)
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -104,27 +133,31 @@ offset_top = -112.0
 offset_right = 272.0
 offset_bottom = -48.0
 grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
 text = "STATE: "
 vertical_alignment = 2
 script = ExtResource("1_awone")
 CharacterData = NodePath("../../PlayerContainer")
 
 [node name="Stamina" type="RichTextLabel" parent="CanvasLayer" node_paths=PackedStringArray("CharacterData")]
-modulate = Color(0.964706, 0, 1, 1)
 offset_left = 16.0
 offset_top = 16.0
 offset_right = 272.0
 offset_bottom = 80.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
 text = "STAMINA: "
 script = ExtResource("3_niqrx")
 CharacterData = NodePath("../../PlayerContainer")
 
 [node name="Dash" type="RichTextLabel" parent="CanvasLayer" node_paths=PackedStringArray("CharacterData")]
-modulate = Color(0.964706, 0, 1, 1)
 offset_left = 16.0
 offset_top = 48.0
 offset_right = 272.0
 offset_bottom = 112.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
 text = "DASH: "
 script = ExtResource("4_hr506")
 CharacterData = NodePath("../../PlayerContainer")
@@ -145,7 +178,6 @@ mouse_filter = 2
 color = Color(0.966667, 0, 1, 1)
 
 [node name="GiantHP" type="RichTextLabel" parent="CanvasLayer" node_paths=PackedStringArray("Giant")]
-modulate = Color(0.964706, 0, 1, 1)
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -154,13 +186,14 @@ offset_top = 16.0
 offset_right = -16.0
 offset_bottom = 80.0
 grow_horizontal = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
 text = "HP: "
 horizontal_alignment = 2
 script = ExtResource("6_7mi5p")
 Giant = NodePath("../../PillGiant")
 
 [node name="GiantDetectionZone" type="RichTextLabel" parent="CanvasLayer" node_paths=PackedStringArray("Giant")]
-modulate = Color(0.964706, 0, 1, 1)
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -172,6 +205,8 @@ offset_right = -16.0
 offset_bottom = -16.0
 grow_horizontal = 0
 grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
 text = "DETECT ZONE: "
 horizontal_alignment = 2
 vertical_alignment = 2
@@ -180,6 +215,33 @@ Giant = NodePath("../../PillGiant")
 
 [node name="FatigueNeedle" parent="CanvasLayer" node_paths=PackedStringArray("CharacterData") instance=ExtResource("8_6wvul")]
 CharacterData = NodePath("../../PlayerContainer")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/FatigueNeedle"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -96.0
+offset_top = -64.0
+offset_right = 96.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "[center]'LEFT CLICK' OR 'SPACE' WHEN DIAL IS IN THE MIDDLE TO REFILL STAMINA"
+
+[node name="FadeIn" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+script = ExtResource("12_u82uo")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_ke55c")

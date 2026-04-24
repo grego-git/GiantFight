@@ -25,7 +25,10 @@ public class CharacterStateAir : ICharacterState
             characterData.Controller.HorizontalReOrient(characterData.CameraController, Vector3.Up, true);
         
         if (characterData.IsDashing())
+        {
             dashTransform = characterData.Controller.GlobalTransform;
+            dashTransform = dashTransform.LookingAt(dashTransform.Origin + dashTransform.Basis.Z, dashTransform.Basis.Y);
+        }
 
         characterData.Controller.EnteringNewState(GetState());
     }

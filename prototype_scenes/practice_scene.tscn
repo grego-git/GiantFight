@@ -1,0 +1,408 @@
+[gd_scene load_steps=33 format=3 uid="uid://b61lxvb7ghrgt"]
+
+[ext_resource type="Script" uid="uid://dw4e5naidgovb" path="res://scripts/World.cs" id="1_738im"]
+[ext_resource type="Script" uid="uid://malwywbfl2rv" path="res://scripts/ui/ResetLabel.cs" id="2_5iss1"]
+[ext_resource type="Script" uid="uid://ddyrpchrdol72" path="res://scripts/ui/PauseLabel.cs" id="3_o6lgo"]
+[ext_resource type="Script" uid="uid://ctitt2qrhgui7" path="res://scripts/ui/FPS.cs" id="4_jxj1b"]
+[ext_resource type="Script" uid="uid://762odk34n8kn" path="res://scripts/ui/StateLabel.cs" id="5_cinyw"]
+[ext_resource type="Script" uid="uid://p2ulqxveulw4" path="res://scripts/ui/StaminaLabel.cs" id="6_362un"]
+[ext_resource type="Script" uid="uid://dspakg42jctrl" path="res://scripts/ui/DashCooldownLabel.cs" id="7_4ubh5"]
+[ext_resource type="PackedScene" uid="uid://du1k0c5uambax" path="res://prefabs/practice/controls_ui.tscn" id="9_wwd8a"]
+[ext_resource type="PackedScene" uid="uid://c0dtdw4tsi2e8" path="res://prefabs/ui/fatigue_needle.tscn" id="10_5veo4"]
+[ext_resource type="Script" uid="uid://cla7lt52bneo" path="res://scripts/practice/PracticeHPLabel.cs" id="10_o6lgo"]
+[ext_resource type="PackedScene" uid="uid://bnh7kehuodvj2" path="res://prefabs/practice/practice_room.tscn" id="10_pfvab"]
+[ext_resource type="Script" uid="uid://blbr1rr2iwir0" path="res://scripts/ui/FadeIn.cs" id="11_cinyw"]
+[ext_resource type="Texture2D" uid="uid://cn3xcck2xva54" path="res://textures/texture_09.png" id="11_goi2f"]
+[ext_resource type="Script" uid="uid://0ipbyj20c0ly" path="res://scripts/practice/KillBox.cs" id="12_b214n"]
+[ext_resource type="Texture2D" uid="uid://cj7cqbit6sn4x" path="res://textures/Magma.png" id="14_738im"]
+[ext_resource type="PackedScene" uid="uid://didvpehlarxml" path="res://prefabs/player/player_container.tscn" id="14_wru3w"]
+[ext_resource type="PackedScene" uid="uid://b3y03b005tnj5" path="res://prefabs/giants/giant_hit_point.tscn" id="15_5iss1"]
+[ext_resource type="Script" uid="uid://d3bq6ekvqnyci" path="res://scripts/practice/HitPoint.cs" id="17_jxj1b"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_awone"]
+
+[sub_resource type="Sky" id="Sky_dqwrh"]
+sky_material = SubResource("ProceduralSkyMaterial_awone")
+
+[sub_resource type="Environment" id="Environment_ke55c"]
+background_mode = 2
+sky = SubResource("Sky_dqwrh")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_klrrp"]
+size = Vector3(1000, 1, 1000)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_fdj5p"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tlxtn"]
+albedo_texture = ExtResource("11_goi2f")
+uv1_scale = Vector3(50, 50, 50)
+texture_filter = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wwd8a"]
+size = Vector3(20, 30, 30)
+
+[sub_resource type="BoxMesh" id="BoxMesh_738im"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5iss1"]
+transparency = 1
+depth_draw_mode = 1
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_b214n"]
+size = Vector3(20, 35, 30)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_738im"]
+size = Vector3(20, 50, 90)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o6lgo"]
+shading_mode = 0
+albedo_texture = ExtResource("14_738im")
+uv1_scale = Vector3(20, 5, 5)
+texture_filter = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5iss1"]
+size = Vector3(20, 40, 90)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o6lgo"]
+size = Vector3(20, 40, 90)
+
+[node name="ClimbTestScene" type="Node3D"]
+
+[node name="World" type="Node3D" parent="."]
+process_mode = 3
+script = ExtResource("1_738im")
+TutorialScene = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Reset" type="RichTextLabel" parent="CanvasLayer" node_paths=PackedStringArray("World")]
+process_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -255.0
+offset_top = 16.0
+offset_right = 257.0
+offset_bottom = 80.0
+grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/normal_font_size = 28
+text = "PRESS 'R' TO RESET"
+horizontal_alignment = 1
+script = ExtResource("2_5iss1")
+World = NodePath("../../World")
+
+[node name="Pause" type="RichTextLabel" parent="CanvasLayer"]
+process_mode = 3
+visible = false
+clip_contents = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -32.0
+offset_right = 256.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/normal_font_size = 28
+text = "PAUSED"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("3_o6lgo")
+
+[node name="Controls" parent="CanvasLayer" instance=ExtResource("9_wwd8a")]
+
+[node name="FPS" type="RichTextLabel" parent="CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -80.0
+offset_right = 272.0
+offset_bottom = -16.0
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "FPS: "
+vertical_alignment = 2
+script = ExtResource("4_jxj1b")
+
+[node name="CharacterState" type="RichTextLabel" parent="CanvasLayer" node_paths=PackedStringArray("CharacterData")]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -112.0
+offset_right = 272.0
+offset_bottom = -48.0
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "STATE: "
+vertical_alignment = 2
+script = ExtResource("5_cinyw")
+CharacterData = NodePath("../../PlayerContainer")
+
+[node name="Stamina" type="RichTextLabel" parent="CanvasLayer" node_paths=PackedStringArray("CharacterData")]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 272.0
+offset_bottom = 80.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "STAMINA: "
+script = ExtResource("6_362un")
+CharacterData = NodePath("../../PlayerContainer")
+
+[node name="Dash" type="RichTextLabel" parent="CanvasLayer" node_paths=PackedStringArray("CharacterData")]
+offset_left = 16.0
+offset_top = 48.0
+offset_right = 272.0
+offset_bottom = 112.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "DASH: "
+script = ExtResource("7_4ubh5")
+CharacterData = NodePath("../../PlayerContainer")
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.966667, 0, 1, 1)
+
+[node name="FatigueNeedle" parent="CanvasLayer" node_paths=PackedStringArray("CharacterData") instance=ExtResource("10_5veo4")]
+CharacterData = NodePath("../../PlayerContainer")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/FatigueNeedle"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -96.0
+offset_top = -64.0
+offset_right = 96.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "[center]'LEFT CLICK' OR 'SPACE' WHEN DIAL IS IN THE MIDDLE TO REFILL STAMINA"
+
+[node name="PracticeRoomHP" type="RichTextLabel" parent="CanvasLayer" node_paths=PackedStringArray("HitPoint")]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -272.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = 80.0
+grow_horizontal = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "PRACTICE ROOM HP: "
+horizontal_alignment = 2
+script = ExtResource("10_o6lgo")
+HitPoint = NodePath("../../EndPracticeHealth")
+
+[node name="FadeIn" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+script = ExtResource("11_cinyw")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ke55c")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 0, 100, 0)
+
+[node name="Ground" type="StaticBody3D" parent="."]
+collision_layer = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_klrrp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(500, 0, 0, 0, 1, 0, 0, 0, 500, 0, 0.5, 0)
+mesh = SubResource("PlaneMesh_fdj5p")
+surface_material_override/0 = SubResource("StandardMaterial3D_tlxtn")
+
+[node name="PracticeRoom" parent="." instance=ExtResource("10_pfvab")]
+transform = Transform3D(30, 0, 0, 0, 30, 0, 0, 0, 30, 0, 30, 100)
+
+[node name="PlayerContainer" parent="." node_paths=PackedStringArray("World") instance=ExtResource("14_wru3w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 200)
+World = NodePath("../World")
+
+[node name="KillBlock" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 75, 45)
+collision_layer = 128
+script = ExtResource("12_b214n")
+
+[node name="ShapeCast3D" type="CollisionShape3D" parent="KillBlock"]
+shape = SubResource("BoxShape3D_wwd8a")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="KillBlock"]
+transform = Transform3D(20, 0, 0, 0, 30, 0, 0, 0, 30, 0, 0, 0)
+mesh = SubResource("BoxMesh_738im")
+surface_material_override/0 = SubResource("StandardMaterial3D_5iss1")
+
+[node name="KillBlock2" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 75, -5)
+collision_layer = 128
+script = ExtResource("12_b214n")
+
+[node name="ShapeCast3D" type="CollisionShape3D" parent="KillBlock2"]
+shape = SubResource("BoxShape3D_b214n")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="KillBlock2"]
+transform = Transform3D(20, 0, 0, 0, 35, 0, 0, 0, 30, 0, 0, 0)
+mesh = SubResource("BoxMesh_738im")
+surface_material_override/0 = SubResource("StandardMaterial3D_5iss1")
+
+[node name="KillBlock3" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 75, -65)
+collision_layer = 128
+script = ExtResource("12_b214n")
+
+[node name="ShapeCast3D" type="CollisionShape3D" parent="KillBlock3"]
+shape = SubResource("BoxShape3D_b214n")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="KillBlock3"]
+transform = Transform3D(20, 0, 0, 0, 35, 0, 0, 0, 30, 0, 0, 0)
+mesh = SubResource("BoxMesh_738im")
+surface_material_override/0 = SubResource("StandardMaterial3D_5iss1")
+
+[node name="KillBlock4" type="Area3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 50, -34.75)
+collision_layer = 128
+script = ExtResource("12_b214n")
+Persistent = true
+
+[node name="ShapeCast3D" type="CollisionShape3D" parent="KillBlock4"]
+shape = SubResource("BoxShape3D_738im")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="KillBlock4"]
+transform = Transform3D(20, 0, 0, 0, 50, 0, 0, 0, 90, 0, 0, 0)
+mesh = SubResource("BoxMesh_738im")
+surface_material_override/0 = SubResource("StandardMaterial3D_o6lgo")
+
+[node name="KillBlock5" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 75, -34.75)
+collision_layer = 128
+script = ExtResource("12_b214n")
+Persistent = true
+
+[node name="ShapeCast3D" type="CollisionShape3D" parent="KillBlock5"]
+shape = SubResource("BoxShape3D_5iss1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="KillBlock5"]
+transform = Transform3D(20, 0, 0, 0, 40, 0, 0, 0, 90, 0, 0, 0)
+mesh = SubResource("BoxMesh_738im")
+surface_material_override/0 = SubResource("StandardMaterial3D_o6lgo")
+
+[node name="KillBlock6" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 75, -34.75)
+collision_layer = 128
+script = ExtResource("12_b214n")
+Persistent = true
+
+[node name="ShapeCast3D" type="CollisionShape3D" parent="KillBlock6"]
+shape = SubResource("BoxShape3D_o6lgo")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="KillBlock6"]
+transform = Transform3D(20, 0, 0, 0, 40, 0, 0, 0, 90, 0, 0, 0)
+mesh = SubResource("BoxMesh_738im")
+surface_material_override/0 = SubResource("StandardMaterial3D_o6lgo")
+
+[node name="EndPracticeHealth" parent="." instance=ExtResource("15_5iss1")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 60, -110)
+script = ExtResource("17_jxj1b")
+HP = 25
+
+[node name="SkipTutorialPracticeHealth" parent="." instance=ExtResource("15_5iss1")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 30, 3, 145)
+script = ExtResource("17_jxj1b")
+HP = 1
+
+[node name="Climb" type="Label3D" parent="."]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -20, 7, 145)
+pixel_size = 0.05
+double_sided = false
+text = "HOLD RIGHT CLICK IN 
+FRONT OF THE WALL TO CLIMB."
+
+[node name="SkipTutorial" type="Label3D" parent="."]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 30, 10, 145)
+pixel_size = 0.05
+double_sided = false
+text = "HIT THIS TO SKIP TUTORIAL 
+AND FIGHT THE GIANT!"
+
+[node name="StaminaWhileClimbing" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 45, 140)
+pixel_size = 0.05
+double_sided = false
+text = "CLIMBING OR HANGING DRAINS YOUR STAMINA.
+IF YOUR STAMINA EMPTIES YOU'LL ENTER FATIGUE 
+AND WILL NEED TO WAIT UNTIL YOUR STAMINA IS FULL TO DO ANYTHING."
+
+[node name="StaminaWhileCrawling" type="Label3D" parent="."]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 25, 70, 110)
+pixel_size = 0.05
+double_sided = false
+text = "HOLDING RIGHT CLICK WHILE ON AN 
+UPRIGHT SURFACE PUTS YOU IN CRAWL. 
+YOU'll LATCH ONTO THE SURFACE 
+AND YOUR STAMINA REPLENISHES SLOWER."
+
+[node name="DontTouchRed" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 90, 75)
+pixel_size = 0.05
+double_sided = false
+text = "DONT TOUCH THE RED BLOCKS WHEN FULLY VISIBLE. 
+PRESS LEFT CTRL TO DASH THROUGH THEM.
+(DASH DOES NOT DRAIN STAMINA BUT DOES HAVE COOL DOWN)"
+
+[node name="DontTouchMagma" type="Label3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -8, 70, 20)
+pixel_size = 0.05
+double_sided = false
+text = "DONT TOUCH MAGMA.
+YOU CAN DASH IN MID AIR 
+(LEFT CTRL OR PRESS SPACE 
+TWICE TO DASH DIRECTLY UP)"
+
+[node name="AttackRed" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 78.31, -140)
+pixel_size = 0.05
+double_sided = false
+text = "ATTACK THE RED ORB.
+PRESS LEFT CLICK TO ATTACK 
+(HOLD TO CHARGE ATTACK FOR MORE DAMAGE)
+
+BRING HP DOWN TO 0 TO FIGHT GIANT!"

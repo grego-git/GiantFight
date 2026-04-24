@@ -128,5 +128,12 @@ public partial class Sword : Node3D
             EmitSignal("HitSomething");
             hit = true;
         }
+        else if (node.Name.ToString().ToLower().Contains("practicehealth"))
+        {
+            HitPoint giantHitPoint = (HitPoint)node;
+            giantHitPoint.Hit(Damage);
+            EmitSignal("HitSomething");
+            hit = true;
+        }
     }
 }
