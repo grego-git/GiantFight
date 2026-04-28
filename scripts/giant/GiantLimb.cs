@@ -7,6 +7,8 @@ public partial class GiantLimb : Area3D
     public string Bone { get; set; }
     [Export]
     public Skeleton3D Skeleton { get; set; }
+    [Export]
+    public string[] AdditionalDetectBones { get; set; }
 
     public bool Enabled { get; set; }
 

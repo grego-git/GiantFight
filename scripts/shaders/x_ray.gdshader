@@ -5,11 +5,11 @@ Thanks to KubikPixel for the SciFi Hologram shader on which much of this code is
 This is the consolidation of the x-ray shaders shown in the video:
 	https://youtu.be/seIYhuF6Tdk
 
-Please note that this shader is designed for experimentation, and is 
+Please note that this shader is designed for experimentation, and is
 therefore not optimized for performance.
 
 MIT License
------------------ */ 
+----------------- */
 
 shader_type spatial;
 render_mode unshaded, depth_test_disabled;
@@ -54,35 +54,35 @@ void fragment () {
 	}
 	vec2 lines = vec2(clamp(sin((TIME * line_speed + canvas.y) / line_width), line_blur, 1.0 - line_blur), canvas.x);
 	vec2 interupts = vec2(clamp(sin((TIME * interrupt_speed + canvas.y) / interrupt_width * 3.0), interrupt_blur, 1.0 - interrupt_blur), canvas.x);
-	
+
 	float flicker;
 	if (enable_flicker){
 		flicker = clamp(fract(cos(TIME) * 43758.5453123), flickering, 1.0);
 	} else {
 		flicker = 1.0;
 	}
-	
+
 	vec4 imgtex;
 	if(enable_pattern) {
 		imgtex = texture(pattern_texture, SCREEN_UV);
 	} else {
 		imgtex = base_color;
 	}
-	
+
 	imgtex *= flicker * texture(static_texture, lines * interupts);
 	vec3 imgtex_color = vec3(imgtex.r, imgtex.g, imgtex.b);
-	
+
 	ALBEDO = imgtex_color;
-	
+
 	if(enable_glow)
 	{
 		vec3 fresnel_color = vec3(glow_color.r, glow_color.g, glow_color.b);
 		vec3 fresnel = fresnel_glow(glow_amount, glow_itensity, fresnel_color, NORMAL, VIEW);
 		ALBEDO += fresnel;
 	}
-	
+
 	EMISSION = glow_amount * vec3(glow_color.r, glow_color.g, glow_color.b);
-	
+
 	if(enable_lines)
 		ALPHA = lines.x * interupts.x;
 }

@@ -1,0 +1,779 @@
+[gd_scene load_steps=42 format=3 uid="uid://chxomueyivgjk"]
+
+[ext_resource type="Script" uid="uid://cxbc5aocp4eyw" path="res://scripts/giant/Giant.cs" id="1_t3qk4"]
+[ext_resource type="ArrayMesh" uid="uid://c3tjl2r2ngq0j" path="res://models/giants/hammer_beret/meshes/hammer_beret.res" id="1_yyevl"]
+[ext_resource type="Animation" uid="uid://b3n5bco2jjsf2" path="res://models/giants/hammer_beret/animations/dash_attack_charge.res" id="2_16oe3"]
+[ext_resource type="Animation" uid="uid://brw7n8rwg3x25" path="res://models/giants/hammer_beret/animations/dash_attack_swing.res" id="3_c4nvs"]
+[ext_resource type="PackedScene" uid="uid://c06728ka5lnsp" path="res://prefabs/climb/animated_climbable_entity.tscn" id="4_2kj2o"]
+[ext_resource type="Animation" uid="uid://ernfaa1ggydh" path="res://models/giants/hammer_beret/animations/idle.res" id="4_t3qk4"]
+[ext_resource type="Animation" uid="uid://d2c08u0ed20dy" path="res://models/giants/hammer_beret/animations/slam.res" id="5_wstgw"]
+[ext_resource type="Script" uid="uid://btmifgegnirye" path="res://scripts/giant/GiantLimb.cs" id="6_16oe3"]
+[ext_resource type="Script" uid="uid://sbueogfis8dk" path="res://scripts/giant/GiantHitBox.cs" id="9_lo51n"]
+[ext_resource type="AudioStream" uid="uid://c4vpogssy726x" path="res://sounds/Stomp.wav" id="10_33sva"]
+[ext_resource type="Script" uid="uid://bdbiac3np3x03" path="res://scripts/giant/PlayerDetection.cs" id="10_lo51n"]
+[ext_resource type="Script" uid="uid://b1f3u2r5y28rp" path="res://scripts/giant/DetectRing.cs" id="11_2ifnc"]
+[ext_resource type="AudioStream" uid="uid://kqdk2bjafmo0" path="res://sounds/GiantPunch.wav" id="11_lo51n"]
+[ext_resource type="PackedScene" uid="uid://b3y03b005tnj5" path="res://prefabs/giants/giant_hit_point.tscn" id="14_2ifnc"]
+[ext_resource type="Script" uid="uid://d1wtqkvqr46gk" path="res://scripts/giant/dispensers/HammerBeretDispenser.cs" id="15_pm0u3"]
+
+[sub_resource type="Skin" id="Skin_f5hdy"]
+resource_name = "Skin"
+bind_count = 16
+bind/0/name = &"Pelvis"
+bind/0/bone = -1
+bind/0/pose = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.19105, -3.02356e-09)
+bind/1/name = &"Body"
+bind/1/bone = -1
+bind/1/pose = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5368, -3.02356e-09)
+bind/2/name = &"Upperarm.L"
+bind/2/bone = -1
+bind/2/pose = Transform3D(4.37114e-08, 0, -1, 0, -1, 0, -1, 0, -4.37114e-08, -4.37114e-08, 0.5, 1)
+bind/3/name = &"Forearm.L"
+bind/3/bone = -1
+bind/3/pose = Transform3D(-7.54979e-08, -1, 0, 1.44253e-22, 1.91069e-15, 1, -1, 7.54979e-08, 0, -0.75, 1.43301e-15, 1)
+bind/4/name = &"Hand.L"
+bind/4/bone = -1
+bind/4/pose = Transform3D(-7.54979e-08, -1, 0, 1.44253e-22, 1.91069e-15, 1, -1, 7.54979e-08, 0, -0.75, -1.5, 1)
+bind/5/name = &"Upperarm.R"
+bind/5/bone = -1
+bind/5/pose = Transform3D(4.37114e-08, 0, 1, 0, -1, 0, 1, 0, -4.37114e-08, 4.37114e-08, 0.5, 1)
+bind/6/name = &"Forearm.R"
+bind/6/bone = -1
+bind/6/pose = Transform3D(-7.54979e-08, 1, 0, -1.44253e-22, 1.91069e-15, 1, 1, 7.54979e-08, 0, 0.75, 1.43301e-15, 1)
+bind/7/name = &"Hand.R"
+bind/7/bone = -1
+bind/7/pose = Transform3D(-7.54979e-08, 1, 0, -1.44253e-22, 1.91069e-15, 1, 1, 7.54979e-08, 0, 0.75, -1.5, 1)
+bind/8/name = &"Thigh.L"
+bind/8/bone = -1
+bind/8/pose = Transform3D(0.00223604, 0.00379973, 0.999049, -0.00379613, -0.999986, 0.00380462, 0.999048, -0.00380102, -0.000334547, 0.00210762, -0.932055, -0.350557)
+bind/9/name = &"Calf.L"
+bind/9/bone = -1
+bind/9/pose = Transform3D(0.00222808, -0.0143026, 0.998954, -0.01429, -0.999796, -0.0142756, 0.998952, -0.0142629, -0.000545079, -0.0242333, -1.45001, -0.365748)
+bind/10/name = &"Thigh.R"
+bind/10/bone = -1
+bind/10/pose = Transform3D(0.00223604, -0.00379973, -0.999049, 0.00379613, -0.999986, 0.00380462, -0.999048, -0.00380102, -0.000334547, -0.00210762, -0.932055, -0.350557)
+bind/11/name = &"Calf.R"
+bind/11/bone = -1
+bind/11/pose = Transform3D(0.00222808, 0.0143026, -0.998954, 0.01429, -0.999796, -0.0142756, -0.998952, -0.0142629, -0.000545079, 0.0242333, -1.45001, -0.365748)
+bind/12/name = &"LegControl.L"
+bind/12/bone = -1
+bind/12/pose = Transform3D(0.00223072, -0.999998, 0, 0, 0, -1, 0.999998, 0.00223072, 0, -2.15602, -0.00734765, -0.330547)
+bind/13/name = &"LegPoleTarget.L"
+bind/13/bone = -1
+bind/13/pose = Transform3D(0.00602711, 0.999982, 0, 0, 0, 1, 0.999982, -0.00602711, 0, 1.45317, -2.00265, -0.35412)
+bind/14/name = &"LegControl.R"
+bind/14/bone = -1
+bind/14/pose = Transform3D(0.00223072, 0.999998, 0, 0, 0, -1, -0.999998, 0.00223072, 0, 2.15602, -0.00734765, -0.330547)
+bind/15/name = &"LegPoleTarget.R"
+bind/15/bone = -1
+bind/15/pose = Transform3D(0.00602711, -0.999982, 0, 0, 0, 1, -0.999982, -0.00602711, 0, -1.45317, -2.00265, -0.35412)
+
+[sub_resource type="Animation" id="Animation_2ifnc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SwipeHitBox:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 5, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SwipeHitBox:monitoring")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SwipeHitBox:monitorable")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SlamHitBox:monitoring")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("SlamHitBox:monitorable")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("SlamHitBox:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 5, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".:TrackPlayer")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath(".:ShakeCamera")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath(".:ShakeGround")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("LeftHammerHitBox:monitoring")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("LeftHammerHitBox:monitorable")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("RightHammerHitBox:monitoring")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("RightHammerHitBox:monitorable")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pm0u3"]
+_data = {
+&"RESET": SubResource("Animation_2ifnc")
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2ifnc"]
+_data = {
+&"dash_attack_charge": ExtResource("2_16oe3"),
+&"dash_attack_swing": ExtResource("3_c4nvs"),
+&"idle": ExtResource("4_t3qk4"),
+&"slam": ExtResource("5_wstgw")
+}
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_c4nvs"]
+radius = 1.0
+height = 2.25
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_t3qk4"]
+radius = 1.0
+height = 2.25
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wstgw"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 0.12549)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_33sva"]
+height = 2.25
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_lo51n"]
+height = 2.25
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lo51n"]
+radius = 0.6
+height = 2.25
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_2ifnc"]
+radius = 0.6
+height = 2.25
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7bofk"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1, 0, 0.983333, 0.12549)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_t3qk4"]
+radius = 0.35
+height = 1.0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_wstgw"]
+radius = 0.35
+height = 1.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7vush"]
+height = 1.25
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_2kj2o"]
+height = 1.25
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pm0u3"]
+radius = 1.5
+height = 4.0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_8k3i8"]
+radius = 1.5
+height = 4.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8k3i8"]
+radius = 1.0
+height = 4.0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_n00e8"]
+radius = 1.0
+height = 4.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_33sva"]
+height = 4.5
+radius = 3.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_lo51n"]
+top_radius = 3.0
+bottom_radius = 3.0
+height = 4.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n00e8"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0, 1, 0.116667, 0.25098)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_2ifnc"]
+height = 4.5
+radius = 1.25
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_pm0u3"]
+top_radius = 1.25
+bottom_radius = 1.25
+height = 4.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xp6ny"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0, 0.25, 1, 0.25098)
+
+[node name="HammerBeret" type="Node3D" node_paths=PackedStringArray("StompSound", "ClimbAnimatedEntities", "ArmLimbs", "Fists", "HitPoints")]
+script = ExtResource("1_t3qk4")
+StompSound = NodePath("StompSound")
+GiantJson = "hammer_beret.json"
+TurnSpeed = 5.0
+ClimbAnimatedEntities = [NodePath("Armature/Skeleton3D/Mesh/AnimatedClimbableEntity")]
+ArmLimbs = []
+Fists = []
+HitPoints = [NodePath("LeftHitPoint"), NodePath("RightHitPoint")]
+
+[node name="Armature" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.19105, 0)
+
+[node name="Skeleton3D" type="Skeleton3D" parent="Armature"]
+bones/0/name = "Pelvis"
+bones/0/parent = -1
+bones/0/rest = Transform3D(1, 2.29137e-17, -1.18545e-18, -2.29137e-17, 0.994661, -0.103194, -1.18545e-18, 0.103194, 0.994661, 0, -0.0604453, -0.151376)
+bones/0/enabled = true
+bones/0/position = Vector3(0, -0.0604453, -0.151376)
+bones/0/rotation = Quaternion(0.0516661, -4.57963e-27, -1.14722e-17, 0.998664)
+bones/0/scale = Vector3(1, 1, 1)
+bones/1/name = "Body"
+bones/1/parent = 0
+bones/1/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.27181e-25, 0.654246, 0)
+bones/1/enabled = true
+bones/1/position = Vector3(8.27181e-25, 0.654246, 0)
+bones/1/rotation = Quaternion(0, 0, 0, 1)
+bones/1/scale = Vector3(1, 1, 1)
+bones/2/name = "Upperarm.L"
+bones/2/parent = 1
+bones/2/rest = Transform3D(-0.395246, 0.368649, -0.841355, 0.417743, -0.743602, -0.522061, -0.818091, -0.557813, 0.139905, 1, 1.0368, -3.02356e-09)
+bones/2/enabled = true
+bones/2/position = Vector3(1, 1.0368, -3.02356e-09)
+bones/2/rotation = Quaternion(-0.549648, -0.35768, 0.754777, 0.016261)
+bones/2/scale = Vector3(1, 1, 1)
+bones/3/name = "Forearm.L"
+bones/3/parent = 2
+bones/3/rest = Transform3D(-0.0866205, -0.995047, 0.0487696, 0.867063, -0.0994061, -0.48818, 0.49061, -7.11937e-08, 0.871379, -6.66134e-16, 1.25, 4.61105e-15)
+bones/3/enabled = true
+bones/3/position = Vector3(-6.66134e-16, 1.25, 4.61105e-15)
+bones/3/rotation = Quaternion(0.18802, -0.170173, 0.717183, 0.649106)
+bones/3/scale = Vector3(1, 1, 1)
+bones/4/name = "Hand.L"
+bones/4/parent = 3
+bones/4/rest = Transform3D(1, -1.49012e-08, -7.06379e-15, 1.49012e-08, 1, -5.58794e-09, 7.14706e-15, 5.58794e-09, 1, -1.58933e-08, 1.5, -2.63066e-08)
+bones/4/enabled = true
+bones/4/position = Vector3(-1.58933e-08, 1.5, -2.63066e-08)
+bones/4/rotation = Quaternion(2.79397e-09, -3.55271e-15, 7.45058e-09, 1)
+bones/4/scale = Vector3(1, 1, 1)
+bones/5/name = "Upperarm.R"
+bones/5/parent = 1
+bones/5/rest = Transform3D(-0.395246, -0.368649, 0.841355, -0.417743, -0.743601, -0.522061, 0.81809, -0.557813, 0.139905, -1, 1.0368, -3.02356e-09)
+bones/5/enabled = true
+bones/5/position = Vector3(-1, 1.0368, -3.02356e-09)
+bones/5/rotation = Quaternion(0.549648, -0.35768, 0.754777, -0.016261)
+bones/5/scale = Vector3(1, 1, 1)
+bones/6/name = "Forearm.R"
+bones/6/parent = 5
+bones/6/rest = Transform3D(-0.0866205, 0.995047, -0.0487695, -0.867063, -0.0994061, -0.48818, -0.49061, -1.16452e-07, 0.871379, -2.98023e-08, 1.25, -3.0863e-15)
+bones/6/enabled = true
+bones/6/position = Vector3(-2.98023e-08, 1.25, -3.0863e-15)
+bones/6/rotation = Quaternion(0.18802, 0.170173, -0.717183, 0.649106)
+bones/6/scale = Vector3(1, 1, 1)
+bones/7/name = "Hand.R"
+bones/7/parent = 6
+bones/7/rest = Transform3D(1, 2.51463e-22, 7.10543e-15, 1.32349e-23, 1, -3.72529e-08, -7.10543e-15, 3.72529e-08, 1, -1.39091e-08, 1.5, -2.63066e-08)
+bones/7/enabled = true
+bones/7/position = Vector3(-1.39091e-08, 1.5, -2.63066e-08)
+bones/7/rotation = Quaternion(1.86265e-08, 3.55271e-15, -5.9557e-23, 1)
+bones/7/scale = Vector3(1, 1, 1)
+bones/8/name = "Thigh.L"
+bones/8/parent = 0
+bones/8/rest = Transform3D(-0.0829209, 0.250419, 0.967482, 0.4655, -0.846407, 0.260527, 0.88451, 0.468924, -0.0464111, 0.34734, 0.257662, 0.000662942)
+bones/8/enabled = true
+bones/8/position = Vector3(0.34734, 0.257662, 0.000662942)
+bones/8/rotation = Quaternion(0.672885, 0.265472, 0.686076, 0.0777811)
+bones/8/scale = Vector3(1.00301, 0.999458, 1.003)
+bones/9/name = "Calf.L"
+bones/9/parent = 8
+bones/9/rest = Transform3D(0.877551, -0.474259, -0.0711415, 0.474898, 0.835475, 0.274507, -0.0708165, -0.274252, 0.959278, -3.30409e-08, 0.521901, -9.13643e-09)
+bones/9/enabled = true
+bones/9/position = Vector3(-3.30409e-08, 0.521901, -9.13643e-09)
+bones/9/rotation = Quaternion(-0.143218, -8.45057e-05, 0.247718, 0.958188)
+bones/9/scale = Vector3(1.00032, 0.999077, 1.00031)
+bones/10/name = "Thigh.R"
+bones/10/parent = 0
+bones/10/rest = Transform3D(-0.0829209, -0.250419, -0.967482, -0.4655, -0.846407, 0.260527, -0.88451, 0.468924, -0.0464111, -0.34734, 0.257662, 0.000662942)
+bones/10/enabled = true
+bones/10/position = Vector3(-0.34734, 0.257662, 0.000662942)
+bones/10/rotation = Quaternion(-0.672885, 0.265472, 0.686076, -0.0777811)
+bones/10/scale = Vector3(1.00301, 0.999458, 1.003)
+bones/11/name = "Calf.R"
+bones/11/parent = 10
+bones/11/rest = Transform3D(0.877551, 0.474259, 0.0711415, -0.474898, 0.835475, 0.274507, 0.0708165, -0.274252, 0.959278, 2.18669e-08, 0.521901, -9.13575e-09)
+bones/11/enabled = true
+bones/11/position = Vector3(2.18669e-08, 0.521901, -9.13575e-09)
+bones/11/rotation = Quaternion(-0.143218, 8.4509e-05, -0.247718, 0.958188)
+bones/11/scale = Vector3(1.00032, 0.999077, 1.00031)
+bones/12/name = "LegControl.L"
+bones/12/parent = -1
+bones/12/rest = Transform3D(0.0022307, -5.94714e-08, 0.999998, -0.999998, -5.97375e-08, 0.0022307, 5.96047e-08, -1, -5.96045e-08, 0.467809, -0.964232, -0.00734766)
+bones/12/enabled = true
+bones/12/position = Vector3(0.467809, -0.964232, -0.00734766)
+bones/12/rotation = Quaternion(-0.500557, 0.499442, -0.499442, 0.500557)
+bones/12/scale = Vector3(1, 1, 1)
+bones/13/name = "LegPoleTarget.L"
+bones/13/parent = -1
+bones/13/rest = Transform3D(0.00602704, -5.92432e-08, 0.999982, 0.999982, 5.99628e-08, -0.00602704, -5.96047e-08, 1, 5.96036e-08, 0.345355, -0.264232, 2.00265)
+bones/13/enabled = true
+bones/13/position = Vector3(0.345355, -0.264232, 2.00265)
+bones/13/rotation = Quaternion(0.501504, 0.498491, 0.498491, 0.501505)
+bones/13/scale = Vector3(1, 1, 1)
+bones/14/name = "LegControl.R"
+bones/14/parent = -1
+bones/14/rest = Transform3D(0.0022307, 5.94714e-08, -0.999998, 0.999998, -5.97375e-08, 0.0022307, -5.96047e-08, -1, -5.96045e-08, -0.467809, -0.964232, -0.00734766)
+bones/14/enabled = true
+bones/14/position = Vector3(-0.467809, -0.964232, -0.00734766)
+bones/14/rotation = Quaternion(-0.500557, -0.499442, 0.499442, 0.500557)
+bones/14/scale = Vector3(1, 1, 1)
+bones/15/name = "LegPoleTarget.R"
+bones/15/parent = -1
+bones/15/rest = Transform3D(0.00602704, 5.92432e-08, -0.999982, -0.999982, 5.99628e-08, -0.00602704, 5.96047e-08, 1, 5.96036e-08, -0.345355, -0.264232, 2.00265)
+bones/15/enabled = true
+bones/15/position = Vector3(-0.345355, -0.264232, 2.00265)
+bones/15/rotation = Quaternion(0.501504, -0.498491, -0.498491, 0.501505)
+bones/15/scale = Vector3(1, 1, 1)
+
+[node name="Mesh" type="MeshInstance3D" parent="Armature/Skeleton3D"]
+mesh = ExtResource("1_yyevl")
+skin = SubResource("Skin_f5hdy")
+
+[node name="AnimatedClimbableEntity" parent="Armature/Skeleton3D/Mesh" instance=ExtResource("4_2kj2o")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_pm0u3"),
+&"hammer_beret": SubResource("AnimationLibrary_2ifnc")
+}
+autoplay = "hammer_beret/idle"
+
+[node name="Body" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
+transform = Transform3D(1, 0, 0, 0, 0.984808, -0.173648, 0, 0.173648, 0.984808, 0, -0.2, -0.025)
+collision_layer = 64
+script = ExtResource("6_16oe3")
+Bone = "Body"
+Skeleton = NodePath("../Armature/Skeleton3D")
+AdditionalDetectBones = PackedStringArray("Pelvis")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.49012e-08, 0, 1.49012e-08, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_c4nvs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_t3qk4")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_wstgw")
+
+[node name="LeftUpperarm" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
+transform = Transform3D(0.906308, -0.422618, 0, 0.298836, 0.640857, -0.707107, 0.298836, 0.640856, 0.707107, 1.25, 0.075, -0.3)
+collision_layer = 64
+script = ExtResource("6_16oe3")
+Bone = "Upperarm.L"
+Skeleton = NodePath("../Armature/Skeleton3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftUpperarm"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.49012e-08, 0, 1.49012e-08, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_33sva")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LeftUpperarm"]
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_lo51n")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_wstgw")
+
+[node name="LeftForearm" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
+transform = Transform3D(0.906307, -0.422618, 0, 0.211309, 0.453154, 0.866026, -0.365998, -0.784886, 0.5, 1.725, -0.725, -0.2)
+collision_layer = 64
+script = ExtResource("6_16oe3")
+Bone = "Forearm.L"
+Skeleton = NodePath("../Armature/Skeleton3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftForearm"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.49012e-08, 0, 1.49012e-08, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_33sva")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LeftForearm"]
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_lo51n")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_wstgw")
+
+[node name="LeftHammer" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
+transform = Transform3D(0.998629, 0.052336, 0, -0.0474325, 0.905066, -0.422618, -0.0221181, 0.422039, 0.906308, 2, -1.05, 0.5)
+collision_layer = 64
+script = ExtResource("6_16oe3")
+Bone = "Hand.L"
+Skeleton = NodePath("../Armature/Skeleton3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftHammer"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.49012e-08, 0, 1.49012e-08, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_lo51n")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LeftHammer"]
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_2ifnc")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_wstgw")
+
+[node name="RightUpperarm" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
+transform = Transform3D(0.906308, 0.422618, 0, -0.298836, 0.640856, -0.707107, -0.298836, 0.640856, 0.707107, -1.25, 0.075, -0.3)
+collision_layer = 64
+script = ExtResource("6_16oe3")
+Bone = "Upperarm.R"
+Skeleton = NodePath("../Armature/Skeleton3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RightUpperarm"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.49012e-08, 0, 1.49012e-08, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_33sva")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RightUpperarm"]
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_lo51n")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_wstgw")
+
+[node name="RightForearm" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
+transform = Transform3D(0.906307, 0.422618, 0, -0.211309, 0.453154, 0.866026, 0.365998, -0.784886, 0.5, -1.725, -0.725, -0.2)
+collision_layer = 64
+script = ExtResource("6_16oe3")
+Bone = "Forearm.R"
+Skeleton = NodePath("../Armature/Skeleton3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RightForearm"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.49012e-08, 0, 1.49012e-08, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_33sva")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RightForearm"]
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_lo51n")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_wstgw")
+
+[node name="RightHammer" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
+transform = Transform3D(0.998629, -0.052336, 0, 0.0474325, 0.905066, -0.422618, 0.0221181, 0.422039, 0.906308, -2, -1.05, 0.5)
+collision_layer = 64
+script = ExtResource("6_16oe3")
+Bone = "Hand.R"
+Skeleton = NodePath("../Armature/Skeleton3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RightHammer"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.49012e-08, 0, 1.49012e-08, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_lo51n")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RightHammer"]
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_2ifnc")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_wstgw")
+
+[node name="LeftHammerHitBox" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
+transform = Transform3D(0.998629, 0.052336, 0, -0.0474325, 0.905066, -0.422618, -0.0221181, 0.422039, 0.906308, 2, -1.05, 0.5)
+collision_layer = 128
+monitoring = false
+monitorable = false
+script = ExtResource("9_lo51n")
+Bone = "Hand.L"
+Skeleton = NodePath("../Armature/Skeleton3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftHammerHitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.49012e-08, 0, 1.49012e-08, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_lo51n")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LeftHammerHitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_2ifnc")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_7bofk")
+
+[node name="RightHammerHitBox" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
+transform = Transform3D(0.998629, -0.052336, 0, 0.0474325, 0.905066, -0.422618, 0.0221181, 0.422039, 0.906308, -2, -1.05, 0.5)
+collision_layer = 128
+monitoring = false
+monitorable = false
+script = ExtResource("9_lo51n")
+Bone = "Hand.R"
+Skeleton = NodePath("../Armature/Skeleton3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RightHammerHitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.49012e-08, 0, 1.49012e-08, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_lo51n")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RightHammerHitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_2ifnc")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_7bofk")
+
+[node name="LeftThigh" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
+transform = Transform3D(0.965926, -0.258819, 0, 0.23457, 0.875426, 0.422618, -0.109382, -0.408218, 0.906308, 0.4, -1.2, -0.05)
+collision_layer = 64
+script = ExtResource("6_16oe3")
+Bone = "Thigh.L"
+Skeleton = NodePath("../Armature/Skeleton3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftThigh"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.49012e-08, 0, 1.49012e-08, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_t3qk4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LeftThigh"]
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_wstgw")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_wstgw")
+
+[node name="LeftCalf" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
+transform = Transform3D(1, 0, 0, 0, 0.996195, -0.0871558, 0, 0.0871558, 0.996195, 0.5, -1.8, 0.05)
+collision_layer = 64
+script = ExtResource("6_16oe3")
+Bone = "Calf.L"
+Skeleton = NodePath("../Armature/Skeleton3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftCalf"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.49012e-08, 0, 1.49012e-08, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_7vush")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LeftCalf"]
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_2kj2o")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_wstgw")
+
+[node name="RightThigh" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
+transform = Transform3D(0.965926, 0.258819, 0, -0.23457, 0.875426, 0.422618, 0.109382, -0.408218, 0.906308, -0.4, -1.2, -0.05)
+collision_layer = 64
+script = ExtResource("6_16oe3")
+Bone = "Thigh.R"
+Skeleton = NodePath("../Armature/Skeleton3D")
+AdditionalDetectBones = PackedStringArray("Pelvis")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RightThigh"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.49012e-08, 0, 1.49012e-08, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_t3qk4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RightThigh"]
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_wstgw")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_wstgw")
+
+[node name="RightCalf" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
+transform = Transform3D(1, 0, 0, 0, 0.996195, -0.0871558, 0, 0.0871558, 0.996195, -0.5, -1.8, 0.05)
+collision_layer = 64
+script = ExtResource("6_16oe3")
+Bone = "Calf.R"
+Skeleton = NodePath("../Armature/Skeleton3D")
+AdditionalDetectBones = PackedStringArray("Pelvis")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RightCalf"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.49012e-08, 0, 1.49012e-08, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_7vush")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RightCalf"]
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_2kj2o")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_wstgw")
+
+[node name="SwipeHitBox" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+visible = false
+collision_layer = 128
+monitoring = false
+monitorable = false
+script = ExtResource("9_lo51n")
+Bone = "Hand.L"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SwipeHitBox"]
+shape = SubResource("CapsuleShape3D_pm0u3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SwipeHitBox"]
+mesh = SubResource("CapsuleMesh_8k3i8")
+surface_material_override/0 = SubResource("StandardMaterial3D_7bofk")
+
+[node name="SlamHitBox" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+visible = false
+collision_layer = 128
+monitoring = false
+monitorable = false
+script = ExtResource("9_lo51n")
+Bone = "Hand.L"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SlamHitBox"]
+shape = SubResource("CapsuleShape3D_8k3i8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SlamHitBox"]
+mesh = SubResource("CapsuleMesh_n00e8")
+surface_material_override/0 = SubResource("StandardMaterial3D_7bofk")
+
+[node name="PlayerDetection" type="Node3D" parent="." node_paths=PackedStringArray("DetectionZones")]
+script = ExtResource("10_lo51n")
+DetectionZones = [NodePath("../NegateDetectRing"), null, null, NodePath("../FloorDetectRing")]
+
+[node name="FloorDetectRing" type="ShapeCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+shape = SubResource("CylinderShape3D_33sva")
+target_position = Vector3(0, 0, 0)
+script = ExtResource("11_2ifnc")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FloorDetectRing"]
+mesh = SubResource("CylinderMesh_lo51n")
+surface_material_override/0 = SubResource("StandardMaterial3D_n00e8")
+
+[node name="NegateDetectRing" type="ShapeCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+shape = SubResource("CylinderShape3D_2ifnc")
+target_position = Vector3(0, 0, 0)
+script = ExtResource("11_2ifnc")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NegateDetectRing"]
+mesh = SubResource("CylinderMesh_pm0u3")
+surface_material_override/0 = SubResource("StandardMaterial3D_xp6ny")
+
+[node name="StompSound" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 1.75)
+stream = ExtResource("10_33sva")
+volume_db = 10.0
+
+[node name="PunchSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("11_lo51n")
+volume_db = 10.0
+
+[node name="LeftHitPoint" parent="." node_paths=PackedStringArray("Skeleton") instance=ExtResource("14_2ifnc")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 1, 0.425, 0.4)
+HP = 25
+Bone = "Upperarm.L"
+Skeleton = NodePath("../Armature/Skeleton3D")
+
+[node name="RightHitPoint" parent="." node_paths=PackedStringArray("Skeleton") instance=ExtResource("14_2ifnc")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -1, 0.425, 0.4)
+HP = 25
+Bone = "Upperarm.R"
+Skeleton = NodePath("../Armature/Skeleton3D")
+
+[node name="GiantActionDispenser" type="Node3D" parent="."]
+script = ExtResource("15_pm0u3")

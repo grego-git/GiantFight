@@ -1,0 +1,274 @@
+[gd_scene load_steps=23 format=3 uid="uid://cu1l18pjc1gbe"]
+
+[ext_resource type="Script" uid="uid://dw4e5naidgovb" path="res://scripts/World.cs" id="1_a3jc1"]
+[ext_resource type="Script" uid="uid://malwywbfl2rv" path="res://scripts/ui/ResetLabel.cs" id="2_2sc6f"]
+[ext_resource type="Script" uid="uid://ddyrpchrdol72" path="res://scripts/ui/PauseLabel.cs" id="3_3sudk"]
+[ext_resource type="PackedScene" uid="uid://du1k0c5uambax" path="res://prefabs/practice/controls_ui.tscn" id="4_b3wve"]
+[ext_resource type="Script" uid="uid://ctitt2qrhgui7" path="res://scripts/ui/FPS.cs" id="5_t4uwm"]
+[ext_resource type="Script" uid="uid://762odk34n8kn" path="res://scripts/ui/StateLabel.cs" id="6_0jucs"]
+[ext_resource type="Script" uid="uid://p2ulqxveulw4" path="res://scripts/ui/StaminaLabel.cs" id="7_utxse"]
+[ext_resource type="Script" uid="uid://dspakg42jctrl" path="res://scripts/ui/DashCooldownLabel.cs" id="8_2sls0"]
+[ext_resource type="Script" uid="uid://drqwf5d27s12x" path="res://scripts/ui/GiantHPLabel.cs" id="9_fl6d2"]
+[ext_resource type="Script" uid="uid://dj7i8ts6h6d2s" path="res://scripts/ui/DetectLabel.cs" id="10_u2msv"]
+[ext_resource type="PackedScene" uid="uid://c0dtdw4tsi2e8" path="res://prefabs/ui/fatigue_needle.tscn" id="11_gcviv"]
+[ext_resource type="Script" uid="uid://blbr1rr2iwir0" path="res://scripts/ui/FadeIn.cs" id="12_sjhnb"]
+[ext_resource type="Texture2D" uid="uid://cn3xcck2xva54" path="res://textures/texture_09.png" id="13_irahs"]
+[ext_resource type="PackedScene" uid="uid://chxomueyivgjk" path="res://prefabs/giants/hammer_beret.tscn" id="14_a3jc1"]
+[ext_resource type="Script" uid="uid://ykvsm1kkb6uj" path="res://scripts/climb/CreateCollisionShape.cs" id="15_qfqn7"]
+[ext_resource type="PackedScene" uid="uid://didvpehlarxml" path="res://prefabs/player/player_container.tscn" id="16_bwwpl"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_awone"]
+
+[sub_resource type="Sky" id="Sky_dqwrh"]
+sky_material = SubResource("ProceduralSkyMaterial_awone")
+
+[sub_resource type="Environment" id="Environment_ke55c"]
+background_mode = 2
+sky = SubResource("Sky_dqwrh")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_klrrp"]
+size = Vector3(1000, 1, 1000)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_fdj5p"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tlxtn"]
+albedo_texture = ExtResource("13_irahs")
+uv1_scale = Vector3(50, 50, 50)
+texture_filter = 0
+
+[node name="ClimbTestScene" type="Node3D"]
+
+[node name="World" type="Node3D" parent="."]
+process_mode = 3
+script = ExtResource("1_a3jc1")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Reset" type="RichTextLabel" parent="CanvasLayer" node_paths=PackedStringArray("World")]
+process_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -255.0
+offset_top = 16.0
+offset_right = 257.0
+offset_bottom = 80.0
+grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/normal_font_size = 28
+text = "PRESS 'R' TO RESET"
+horizontal_alignment = 1
+script = ExtResource("2_2sc6f")
+World = NodePath("../../World")
+
+[node name="Pause" type="RichTextLabel" parent="CanvasLayer"]
+process_mode = 3
+visible = false
+clip_contents = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -32.0
+offset_right = 256.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/normal_font_size = 28
+text = "PAUSED"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("3_3sudk")
+
+[node name="Controls" parent="CanvasLayer/Pause" instance=ExtResource("4_b3wve")]
+layout_mode = 1
+offset_left = 69.0
+offset_right = 320.0
+
+[node name="Return" type="RichTextLabel" parent="CanvasLayer/Pause"]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -256.0
+offset_top = 128.0
+offset_right = 256.0
+offset_bottom = 256.0
+grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/normal_font_size = 16
+text = "PRESS 'BACKSPACE' TO 
+RETURN TO TUTORIAL"
+horizontal_alignment = 1
+
+[node name="FPS" type="RichTextLabel" parent="CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -80.0
+offset_right = 272.0
+offset_bottom = -16.0
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "FPS: "
+vertical_alignment = 2
+script = ExtResource("5_t4uwm")
+
+[node name="CharacterState" type="RichTextLabel" parent="CanvasLayer" node_paths=PackedStringArray("CharacterData")]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -112.0
+offset_right = 272.0
+offset_bottom = -48.0
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "STATE: "
+vertical_alignment = 2
+script = ExtResource("6_0jucs")
+CharacterData = NodePath("../../PlayerContainer")
+
+[node name="Stamina" type="RichTextLabel" parent="CanvasLayer" node_paths=PackedStringArray("CharacterData")]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 272.0
+offset_bottom = 80.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "STAMINA: "
+script = ExtResource("7_utxse")
+CharacterData = NodePath("../../PlayerContainer")
+
+[node name="Dash" type="RichTextLabel" parent="CanvasLayer" node_paths=PackedStringArray("CharacterData")]
+offset_left = 16.0
+offset_top = 48.0
+offset_right = 272.0
+offset_bottom = 112.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "DASH: "
+script = ExtResource("8_2sls0")
+CharacterData = NodePath("../../PlayerContainer")
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.966667, 0, 1, 1)
+
+[node name="GiantHP" type="RichTextLabel" parent="CanvasLayer" node_paths=PackedStringArray("Giant")]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -272.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = 80.0
+grow_horizontal = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "HP: "
+horizontal_alignment = 2
+script = ExtResource("9_fl6d2")
+Giant = NodePath("../../HammerBeret")
+
+[node name="GiantDetectionZone" type="RichTextLabel" parent="CanvasLayer" node_paths=PackedStringArray("Giant")]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -272.0
+offset_top = -80.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "DETECT ZONE: "
+horizontal_alignment = 2
+vertical_alignment = 2
+script = ExtResource("10_u2msv")
+Giant = NodePath("../../HammerBeret")
+
+[node name="FatigueNeedle" parent="CanvasLayer" node_paths=PackedStringArray("CharacterData") instance=ExtResource("11_gcviv")]
+CharacterData = NodePath("../../PlayerContainer")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/FatigueNeedle"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -96.0
+offset_top = -64.0
+offset_right = 96.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "[center]'LEFT CLICK' OR 'SPACE' WHEN DIAL IS IN THE MIDDLE TO REFILL STAMINA"
+
+[node name="FadeIn" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+script = ExtResource("12_sjhnb")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ke55c")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 0, 100, 0)
+
+[node name="Ground" type="StaticBody3D" parent="."]
+collision_layer = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_klrrp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(500, 0, 0, 0, 1, 0, 0, 0, 500, 0, 0.5, 0)
+mesh = SubResource("PlaneMesh_fdj5p")
+surface_material_override/0 = SubResource("StandardMaterial3D_tlxtn")
+
+[node name="HammerBeret" parent="." node_paths=PackedStringArray("CharacterData") instance=ExtResource("14_a3jc1")]
+transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 25, 0, 53, 0)
+CharacterData = NodePath("../PlayerContainer")
+
+[node name="CreateCollisionShape" type="Node3D" parent="." node_paths=PackedStringArray("CharacterData", "Giant")]
+script = ExtResource("15_qfqn7")
+CharacterData = NodePath("../PlayerContainer")
+Giant = NodePath("../HammerBeret")
+
+[node name="PlayerContainer" parent="." node_paths=PackedStringArray("World") instance=ExtResource("16_bwwpl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 200)
+World = NodePath("../World")

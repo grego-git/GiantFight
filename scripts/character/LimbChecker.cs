@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public partial class LimbChecker : ShapeCast3D
 {
@@ -20,7 +21,17 @@ public partial class LimbChecker : ShapeCast3D
             GiantLimb limb = (GiantLimb)GetCollider(i);
 
             if (limb.Monitorable)
+            {
                 limbsDetected.Add(limb.Bone);
+
+                if (limb.AdditionalDetectBones == null || limb.AdditionalDetectBones.Count() == 0)
+                    continue;
+                
+                foreach (string additionalBone in limb.AdditionalDetectBones)
+                {
+                    limbsDetected.Add(additionalBone);
+                }
+            }
         }
 
         return limbsDetected;

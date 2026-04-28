@@ -46,6 +46,9 @@ public partial class PlayerDetection : Node3D
             
             for (int i = 0; i < DetectionZones.Length; i++)
             {
+                if (DetectionZones[i] == null)
+                    continue;
+
                 DetectionZones[i].ForceUpdateTransform();
 
                 if (DetectionZones[i].IsColliding())

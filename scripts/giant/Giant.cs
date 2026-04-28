@@ -29,6 +29,8 @@ public partial class Giant : Node3D
     public bool StunPlayer { get; set; }
     [Export]
     public bool ShakeCamera { get; set; }
+    [Export]
+    public bool ShakeGround { get; set; }
 
     [Export]
     public ClimbableAnimatedEntity[] ClimbAnimatedEntities { get; set; }
@@ -53,6 +55,7 @@ public partial class Giant : Node3D
     public PlayerDetection PlayerDetection { get; set; }
     public AnimationPlayer AnimPlayer { get; set; }
     public GiantProfile GiantProfile { get; set; }
+    public GiantActionDispenser ActionDispenser { get; set; }
     public Meter AgroMeter { get; set; }
     public Meter SlamTimer { get; set; }
     public HashSet<string> BonesPlayerIsOn { get; set; }
@@ -60,8 +63,11 @@ public partial class Giant : Node3D
     public int MaxHP { get; private set; }
     public int CurrentHP { get; private set; }
 
+    [Export]
     public Node3D LeftLegIKTarget { get; set; }
+    [Export]
     public Node3D LeftArmIKTarget { get; set; }
+    [Export]
     public Node3D RightArmIKTarget { get; set; }
 
     private StandardMaterial3D material;
@@ -72,13 +78,10 @@ public partial class Giant : Node3D
         base._Ready();
 
         Skeleton = (Skeleton3D)GetNode("Armature/Skeleton3D");
-        Mesh = (MeshInstance3D)Skeleton.GetNode("Sphere_001");
+        Mesh = (MeshInstance3D)Skeleton.GetNode("Mesh");
         PlayerDetection = (PlayerDetection)GetNode("PlayerDetection");
         AnimPlayer = (AnimationPlayer)GetNode("AnimationPlayer");
-
-        LeftLegIKTarget = (Node3D)GetNode("LeftLegIKTarget");
-        LeftArmIKTarget = (Node3D)GetNode("LeftArmIKTarget");
-        RightArmIKTarget = (Node3D)GetNode("RightArmIKTarget");
+        ActionDispenser = (GiantActionDispenser)GetNode("GiantActionDispenser");
 
         string json = Godot.FileAccess.GetFileAsString("res://giant_jsons/" + GiantJson);
         GiantProfile = JsonConvert.DeserializeObject<GiantProfile>(json);
@@ -88,10 +91,13 @@ public partial class Giant : Node3D
 
         material = (StandardMaterial3D)Mesh.Mesh.SurfaceGetMaterial(0);
         
-        foreach (var hitPoint in HitPoints)
+        if (HitPoints != null && HitPoints.Length > 0)
         {
-            MaxHP += hitPoint.HP;
-            CurrentHP += hitPoint.HP;
+            foreach (var hitPoint in HitPoints)
+            {
+                MaxHP += hitPoint.HP;
+                CurrentHP += hitPoint.HP;
+            }
         }
     }
 
@@ -129,6 +135,14 @@ public partial class Giant : Node3D
                 
                 ShakeCamera = false;
             }
+
+            if (ShakeGround)
+            {
+                if (BonesPlayerIsOn == null || BonesPlayerIsOn.Count == 0)
+                    CharacterData.CameraController.Shake(1.0f, 5.0f);
+                
+                ShakeGround = false;
+            }
         }
         else
         {
@@ -154,8 +168,10 @@ public partial class Giant : Node3D
                         if (SlamTimer.IsFilled())
                         {
                             SlamTimer.Empty();
-                            CurrentAction = new GiantActionPlayAnimation(this, GiantProfile.SlamAnimation);
-                            CurrentAction.Init();
+                            CurrentAction = ActionDispenser.NegateAction(this);
+
+                            if (CurrentAction != null)
+                                CurrentAction.Init();
                         }
                         break;
                     case PlayerDetection.DetectionZoneAreas.NONE:
@@ -164,7 +180,7 @@ public partial class Giant : Node3D
 
                         if (AgroMeter.IsFilled())
                         {
-                            CurrentAction = new GiantActionPlayAnimation(this, GiantProfile.ExternalAttackAnimation);
+                            CurrentAction = ActionDispenser.ExternalAction(this);                            
                             CurrentAction.Init();
                         }
                         break;
@@ -203,17 +219,17 @@ public partial class Giant : Node3D
                         break;
                     case PlayerDetection.DetectionZoneAreas.FLOOR:
                         SlamTimer.Empty();
-                        CurrentAction = new GiantActionTrackStomp(this);
+                        CurrentAction = ActionDispenser.BottomAction(this);
                         CurrentAction.Init();
                         break;
                     case PlayerDetection.DetectionZoneAreas.MIDDLE:
                         SlamTimer.Empty();
-                        CurrentAction = new GiantActionTrackClap(this);
+                        CurrentAction = ActionDispenser.MidAction(this);
                         CurrentAction.Init();
                         break;
                     case PlayerDetection.DetectionZoneAreas.TOP:
                         SlamTimer.Empty();
-                        CurrentAction = new GiantActionTrackPunch(this);
+                        CurrentAction = ActionDispenser.TopAction(this);
                         CurrentAction.Init();
                         break;
                     case PlayerDetection.DetectionZoneAreas.DEAD:

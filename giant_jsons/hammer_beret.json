@@ -1,0 +1,20 @@
+{
+	"ShakeAnimations": {
+
+	},
+	"AttackAnimations": {
+		
+	},
+	"StunBones": {
+		
+	},
+	"ExternalAttackType": "CHARGE",
+	"SlamAnimation": "hammer_beret/idle",
+	"FloorAnimation": "hammer_beret/slam",
+	"MidAnimation": "hammer_beret/idle",
+	"TopAnimation": "hammer_beret/idle",
+	"IdleAnimation": "hammer_beret/idle",
+	"ExternalAttackAnimation": "hammer_beret/dash_attack_swing",
+	"ChargeAttackAnimation": "hammer_beret/dash_attack_charge",
+	"DeadAnimation": "hammer_beret/dead"
+}
