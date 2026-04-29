@@ -1,12 +1,9 @@
-using System.Collections.Generic;
 using Godot;
 
 public class GiantActionShake : IGiantAction
 {
     private Giant giant;
-
     private string animation;
-
     private bool complete;
 
     public GiantActionShake(Giant giant, string animation)

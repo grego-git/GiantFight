@@ -28,4 +28,8 @@ public partial class PillGiantDispenser : GiantActionDispenser, IActionDispenser
         return new GiantActionPlayAnimation(giant, giant.GiantProfile.SlamAnimation);
     }
 
+    public override IGiantAction AttackBodyAction(Giant giant, string animation, bool useLeftHand)
+    {
+        return new GiantActionIKBodyAttack(giant, animation, useLeftHand);
+    }
 }

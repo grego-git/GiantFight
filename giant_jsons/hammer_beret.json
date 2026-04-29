@@ -1,12 +1,51 @@
 {
 	"ShakeAnimations": {
-
+		"hammer_beret/attack_shoulder_left": [
+			"Upperarm.L"
+		],
+		"hammer_beret/attack_shoulder_right": [
+			"Upperarm.R"
+		],
+		"hammer_beret/hammer_clap": [
+			"Forearm.L",
+			"Hand.L",
+			"Forearm.R",
+			"Hand.R"
+		]
 	},
 	"AttackAnimations": {
-		
+		"hammer_beret/attack_shoulder_left": [
+			"Upperarm.L"
+		],
+		"hammer_beret/attack_shoulder_right": [
+			"Upperarm.R"
+		],
+		"hammer_beret/hammer_clap": [
+			"Forearm.L",
+			"Hand.L",
+			"Forearm.R",
+			"Hand.R"
+		]
 	},
 	"StunBones": {
-		
+		"hammer_beret/attack_shoulder_left": [
+			"Upperarm.L",
+			"Forearm.L",
+			"Hand.L"
+		],
+		"hammer_beret/attack_shoulder_right": [
+			"Upperarm.R",
+			"Forearm.R",
+			"Hand.R"
+		],
+		"hammer_beret/hammer_clap": [
+			"Upperarm.L",
+			"Forearm.L",
+			"Hand.L",
+			"Upperarm.R",
+			"Forearm.R",
+			"Hand.R"
+		]
 	},
 	"ExternalAttackType": "CHARGE",
 	"SlamAnimation": "hammer_beret/idle",

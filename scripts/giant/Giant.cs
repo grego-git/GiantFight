@@ -208,7 +208,7 @@ public partial class Giant : Node3D
                                     useLeftHand = false;
                             }
 
-                            CurrentAction = new GiantActionBodyAttack(this, attackAnimation,  useLeftHand);
+                            CurrentAction = ActionDispenser.AttackBodyAction(this, attackAnimation, useLeftHand);
                             CurrentAction.Init();
                         }
                         else if (!string.IsNullOrEmpty(shakeAnimation)) 

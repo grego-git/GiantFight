@@ -28,4 +28,8 @@ public partial class GiantActionDispenser : Node3D, IActionDispenser
         return null;
     }
 
+    public virtual IGiantAction AttackBodyAction(Giant giant, string animation, bool useLeftHand)
+    {
+        return null;
+    }
 }
