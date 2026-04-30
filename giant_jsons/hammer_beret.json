@@ -1,16 +1,12 @@
 {
 	"ShakeAnimations": {
-		"hammer_beret/attack_shoulder_left": [
-			"Upperarm.L"
-		],
-		"hammer_beret/attack_shoulder_right": [
-			"Upperarm.R"
-		],
-		"hammer_beret/hammer_clap": [
-			"Forearm.L",
+		"hammer_beret/shake_hammer_left": [
 			"Hand.L",
-			"Forearm.R",
-			"Hand.R"
+			"Forearm.L"
+		],
+		"hammer_beret/shake_hammer_right": [
+			"Hand.R",
+			"Forearm.R"
 		]
 	},
 	"AttackAnimations": {
@@ -28,15 +24,21 @@
 		]
 	},
 	"StunBones": {
+		"hammer_beret/shake_hammer_left": [
+			"Hand.L",
+			"Forearm.L"
+		],
+		"hammer_beret/shake_hammer_right": [
+			"Hand.R",
+			"Forearm.R"
+		],
 		"hammer_beret/attack_shoulder_left": [
 			"Upperarm.L",
-			"Forearm.L",
-			"Hand.L"
+			"Forearm.L"
 		],
 		"hammer_beret/attack_shoulder_right": [
 			"Upperarm.R",
-			"Forearm.R",
-			"Hand.R"
+			"Forearm.R"
 		],
 		"hammer_beret/hammer_clap": [
 			"Upperarm.L",
