@@ -3,6 +3,9 @@ using System;
 
 public partial class GiantHitPoint : StaticBody3D
 {
+    [Signal]
+    public delegate void HitPointDeadEventHandler();
+
     [Export]
     public int HP { get; set; }
     [Export]
@@ -20,6 +23,7 @@ public partial class GiantHitPoint : StaticBody3D
     private Meter hitMeter;
     private Meter flashMeter;
 
+    private bool dead;
     private float turnColorOff;
 
     public override void _Ready()
@@ -89,11 +93,20 @@ public partial class GiantHitPoint : StaticBody3D
 
     public void Hit(int damage)
     {
+        if (dead)
+            return;
+
         if (!hitMeter.IsEmpty())
             return;
         
         HP -= damage;
         HP = Mathf.Max(HP, 0);
+
+        if (HP == 0)
+        {
+            dead = true;
+            EmitSignal("HitPointDead");
+        }
 
         hitMeter.FillToMax();
         flashMeter.FillToMax();

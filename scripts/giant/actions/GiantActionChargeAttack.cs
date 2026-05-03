@@ -71,6 +71,5 @@ public class GiantActionChargeAttack : IGiantAction
             giant.AnimPlayer.AnimationFinished -= AnimationComplete;
             giant.AgroMeter.Empty();
         }
-
     }
 }

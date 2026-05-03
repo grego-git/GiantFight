@@ -112,7 +112,6 @@ public class CharacterStateClimb : ICharacterState
             return new CharacterStateHang(characterData);
         }
 
-        GD.Print("NO NEXT STATE");
         fromClimb = false;
 
         return null;

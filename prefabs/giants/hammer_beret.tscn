@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://chxomueyivgjk"]
+[gd_scene load_steps=58 format=3 uid="uid://chxomueyivgjk"]
 
 [ext_resource type="Script" uid="uid://cxbc5aocp4eyw" path="res://scripts/giant/Giant.cs" id="1_t3qk4"]
 [ext_resource type="ArrayMesh" uid="uid://c3tjl2r2ngq0j" path="res://models/giants/hammer_beret/meshes/hammer_beret.res" id="1_yyevl"]
@@ -18,8 +18,14 @@
 [ext_resource type="Animation" uid="uid://nakkmseacl5e" path="res://models/giants/hammer_beret/animations/shake_hammer_left.res" id="11_775hy"]
 [ext_resource type="AudioStream" uid="uid://kqdk2bjafmo0" path="res://sounds/GiantPunch.wav" id="11_lo51n"]
 [ext_resource type="Animation" uid="uid://q1eoc4guosbo" path="res://models/giants/hammer_beret/animations/shake_hammer_right.res" id="12_bkgeu"]
+[ext_resource type="Animation" uid="uid://825l61xl4yey" path="res://models/giants/hammer_beret/animations/shake_body.res" id="13_0td8j"]
 [ext_resource type="PackedScene" uid="uid://b3y03b005tnj5" path="res://prefabs/giants/giant_hit_point.tscn" id="14_2ifnc"]
+[ext_resource type="Animation" uid="uid://cx6v7a8wapc8v" path="res://models/giants/hammer_beret/animations/tornado.res" id="14_i3s4i"]
 [ext_resource type="Script" uid="uid://d1wtqkvqr46gk" path="res://scripts/giant/dispensers/HammerBeretDispenser.cs" id="15_pm0u3"]
+[ext_resource type="Animation" uid="uid://cpwe5kcvvicbd" path="res://models/giants/hammer_beret/animations/tornado_end.res" id="15_xp6ny"]
+[ext_resource type="PackedScene" uid="uid://x5mfva81oeay" path="res://prefabs/giants/particles/clap_particles.tscn" id="21_bkgeu"]
+[ext_resource type="ArrayMesh" uid="uid://td26r7jam3x6" path="res://models/giants/tornado_cylinder/tornado_cylinder_mesh.res" id="25_0imxx"]
+[ext_resource type="Texture2D" uid="uid://dqlxthxwwok04" path="res://models/giants/tornado_cylinder/TornadoCylinder_TornadoTexture.png" id="26_57qk2"]
 
 [sub_resource type="Skin" id="Skin_f5hdy"]
 resource_name = "Skin"
@@ -303,6 +309,102 @@ tracks/18/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("ClapParticles:position")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 5, 0)]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("ClapParticles:emitting")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/21/type = "value"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("StompSound:position")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, -4, 1.75)]
+}
+tracks/22/type = "value"
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("TornadoHitBox:monitoring")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/23/type = "value"
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("TornadoHitBox:monitorable")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/24/type = "value"
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("TornadoHitBox:position")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 5, 0)]
+}
+tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("SlamHitBox:scale")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/26/type = "value"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath("TornadoCylinder:surface_material_override/0:albedo_color")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pm0u3"]
 _data = {
@@ -317,9 +419,12 @@ _data = {
 &"dash_attack_swing": ExtResource("3_c4nvs"),
 &"hammer_clap": ExtResource("10_775hy"),
 &"idle": ExtResource("4_t3qk4"),
+&"shake_body": ExtResource("13_0td8j"),
 &"shake_hammer_left": ExtResource("11_775hy"),
 &"shake_hammer_right": ExtResource("12_bkgeu"),
-&"slam": ExtResource("5_wstgw")
+&"slam": ExtResource("5_wstgw"),
+&"tornado": ExtResource("14_i3s4i"),
+&"tornado_end": ExtResource("15_xp6ny")
 }
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_c4nvs"]
@@ -376,6 +481,15 @@ height = 4.0
 radius = 1.5
 height = 4.0
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_i3s4i"]
+height = 2.5
+radius = 3.75
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_xp6ny"]
+top_radius = 3.75
+bottom_radius = 3.75
+height = 2.5
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8k3i8"]
 radius = 1.0
 height = 4.0
@@ -419,6 +533,14 @@ transparency = 1
 shading_mode = 0
 albedo_color = Color(0, 0.25, 1, 0.25098)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pnp6r"]
+transparency = 1
+blend_mode = 1
+cull_mode = 1
+shading_mode = 0
+albedo_color = Color(1, 1, 1, 0)
+albedo_texture = ExtResource("26_57qk2")
+
 [node name="HammerBeret" type="Node3D" node_paths=PackedStringArray("StompSound", "ClimbAnimatedEntities", "ArmLimbs", "Fists", "HitPoints")]
 script = ExtResource("1_t3qk4")
 StompSound = NodePath("StompSound")
@@ -438,7 +560,7 @@ bones/0/parent = -1
 bones/0/rest = Transform3D(1, 2.29137e-17, -1.18545e-18, -2.29137e-17, 0.994661, -0.103194, -1.18545e-18, 0.103194, 0.994661, 0, -0.0604453, -0.151376)
 bones/0/enabled = true
 bones/0/position = Vector3(0, -0.0604453, -0.151376)
-bones/0/rotation = Quaternion(-0.0129666, 1.70394e-26, -1.14842e-17, 0.999916)
+bones/0/rotation = Quaternion(0.0516661, -4.57963e-27, -1.14722e-17, 0.998664)
 bones/0/scale = Vector3(1, 1, 1)
 bones/1/name = "Body"
 bones/1/parent = 0
@@ -452,14 +574,14 @@ bones/2/parent = 1
 bones/2/rest = Transform3D(-0.395246, 0.368649, -0.841355, 0.417743, -0.743602, -0.522061, -0.818091, -0.557813, 0.139905, 1, 1.0368, -3.02356e-09)
 bones/2/enabled = true
 bones/2/position = Vector3(1, 1.0368, -3.02356e-09)
-bones/2/rotation = Quaternion(0.378887, 0.240502, 0.718889, -0.53085)
+bones/2/rotation = Quaternion(-0.549648, -0.35768, 0.754777, 0.016261)
 bones/2/scale = Vector3(1, 1, 1)
 bones/3/name = "Forearm.L"
 bones/3/parent = 2
 bones/3/rest = Transform3D(-0.0866205, -0.995047, 0.0487696, 0.867063, -0.0994061, -0.48818, 0.49061, -7.11937e-08, 0.871379, -6.66134e-16, 1.25, 4.61105e-15)
 bones/3/enabled = true
 bones/3/position = Vector3(-6.66134e-16, 1.25, 4.61105e-15)
-bones/3/rotation = Quaternion(0.04017, -0.0482264, 0.779346, 0.623442)
+bones/3/rotation = Quaternion(0.18802, -0.170173, 0.717183, 0.649106)
 bones/3/scale = Vector3(1, 1, 1)
 bones/4/name = "Hand.L"
 bones/4/parent = 3
@@ -473,14 +595,14 @@ bones/5/parent = 1
 bones/5/rest = Transform3D(-0.395246, -0.368649, 0.841355, -0.417743, -0.743601, -0.522061, 0.81809, -0.557813, 0.139905, -1, 1.0368, -3.02356e-09)
 bones/5/enabled = true
 bones/5/position = Vector3(-1, 1.0368, -3.02356e-09)
-bones/5/rotation = Quaternion(-0.378886, 0.240502, 0.71889, 0.53085)
+bones/5/rotation = Quaternion(0.549648, -0.35768, 0.754777, -0.016261)
 bones/5/scale = Vector3(1, 1, 1)
 bones/6/name = "Forearm.R"
 bones/6/parent = 5
 bones/6/rest = Transform3D(-0.0866205, 0.995047, -0.0487695, -0.867063, -0.0994061, -0.48818, -0.49061, -1.16452e-07, 0.871379, -2.98023e-08, 1.25, -3.0863e-15)
 bones/6/enabled = true
 bones/6/position = Vector3(-2.98023e-08, 1.25, -3.0863e-15)
-bones/6/rotation = Quaternion(0.04017, 0.0482264, -0.779346, 0.623442)
+bones/6/rotation = Quaternion(0.18802, 0.170173, -0.717183, 0.649106)
 bones/6/scale = Vector3(1, 1, 1)
 bones/7/name = "Hand.R"
 bones/7/parent = 6
@@ -494,28 +616,28 @@ bones/8/parent = 0
 bones/8/rest = Transform3D(-0.0829209, 0.250419, 0.967482, 0.4655, -0.846407, 0.260527, 0.88451, 0.468924, -0.0464111, 0.34734, 0.257662, 0.000662942)
 bones/8/enabled = true
 bones/8/position = Vector3(0.34734, 0.257662, 0.000662942)
-bones/8/rotation = Quaternion(0.676533, 0.221911, 0.700956, 0.0414632)
+bones/8/rotation = Quaternion(0.672885, 0.265472, 0.686076, 0.0777811)
 bones/8/scale = Vector3(1.00301, 0.999458, 1.003)
 bones/9/name = "Calf.L"
 bones/9/parent = 8
 bones/9/rest = Transform3D(0.877551, -0.474259, -0.0711415, 0.474898, 0.835475, 0.274507, -0.0708165, -0.274252, 0.959278, -3.30409e-08, 0.521901, -9.13643e-09)
 bones/9/enabled = true
 bones/9/position = Vector3(-3.30409e-08, 0.521901, -9.13643e-09)
-bones/9/rotation = Quaternion(-0.135795, -8.0791e-05, 0.234885, 0.962491)
+bones/9/rotation = Quaternion(-0.143218, -8.45057e-05, 0.247718, 0.958188)
 bones/9/scale = Vector3(1.00032, 0.999077, 1.00031)
 bones/10/name = "Thigh.R"
 bones/10/parent = 0
 bones/10/rest = Transform3D(-0.0829209, -0.250419, -0.967482, -0.4655, -0.846407, 0.260527, -0.88451, 0.468924, -0.0464111, -0.34734, 0.257662, 0.000662942)
 bones/10/enabled = true
 bones/10/position = Vector3(-0.34734, 0.257662, 0.000662942)
-bones/10/rotation = Quaternion(-0.676533, 0.221911, 0.700956, -0.0414633)
+bones/10/rotation = Quaternion(-0.672885, 0.265472, 0.686076, -0.0777811)
 bones/10/scale = Vector3(1.00301, 0.999458, 1.003)
 bones/11/name = "Calf.R"
 bones/11/parent = 10
 bones/11/rest = Transform3D(0.877551, 0.474259, 0.0711415, -0.474898, 0.835475, 0.274507, 0.0708165, -0.274252, 0.959278, 2.18669e-08, 0.521901, -9.13575e-09)
 bones/11/enabled = true
 bones/11/position = Vector3(2.18669e-08, 0.521901, -9.13575e-09)
-bones/11/rotation = Quaternion(-0.135795, 8.07873e-05, -0.234885, 0.962491)
+bones/11/rotation = Quaternion(-0.143218, 8.4509e-05, -0.247718, 0.958188)
 bones/11/scale = Vector3(1.00032, 0.999077, 1.00031)
 bones/12/name = "LegControl.L"
 bones/12/parent = -1
@@ -801,6 +923,20 @@ shape = SubResource("CapsuleShape3D_pm0u3")
 mesh = SubResource("CapsuleMesh_8k3i8")
 surface_material_override/0 = SubResource("StandardMaterial3D_7bofk")
 
+[node name="TornadoHitBox" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+collision_layer = 128
+monitoring = false
+monitorable = false
+script = ExtResource("9_lo51n")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TornadoHitBox"]
+shape = SubResource("CylinderShape3D_i3s4i")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TornadoHitBox"]
+mesh = SubResource("CylinderMesh_xp6ny")
+surface_material_override/0 = SubResource("StandardMaterial3D_7bofk")
+
 [node name="SlamHitBox" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
 collision_layer = 128
@@ -876,3 +1012,16 @@ Skeleton = NodePath("../Armature/Skeleton3D")
 
 [node name="GiantActionDispenser" type="Node3D" parent="."]
 script = ExtResource("15_pm0u3")
+
+[node name="ClapParticles" parent="." instance=ExtResource("21_bkgeu")]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 5, 0)
+
+[node name="TornadoCylinder" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.875, 0, 0, 0, 1, 0, 0, 0, 0.875, 0, -1.5, 0)
+mesh = ExtResource("25_0imxx")
+surface_material_override/0 = SubResource("StandardMaterial3D_pnp6r")
+
+[node name="TornadoTopCylinder" type="MeshInstance3D" parent="."]
+transform = Transform3D(3.75, 0, 0, 0, 1.375, 0, 0, 0, 3.5, 0, -0.125, 0)
+mesh = ExtResource("25_0imxx")
+surface_material_override/0 = SubResource("StandardMaterial3D_pnp6r")

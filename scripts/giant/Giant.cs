@@ -71,6 +71,7 @@ public partial class Giant : Node3D
     public Node3D RightArmIKTarget { get; set; }
 
     private StandardMaterial3D material;
+    private IGiantAction desperationAction;
     private float yRot;
 
     public override void _Ready()
@@ -95,6 +96,7 @@ public partial class Giant : Node3D
         {
             foreach (var hitPoint in HitPoints)
             {
+                hitPoint.HitPointDead += HitPointDead;
                 MaxHP += hitPoint.HP;
                 CurrentHP += hitPoint.HP;
             }
@@ -251,8 +253,17 @@ public partial class Giant : Node3D
 
                     if (CurrentAction.Complete())
                     {
-                        AnimPlayer.Play(GiantProfile.IdleAnimation);
-                        CurrentState = State.DETERMINING;
+                        if (desperationAction != null)
+                        {
+                            CurrentAction = desperationAction;
+                            CurrentAction.Init();
+                            desperationAction = null;
+                        }
+                        else 
+                        {
+                            AnimPlayer.Play(GiantProfile.IdleAnimation);
+                            CurrentState = State.DETERMINING;
+                        }
                     }
                 }
                 break;
@@ -334,5 +345,10 @@ public partial class Giant : Node3D
         }
 
         return "";
+    }
+
+    private void HitPointDead()
+    {
+        desperationAction = ActionDispenser.DesperationAction(this);
     }
 }

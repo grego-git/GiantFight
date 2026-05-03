@@ -15,5 +15,5 @@ public class Constants
         RUBBLE
     }
 
-    public const bool DEBUG = false;
+    public const bool DEBUG = true;
 }

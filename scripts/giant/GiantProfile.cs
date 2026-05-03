@@ -13,5 +13,6 @@ public class GiantProfile
     public string IdleAnimation { get; set; }
     public string ExternalAttackAnimation { get; set; }
     public string ChargeAttackAnimation { get; set; }
+    public string DesperationAnimation { get; set; }
     public string DeadAnimation { get; set; }
 }

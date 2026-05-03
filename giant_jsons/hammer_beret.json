@@ -7,6 +7,11 @@
 		"hammer_beret/shake_hammer_right": [
 			"Hand.R",
 			"Forearm.R"
+		],
+		"hammer_beret/shake_body": [
+			"Body",
+			"Upperarm.L",
+			"Upperarm.R"
 		]
 	},
 	"AttackAnimations": {
@@ -31,6 +36,11 @@
 		"hammer_beret/shake_hammer_right": [
 			"Hand.R",
 			"Forearm.R"
+		],
+		"hammer_beret/shake_body": [
+			"Body",
+			"Upperarm.L",
+			"Upperarm.R"
 		],
 		"hammer_beret/attack_shoulder_left": [
 			"Upperarm.L",
@@ -57,5 +67,6 @@
 	"IdleAnimation": "hammer_beret/idle",
 	"ExternalAttackAnimation": "hammer_beret/dash_attack_swing",
 	"ChargeAttackAnimation": "hammer_beret/dash_attack_charge",
-	"DeadAnimation": "hammer_beret/dead"
+	"DeadAnimation": "hammer_beret/dead",
+	"DesperationAnimation": "hammer_beret/tornado"
 }

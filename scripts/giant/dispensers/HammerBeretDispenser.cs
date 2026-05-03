@@ -28,6 +28,11 @@ public partial class HammerBeretDispenser : GiantActionDispenser, IActionDispens
         return null;
     }
 
+    public override IGiantAction DesperationAction(Giant giant)
+    {
+        return new GiantActionTornado(giant, giant.GiantProfile.DesperationAnimation);
+    }
+
     public override IGiantAction AttackBodyAction(Giant giant, string animation, bool useLeftHand)
     {
         return new GiantActionBodyAttack(giant, animation, useLeftHand);
