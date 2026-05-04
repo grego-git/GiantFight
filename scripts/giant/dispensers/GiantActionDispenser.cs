@@ -37,4 +37,9 @@ public partial class GiantActionDispenser : Node3D, IActionDispenser
     {
         return null;
     }
+
+    public virtual string GetDesperationActionType()
+    {
+        return null;
+    }
 }

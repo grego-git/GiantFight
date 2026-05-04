@@ -575,7 +575,7 @@ TurnSpeed = 5.0
 ClimbAnimatedEntities = [NodePath("Armature/Skeleton3D/Mesh/AnimatedClimbableEntity")]
 ArmLimbs = [NodePath("LeftForearm"), NodePath("LeftHammer"), NodePath("RightForearm"), NodePath("RightHammer")]
 Fists = []
-HitPoints = [NodePath("LeftHitPoint"), NodePath("RightHitPoint"), NodePath("RightHammerHitPoint")]
+HitPoints = [NodePath("LeftHitPoint"), NodePath("RightHitPoint"), NodePath("RightHammerHitPoint"), NodePath("LeftHammerHitPoint")]
 
 [node name="Armature" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.19105, 0)
@@ -1026,19 +1026,25 @@ volume_db = 10.0
 
 [node name="LeftHitPoint" parent="." node_paths=PackedStringArray("Skeleton") instance=ExtResource("14_2ifnc")]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 1, 0.425, 0.4)
-HP = 13
+HP = 12
 Bone = "Upperarm.L"
 Skeleton = NodePath("../Armature/Skeleton3D")
 
 [node name="RightHitPoint" parent="." node_paths=PackedStringArray("Skeleton") instance=ExtResource("14_2ifnc")]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -1, 0.425, 0.4)
-HP = 13
+HP = 12
 Bone = "Upperarm.R"
+Skeleton = NodePath("../Armature/Skeleton3D")
+
+[node name="LeftHammerHitPoint" parent="." node_paths=PackedStringArray("Skeleton") instance=ExtResource("14_2ifnc")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 2.15, -1.3, 0.9)
+HP = 25
+Bone = "Hand.L"
 Skeleton = NodePath("../Armature/Skeleton3D")
 
 [node name="RightHammerHitPoint" parent="." node_paths=PackedStringArray("Skeleton") instance=ExtResource("14_2ifnc")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -2.15, -1.3, 0.9)
-HP = 24
+HP = 25
 Bone = "Hand.R"
 Skeleton = NodePath("../Armature/Skeleton3D")
 

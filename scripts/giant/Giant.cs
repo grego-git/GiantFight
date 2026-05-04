@@ -349,6 +349,14 @@ public partial class Giant : Node3D
 
     private void HitPointDead()
     {
+        // There's already an action queued up
+        if (desperationAction != null)
+            return;
+        
+        // There's already an action in play
+        if (CurrentAction != null && CurrentAction.GetType().Name == ActionDispenser.GetDesperationActionType())
+            return;
+
         desperationAction = ActionDispenser.DesperationAction(this);
     }
 }

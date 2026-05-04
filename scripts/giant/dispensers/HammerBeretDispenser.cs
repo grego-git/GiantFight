@@ -37,4 +37,9 @@ public partial class HammerBeretDispenser : GiantActionDispenser, IActionDispens
     {
         return new GiantActionBodyAttack(giant, animation, useLeftHand);
     }
+
+    public override string GetDesperationActionType()
+    {
+        return typeof(GiantActionTornado).Name;
+    }
 }
