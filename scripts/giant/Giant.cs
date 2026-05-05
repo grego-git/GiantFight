@@ -280,6 +280,12 @@ public partial class Giant : Node3D
         GlobalRotation = new Vector3(GlobalRotation.X, yRot, GlobalRotation.Z);
     }
 
+    public void RotateYRot(float delta, float speed)
+    {
+        yRot += speed * delta;
+        GlobalRotation = new Vector3(GlobalRotation.X, yRot, GlobalRotation.Z);
+    }
+
     private void StunPlayerOnGiant()
     {
         foreach (var stunBones in GiantProfile.StunBones)
