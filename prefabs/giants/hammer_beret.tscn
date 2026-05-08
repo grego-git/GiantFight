@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://chxomueyivgjk"]
+[gd_scene load_steps=63 format=3 uid="uid://chxomueyivgjk"]
 
 [ext_resource type="Script" uid="uid://cxbc5aocp4eyw" path="res://scripts/giant/Giant.cs" id="1_t3qk4"]
 [ext_resource type="ArrayMesh" uid="uid://c3tjl2r2ngq0j" path="res://models/giants/hammer_beret/meshes/hammer_beret.res" id="1_yyevl"]
@@ -430,6 +430,66 @@ tracks/28/keys = {
 "update": 0,
 "values": [Vector3(0.05, 0.05, 0.05)]
 }
+tracks/29/type = "value"
+tracks/29/imported = false
+tracks/29/enabled = true
+tracks/29/path = NodePath("TornadoHitBox2:monitoring")
+tracks/29/interp = 1
+tracks/29/loop_wrap = true
+tracks/29/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/30/type = "value"
+tracks/30/imported = false
+tracks/30/enabled = true
+tracks/30/path = NodePath("TornadoHitBox2:monitorable")
+tracks/30/interp = 1
+tracks/30/loop_wrap = true
+tracks/30/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/31/type = "value"
+tracks/31/imported = false
+tracks/31/enabled = true
+tracks/31/path = NodePath("TornadoHitBox2:position")
+tracks/31/interp = 1
+tracks/31/loop_wrap = true
+tracks/31/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 5, 0)]
+}
+tracks/32/type = "value"
+tracks/32/imported = false
+tracks/32/enabled = true
+tracks/32/path = NodePath("TornadoHitBox3:monitoring")
+tracks/32/interp = 1
+tracks/32/loop_wrap = true
+tracks/32/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/33/type = "value"
+tracks/33/imported = false
+tracks/33/enabled = true
+tracks/33/path = NodePath("TornadoHitBox3:monitorable")
+tracks/33/interp = 1
+tracks/33/loop_wrap = true
+tracks/33/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pm0u3"]
 _data = {
@@ -516,6 +576,24 @@ top_radius = 3.75
 bottom_radius = 3.75
 height = 2.5
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_57qk2"]
+height = 5.0
+radius = 7.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_pnp6r"]
+top_radius = 7.5
+bottom_radius = 7.5
+height = 5.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_pnp6r"]
+height = 10.0
+radius = 15.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_w6ov4"]
+top_radius = 15.0
+bottom_radius = 15.0
+height = 10.0
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8k3i8"]
 radius = 1.0
 height = 4.0
@@ -585,29 +663,29 @@ bones/0/name = "Pelvis"
 bones/0/parent = -1
 bones/0/rest = Transform3D(1, 2.29137e-17, -1.18545e-18, -2.29137e-17, 0.994661, -0.103194, -1.18545e-18, 0.103194, 0.994661, 0, -0.0604453, -0.151376)
 bones/0/enabled = true
-bones/0/position = Vector3(0.232173, -0.0587528, -0.427662)
-bones/0/rotation = Quaternion(-0.110287, -0.370003, -0.0456825, 0.921329)
+bones/0/position = Vector3(0, 0, 0)
+bones/0/rotation = Quaternion(0, 0, 0, 1)
 bones/0/scale = Vector3(1, 1, 1)
 bones/1/name = "Body"
 bones/1/parent = 0
 bones/1/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.27181e-25, 0.654246, 0)
 bones/1/enabled = true
 bones/1/position = Vector3(8.27181e-25, 0.654246, 0)
-bones/1/rotation = Quaternion(1.5803e-08, -0.332991, -6.04959e-09, 0.94293)
+bones/1/rotation = Quaternion(0, 0, 0, 1)
 bones/1/scale = Vector3(1, 1, 1)
 bones/2/name = "Upperarm.L"
 bones/2/parent = 1
 bones/2/rest = Transform3D(-0.395246, 0.368649, -0.841355, 0.417743, -0.743602, -0.522061, -0.818091, -0.557813, 0.139905, 1, 1.0368, -3.02356e-09)
 bones/2/enabled = true
 bones/2/position = Vector3(1, 1.0368, -3.02356e-09)
-bones/2/rotation = Quaternion(-0.485216, -0.390822, 0.592682, -0.510442)
+bones/2/rotation = Quaternion(-0.683013, -0.183013, 0.5, -0.5)
 bones/2/scale = Vector3(1, 1, 1)
 bones/3/name = "Forearm.L"
 bones/3/parent = 2
 bones/3/rest = Transform3D(-0.0866205, -0.995047, 0.0487696, 0.867063, -0.0994061, -0.48818, 0.49061, -7.11937e-08, 0.871379, -6.66134e-16, 1.25, 4.61105e-15)
 bones/3/enabled = true
 bones/3/position = Vector3(-6.66134e-16, 1.25, 4.61105e-15)
-bones/3/rotation = Quaternion(0.183695, -0.166258, 0.707969, 0.661358)
+bones/3/rotation = Quaternion(8.9407e-08, -4.47035e-08, 0.258819, 0.965926)
 bones/3/scale = Vector3(1, 1, 1)
 bones/4/name = "Hand.L"
 bones/4/parent = 3
@@ -621,14 +699,14 @@ bones/5/parent = 1
 bones/5/rest = Transform3D(-0.395246, -0.368649, 0.841355, -0.417743, -0.743601, -0.522061, 0.81809, -0.557813, 0.139905, -1, 1.0368, -3.02356e-09)
 bones/5/enabled = true
 bones/5/position = Vector3(-1, 1.0368, -3.02356e-09)
-bones/5/rotation = Quaternion(0.492009, -0.626087, 0.603721, -0.0382628)
+bones/5/rotation = Quaternion(0.5, -0.5, 0.683013, 0.183013)
 bones/5/scale = Vector3(1, 1, 1)
 bones/6/name = "Forearm.R"
 bones/6/parent = 5
 bones/6/rest = Transform3D(-0.0866205, 0.995047, -0.0487695, -0.867063, -0.0994061, -0.48818, -0.49061, -1.16452e-07, 0.871379, -2.98023e-08, 1.25, -3.0863e-15)
 bones/6/enabled = true
 bones/6/position = Vector3(-2.98023e-08, 1.25, -3.0863e-15)
-bones/6/rotation = Quaternion(0.185599, 0.167982, -0.700589, 0.668215)
+bones/6/rotation = Quaternion(1.71363e-07, 4.47035e-08, 0.258819, 0.965926)
 bones/6/scale = Vector3(1, 1, 1)
 bones/7/name = "Hand.R"
 bones/7/parent = 6
@@ -642,56 +720,56 @@ bones/8/parent = 0
 bones/8/rest = Transform3D(-0.0829209, 0.250419, 0.967482, 0.4655, -0.846407, 0.260527, 0.88451, 0.468924, -0.0464111, 0.34734, 0.257662, 0.000662942)
 bones/8/enabled = true
 bones/8/position = Vector3(0.34734, 0.257662, 0.000662942)
-bones/8/rotation = Quaternion(0.676814, 0.158526, 0.718785, -0.0118313)
-bones/8/scale = Vector3(1.00301, 0.999458, 1.003)
+bones/8/rotation = Quaternion(0.716761, -0.0409089, 0.695139, 0.0369044)
+bones/8/scale = Vector3(1.00284, 0.999988, 1.00286)
 bones/9/name = "Calf.L"
 bones/9/parent = 8
 bones/9/rest = Transform3D(0.877551, -0.474259, -0.0711415, 0.474898, 0.835475, 0.274507, -0.0708165, -0.274252, 0.959278, -3.30409e-08, 0.521901, -9.13643e-09)
 bones/9/enabled = true
 bones/9/position = Vector3(-3.30409e-08, 0.521901, -9.13643e-09)
-bones/9/rotation = Quaternion(-0.133921, -7.79799e-05, 0.231646, 0.963538)
-bones/9/scale = Vector3(1.00009, 0.999781, 1.00003)
+bones/9/rotation = Quaternion(-0.00122649, -7.79554e-05, 0.00212194, 0.999997)
+bones/9/scale = Vector3(1.00001, 0.999999, 1)
 bones/10/name = "Thigh.R"
 bones/10/parent = 0
 bones/10/rest = Transform3D(-0.0829209, -0.250419, -0.967482, -0.4655, -0.846407, 0.260527, -0.88451, 0.468924, -0.0464111, -0.34734, 0.257662, 0.000662942)
 bones/10/enabled = true
 bones/10/position = Vector3(-0.34734, 0.257662, 0.000662942)
-bones/10/rotation = Quaternion(-0.678698, 0.154802, 0.717732, 0.016292)
-bones/10/scale = Vector3(1.00301, 0.999458, 1.003)
+bones/10/rotation = Quaternion(-0.716761, -0.0409088, 0.695139, -0.0369044)
+bones/10/scale = Vector3(1.00284, 0.999988, 1.00286)
 bones/11/name = "Calf.R"
 bones/11/parent = 10
 bones/11/rest = Transform3D(0.877551, 0.474259, 0.0711415, -0.474898, 0.835475, 0.274507, 0.0708165, -0.274252, 0.959278, 2.18669e-08, 0.521901, -9.13575e-09)
 bones/11/enabled = true
 bones/11/position = Vector3(2.18669e-08, 0.521901, -9.13575e-09)
-bones/11/rotation = Quaternion(-0.133478, 7.79144e-05, -0.23088, 0.963783)
-bones/11/scale = Vector3(1.00009, 0.999784, 1.00003)
+bones/11/rotation = Quaternion(-0.00122649, 7.79554e-05, -0.00212194, 0.999997)
+bones/11/scale = Vector3(1.00001, 0.999999, 1)
 bones/12/name = "LegControl.L"
 bones/12/parent = -1
 bones/12/rest = Transform3D(0.0022307, -5.94714e-08, 0.999998, -0.999998, -5.97375e-08, 0.0022307, 5.96047e-08, -1, -5.96045e-08, 0.467809, -0.964232, -0.00734766)
 bones/12/enabled = true
-bones/12/position = Vector3(0.4606, -0.964232, -0.00734766)
-bones/12/rotation = Quaternion(-0.278322, 0.276871, -0.650028, 0.650648)
+bones/12/position = Vector3(0.210355, -0.964232, -0.00734766)
+bones/12/rotation = Quaternion(-0.500557, 0.499442, -0.499442, 0.500557)
 bones/12/scale = Vector3(1, 1, 1)
 bones/13/name = "LegPoleTarget.L"
 bones/13/parent = -1
 bones/13/rest = Transform3D(0.00602704, -5.92432e-08, 0.999982, 0.999982, 5.99628e-08, -0.00602704, -5.96047e-08, 1, 5.96036e-08, 0.345355, -0.264232, 2.00265)
 bones/13/enabled = true
-bones/13/position = Vector3(-1.00127, -0.264232, 1.34626)
-bones/13/rotation = Quaternion(0.279556, 0.275636, 0.649499, 0.651172)
+bones/13/position = Vector3(0.345355, -0.264232, 2.00265)
+bones/13/rotation = Quaternion(0.501504, 0.498491, 0.498491, 0.501505)
 bones/13/scale = Vector3(1, 1, 1)
 bones/14/name = "LegControl.R"
 bones/14/parent = -1
 bones/14/rest = Transform3D(0.0022307, 5.94714e-08, -0.999998, 0.999998, -5.97375e-08, 0.0022307, -5.96047e-08, -1, -5.96045e-08, -0.467809, -0.964232, -0.00734766)
 bones/14/enabled = true
-bones/14/position = Vector3(-0.194237, -0.964232, -0.650405)
-bones/14/rotation = Quaternion(-0.650648, -0.650028, 0.276872, 0.278322)
+bones/14/position = Vector3(-0.210355, -0.964232, -0.00734766)
+bones/14/rotation = Quaternion(-0.500557, -0.499442, 0.499442, 0.500557)
 bones/14/scale = Vector3(1, 1, 1)
 bones/15/name = "LegPoleTarget.R"
 bones/15/parent = -1
 bones/15/rest = Transform3D(0.00602704, 5.92432e-08, -0.999982, -0.999982, 5.99628e-08, -0.00602704, 5.96047e-08, 1, 5.96036e-08, -0.345355, -0.264232, 2.00265)
 bones/15/enabled = true
-bones/15/position = Vector3(-1.49534, -0.264232, 0.871527)
-bones/15/rotation = Quaternion(0.651172, -0.649499, -0.275636, 0.279556)
+bones/15/position = Vector3(-0.345355, -0.264232, 2.00265)
+bones/15/rotation = Quaternion(0.501504, -0.498491, -0.498491, 0.501505)
 bones/15/scale = Vector3(1, 1, 1)
 
 [node name="Mesh" type="MeshInstance3D" parent="Armature/Skeleton3D"]
@@ -963,6 +1041,34 @@ shape = SubResource("CylinderShape3D_i3s4i")
 mesh = SubResource("CylinderMesh_xp6ny")
 surface_material_override/0 = SubResource("StandardMaterial3D_7bofk")
 
+[node name="TornadoHitBox2" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+collision_layer = 128
+monitoring = false
+monitorable = false
+script = ExtResource("9_lo51n")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TornadoHitBox2"]
+shape = SubResource("CylinderShape3D_57qk2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TornadoHitBox2"]
+mesh = SubResource("CylinderMesh_pnp6r")
+surface_material_override/0 = SubResource("StandardMaterial3D_7bofk")
+
+[node name="TornadoHitBox3" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.25, 0)
+collision_layer = 128
+monitoring = false
+monitorable = false
+script = ExtResource("9_lo51n")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TornadoHitBox3"]
+shape = SubResource("CylinderShape3D_pnp6r")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TornadoHitBox3"]
+mesh = SubResource("CylinderMesh_w6ov4")
+surface_material_override/0 = SubResource("StandardMaterial3D_7bofk")
+
 [node name="SlamHitBox" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
 collision_layer = 128
@@ -1060,7 +1166,17 @@ transform = Transform3D(0.875, 0, 0, 0, 1, 0, 0, 0, 0.875, 0, -1.5, 0)
 mesh = ExtResource("25_0imxx")
 surface_material_override/0 = SubResource("StandardMaterial3D_pnp6r")
 
-[node name="TornadoTopCylinder" type="MeshInstance3D" parent="."]
-transform = Transform3D(3.75, 0, 0, 0, 1.375, 0, 0, 0, 3.5, 0, -0.125, 0)
+[node name="TornadoCylinder2" type="MeshInstance3D" parent="."]
+transform = Transform3D(3.75, 0, 0, 0, 1.375, 0, 0, 0, 3.75, 0, -0.125, 0)
+mesh = ExtResource("25_0imxx")
+surface_material_override/0 = SubResource("StandardMaterial3D_pnp6r")
+
+[node name="TornadoCylinder3" type="MeshInstance3D" parent="."]
+transform = Transform3D(7.5, 0, 0, 0, 2.75, 0, 0, 0, 7.5, 0, 3.45, 0)
+mesh = ExtResource("25_0imxx")
+surface_material_override/0 = SubResource("StandardMaterial3D_pnp6r")
+
+[node name="TornadoCylinder4" type="MeshInstance3D" parent="."]
+transform = Transform3D(15, 0, 0, 0, 5.5, 0, 0, 0, 15, 0, 10.8, 0)
 mesh = ExtResource("25_0imxx")
 surface_material_override/0 = SubResource("StandardMaterial3D_pnp6r")

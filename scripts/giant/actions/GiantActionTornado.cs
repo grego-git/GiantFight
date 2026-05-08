@@ -23,7 +23,7 @@ public class GiantActionTornado : IGiantAction
         maxRotSpeed = 100.0f;
         rotAccel = 100.0f;
 
-        chaseDir = Vector3.Zero;
+        chaseDir = giant.GlobalBasis.Z.Normalized();
         maxChaseSpeed = 100.0f;
         chaseDeccel = 50.0f;
         chaseAccel = 25.0f;
