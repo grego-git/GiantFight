@@ -62,6 +62,7 @@ public partial class Giant : Node3D
 
     public int MaxHP { get; private set; }
     public int CurrentHP { get; private set; }
+    public bool Dead { get; private set; }
 
     [Export]
     public Node3D LeftLegIKTarget { get; set; }
@@ -106,17 +107,15 @@ public partial class Giant : Node3D
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
-
-        bool dead;
         
         CurrentHP = 0;
 
         foreach (var hitPoint in HitPoints)
             CurrentHP += hitPoint.HP;
 
-        dead = CurrentHP <= 0;
+        Dead = CurrentHP <= 0;
 
-        if (!dead) 
+        if (!Dead) 
         {
             BonesPlayerIsOn = GetBonesPlayerIsOn();
 

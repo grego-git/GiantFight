@@ -42,6 +42,36 @@ texture_filter = 0
 process_mode = 3
 script = ExtResource("1_tlxtn")
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ke55c")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 0, 100, 0)
+
+[node name="Ground" type="StaticBody3D" parent="."]
+collision_layer = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_klrrp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(500, 0, 0, 0, 1, 0, 0, 0, 500, 0, 0.5, 0)
+mesh = SubResource("PlaneMesh_fdj5p")
+surface_material_override/0 = SubResource("StandardMaterial3D_tlxtn")
+
+[node name="PillGiant" parent="." node_paths=PackedStringArray("CharacterData") instance=ExtResource("1_gtjjn")]
+transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 25, 0, 110, 0)
+CharacterData = NodePath("../PlayerContainer")
+
+[node name="CreateCollisionShape" type="Node3D" parent="." node_paths=PackedStringArray("CharacterData", "Giant")]
+script = ExtResource("1_dqwrh")
+CharacterData = NodePath("../PlayerContainer")
+Giant = NodePath("../PillGiant")
+
+[node name="PlayerContainer" parent="." node_paths=PackedStringArray("World") instance=ExtResource("2_gtjjn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 200)
+World = NodePath("../World")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Reset" type="RichTextLabel" parent="CanvasLayer" node_paths=PackedStringArray("World")]
@@ -242,33 +272,3 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 0)
 script = ExtResource("12_u82uo")
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_ke55c")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 0, 100, 0)
-
-[node name="Ground" type="StaticBody3D" parent="."]
-collision_layer = 32
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
-shape = SubResource("BoxShape3D_klrrp")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
-transform = Transform3D(500, 0, 0, 0, 1, 0, 0, 0, 500, 0, 0.5, 0)
-mesh = SubResource("PlaneMesh_fdj5p")
-surface_material_override/0 = SubResource("StandardMaterial3D_tlxtn")
-
-[node name="PillGiant" parent="." node_paths=PackedStringArray("CharacterData") instance=ExtResource("1_gtjjn")]
-transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 25, 0, 110, 0)
-CharacterData = NodePath("../PlayerContainer")
-
-[node name="CreateCollisionShape" type="Node3D" parent="." node_paths=PackedStringArray("CharacterData", "Giant")]
-script = ExtResource("1_dqwrh")
-CharacterData = NodePath("../PlayerContainer")
-Giant = NodePath("../PillGiant")
-
-[node name="PlayerContainer" parent="." node_paths=PackedStringArray("World") instance=ExtResource("2_gtjjn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 200)
-World = NodePath("../World")

@@ -3,8 +3,13 @@ using System;
 
 public partial class HitPoint : StaticBody3D
 {
+    [Signal]
+    public delegate void HitPointHitEventHandler();
+
     [Export]
     public int HP { get; set; }
+    [Export]
+    public string Scene { get; set; }
 
     private MeshInstance3D mesh;
     private StandardMaterial3D mat;
@@ -40,7 +45,7 @@ public partial class HitPoint : StaticBody3D
 
             if (turnColorOff == 0.0f)
             {
-                GetTree().ChangeSceneToFile("res://prototype_scenes/climb_test_scene.tscn");
+                GetTree().ChangeSceneToFile(Scene);
                 return;
             }
         }
@@ -71,6 +76,8 @@ public partial class HitPoint : StaticBody3D
         
         HP -= damage;
         HP = Mathf.Max(HP, 0);
+        
+        EmitSignal("HitPointHit");
 
         hitMeter.FillToMax();
         flashMeter.FillToMax();
