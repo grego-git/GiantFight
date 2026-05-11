@@ -1,7 +1,7 @@
 using System.Linq;
 using Godot;
 
-public class GiantActionBodyAttack : IGiantAction
+public class GiantActionIKBodyAttack : IGiantAction
 {
     private Giant giant;
     private SkeletonIK3D ik;
@@ -16,7 +16,7 @@ public class GiantActionBodyAttack : IGiantAction
     private bool complete;
     private bool useLeftHand;
 
-    public GiantActionBodyAttack(Giant giant, string animation, bool useLeftHand)
+    public GiantActionIKBodyAttack(Giant giant, string animation, bool useLeftHand)
     {
         this.giant = giant;
         this.animation = animation;

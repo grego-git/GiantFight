@@ -21,15 +21,23 @@ public class GiantActionDead : IGiantAction
         giant.AnimPlayer.Play(animation);
         giant.CurrentState = Giant.State.ACTION;
         
-        giant.LeftArmIK.Influence = 0.0f;
-        giant.RightArmIK.Influence = 0.0f;
-        giant.LeftLegIK.Influence = 0.0f;
+        if (giant.LeftArmIK != null) 
+            giant.LeftArmIK.Influence = 0.0f;
+        
+        if (giant.RightArmIK != null) 
+            giant.RightArmIK.Influence = 0.0f;
+        
+        if (giant.LeftLegIK != null) 
+            giant.LeftLegIK.Influence = 0.0f;
 
-        giant.Fists[0].Monitorable = false;
-        giant.Fists[0].Monitoring = false;
+        if (giant.Fists != null && giant.Fists.Length > 0)
+        {
+            giant.Fists[0].Monitorable = false;
+            giant.Fists[0].Monitoring = false;
 
-        giant.Fists[1].Monitorable = false;
-        giant.Fists[1].Monitoring = false;
+            giant.Fists[1].Monitorable = false;
+            giant.Fists[1].Monitoring = false;
+        }
 
         giant.AnimPlayer.AnimationFinished += AnimationComplete;
     }

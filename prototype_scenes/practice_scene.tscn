@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://b61lxvb7ghrgt"]
+[gd_scene load_steps=34 format=3 uid="uid://b61lxvb7ghrgt"]
 
 [ext_resource type="Script" uid="uid://dw4e5naidgovb" path="res://scripts/World.cs" id="1_738im"]
 [ext_resource type="Script" uid="uid://malwywbfl2rv" path="res://scripts/ui/ResetLabel.cs" id="2_5iss1"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://cj7cqbit6sn4x" path="res://textures/Magma.png" id="14_738im"]
 [ext_resource type="PackedScene" uid="uid://didvpehlarxml" path="res://prefabs/player/player_container.tscn" id="14_wru3w"]
 [ext_resource type="PackedScene" uid="uid://b3y03b005tnj5" path="res://prefabs/giants/giant_hit_point.tscn" id="15_5iss1"]
+[ext_resource type="Script" uid="uid://ct5xhpgth0m1p" path="res://scripts/ui/PracticeHPLabelManager.cs" id="17_362un"]
 [ext_resource type="Script" uid="uid://d3bq6ekvqnyci" path="res://scripts/practice/HitPoint.cs" id="17_jxj1b"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_awone"]
@@ -73,6 +74,212 @@ size = Vector3(20, 40, 90)
 process_mode = 3
 script = ExtResource("1_738im")
 TutorialScene = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ke55c")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 0, 100, 0)
+
+[node name="Ground" type="StaticBody3D" parent="."]
+collision_layer = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_klrrp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(500, 0, 0, 0, 1, 0, 0, 0, 500, 0, 0.5, 0)
+mesh = SubResource("PlaneMesh_fdj5p")
+surface_material_override/0 = SubResource("StandardMaterial3D_tlxtn")
+
+[node name="PracticeRoom" parent="." instance=ExtResource("10_pfvab")]
+transform = Transform3D(30, 0, 0, 0, 30, 0, 0, 0, 30, 0, 30, 100)
+
+[node name="PlayerContainer" parent="." node_paths=PackedStringArray("World") instance=ExtResource("14_wru3w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 200)
+World = NodePath("../World")
+
+[node name="KillBlock" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 75, 45)
+collision_layer = 128
+script = ExtResource("12_b214n")
+
+[node name="ShapeCast3D" type="CollisionShape3D" parent="KillBlock"]
+shape = SubResource("BoxShape3D_wwd8a")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="KillBlock"]
+transform = Transform3D(20, 0, 0, 0, 30, 0, 0, 0, 30, 0, 0, 0)
+mesh = SubResource("BoxMesh_738im")
+surface_material_override/0 = SubResource("StandardMaterial3D_5iss1")
+
+[node name="KillBlock2" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 75, -5)
+collision_layer = 128
+script = ExtResource("12_b214n")
+
+[node name="ShapeCast3D" type="CollisionShape3D" parent="KillBlock2"]
+shape = SubResource("BoxShape3D_b214n")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="KillBlock2"]
+transform = Transform3D(20, 0, 0, 0, 35, 0, 0, 0, 30, 0, 0, 0)
+mesh = SubResource("BoxMesh_738im")
+surface_material_override/0 = SubResource("StandardMaterial3D_5iss1")
+
+[node name="KillBlock3" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 75, -65)
+collision_layer = 128
+script = ExtResource("12_b214n")
+
+[node name="ShapeCast3D" type="CollisionShape3D" parent="KillBlock3"]
+shape = SubResource("BoxShape3D_b214n")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="KillBlock3"]
+transform = Transform3D(20, 0, 0, 0, 35, 0, 0, 0, 30, 0, 0, 0)
+mesh = SubResource("BoxMesh_738im")
+surface_material_override/0 = SubResource("StandardMaterial3D_5iss1")
+
+[node name="KillBlock4" type="Area3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 50, -34.75)
+collision_layer = 128
+script = ExtResource("12_b214n")
+Persistent = true
+
+[node name="ShapeCast3D" type="CollisionShape3D" parent="KillBlock4"]
+shape = SubResource("BoxShape3D_738im")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="KillBlock4"]
+transform = Transform3D(20, 0, 0, 0, 50, 0, 0, 0, 90, 0, 0, 0)
+mesh = SubResource("BoxMesh_738im")
+surface_material_override/0 = SubResource("StandardMaterial3D_o6lgo")
+
+[node name="KillBlock5" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 75, -34.75)
+collision_layer = 128
+script = ExtResource("12_b214n")
+Persistent = true
+
+[node name="ShapeCast3D" type="CollisionShape3D" parent="KillBlock5"]
+shape = SubResource("BoxShape3D_5iss1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="KillBlock5"]
+transform = Transform3D(20, 0, 0, 0, 40, 0, 0, 0, 90, 0, 0, 0)
+mesh = SubResource("BoxMesh_738im")
+surface_material_override/0 = SubResource("StandardMaterial3D_o6lgo")
+
+[node name="KillBlock6" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 75, -34.75)
+collision_layer = 128
+script = ExtResource("12_b214n")
+Persistent = true
+
+[node name="ShapeCast3D" type="CollisionShape3D" parent="KillBlock6"]
+shape = SubResource("BoxShape3D_o6lgo")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="KillBlock6"]
+transform = Transform3D(20, 0, 0, 0, 40, 0, 0, 0, 90, 0, 0, 0)
+mesh = SubResource("BoxMesh_738im")
+surface_material_override/0 = SubResource("StandardMaterial3D_o6lgo")
+
+[node name="EndPracticeHealthPillGiant" parent="." instance=ExtResource("15_5iss1")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -10, 60, -110)
+script = ExtResource("17_jxj1b")
+HP = 25
+Scene = "res://prototype_scenes/pill_giant_test_scene.tscn"
+
+[node name="EndPracticeHealthHammerBeret" parent="." instance=ExtResource("15_5iss1")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 10, 60, -110)
+script = ExtResource("17_jxj1b")
+HP = 25
+Scene = "res://prototype_scenes/hammer_beret_test_scene.tscn"
+
+[node name="SkipTutorialPracticeHealthPillGiant" parent="." instance=ExtResource("15_5iss1")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 30, 3, 145)
+script = ExtResource("17_jxj1b")
+HP = 1
+Scene = "res://prototype_scenes/pill_giant_test_scene.tscn"
+
+[node name="SkipTutorialPracticeHealthHammerBeret" parent="." instance=ExtResource("15_5iss1")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 45, 3, 175)
+script = ExtResource("17_jxj1b")
+HP = 1
+Scene = "res://prototype_scenes/hammer_beret_test_scene.tscn"
+
+[node name="Climb" type="Label3D" parent="."]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -20, 7, 145)
+pixel_size = 0.05
+double_sided = false
+text = "HOLD RIGHT CLICK IN 
+FRONT OF THE WALL TO CLIMB."
+
+[node name="SkipTutorial" type="Label3D" parent="."]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 30, 10, 145)
+pixel_size = 0.05
+double_sided = false
+text = "HIT THIS TO SKIP TUTORIAL 
+AND FIGHT THE PILL GIANT!"
+
+[node name="SkipTutorialHammerBeret" type="Label3D" parent="."]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 45, 10, 175)
+pixel_size = 0.05
+double_sided = false
+text = "HIT THIS TO SKIP TUTORIAL 
+AND FIGHT THE HAMMER BERET!"
+
+[node name="StaminaWhileClimbing" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 45, 140)
+pixel_size = 0.05
+double_sided = false
+text = "CLIMBING OR HANGING DRAINS YOUR STAMINA.
+IF YOUR STAMINA EMPTIES YOU'LL ENTER FATIGUE 
+AND WILL NEED TO WAIT UNTIL YOUR STAMINA IS FULL TO DO ANYTHING."
+
+[node name="StaminaWhileCrawling" type="Label3D" parent="."]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 25, 70, 110)
+pixel_size = 0.05
+double_sided = false
+text = "HOLDING RIGHT CLICK WHILE ON AN 
+UPRIGHT SURFACE PUTS YOU IN CRAWL. 
+YOU'll LATCH ONTO THE SURFACE 
+AND YOUR STAMINA REPLENISHES SLOWER."
+
+[node name="DontTouchRed" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 90, 75)
+pixel_size = 0.05
+double_sided = false
+text = "DONT TOUCH THE RED BLOCKS WHEN FULLY VISIBLE. 
+PRESS LEFT CTRL TO DASH THROUGH THEM.
+(DASH DOES NOT DRAIN STAMINA BUT DOES HAVE COOL DOWN)"
+
+[node name="DontTouchMagma" type="Label3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -8, 70, 20)
+pixel_size = 0.05
+double_sided = false
+text = "DONT TOUCH MAGMA.
+YOU CAN DASH IN MID AIR 
+(LEFT CTRL OR PRESS SPACE 
+TWICE TO DASH DIRECTLY UP)"
+
+[node name="AttackRed" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 78.31, -140)
+pixel_size = 0.05
+double_sided = false
+text = "ATTACK THE RED ORB.
+PRESS LEFT CLICK TO ATTACK 
+(HOLD TO CHARGE ATTACK FOR MORE DAMAGE)
+
+BRING HP DOWN TO 0 TO FIGHT THE GIANTS!"
+
+[node name="PillGiant" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 65, -110)
+pixel_size = 0.05
+double_sided = false
+text = "PILL GIANT"
+
+[node name="HammerBeret" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 65, -110)
+pixel_size = 0.05
+double_sided = false
+text = "HAMMER BERET"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -208,7 +415,19 @@ theme_override_font_sizes/normal_font_size = 14
 bbcode_enabled = true
 text = "[center]'LEFT CLICK' OR 'SPACE' WHEN DIAL IS IN THE MIDDLE TO REFILL STAMINA"
 
-[node name="PracticeRoomHP" type="RichTextLabel" parent="CanvasLayer" node_paths=PackedStringArray("HitPoint")]
+[node name="HPs" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("Labels")]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+script = ExtResource("17_362un")
+Labels = [NodePath("PracticeRoomHPPillGiant"), NodePath("PracticeRoomHPHammerBeret")]
+
+[node name="PracticeRoomHPPillGiant" type="RichTextLabel" parent="CanvasLayer/HPs" node_paths=PackedStringArray("HitPoint")]
+layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -222,7 +441,24 @@ theme_override_constants/outline_size = 4
 text = "PRACTICE ROOM HP: "
 horizontal_alignment = 2
 script = ExtResource("10_o6lgo")
-HitPoint = NodePath("../../EndPracticeHealth")
+HitPoint = NodePath("../../../EndPracticeHealthPillGiant")
+
+[node name="PracticeRoomHPHammerBeret" type="RichTextLabel" parent="CanvasLayer/HPs" node_paths=PackedStringArray("HitPoint")]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -272.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = 80.0
+grow_horizontal = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "PRACTICE ROOM HP: "
+horizontal_alignment = 2
+script = ExtResource("10_o6lgo")
+HitPoint = NodePath("../../../EndPracticeHealthHammerBeret")
 
 [node name="FadeIn" type="ColorRect" parent="CanvasLayer"]
 anchors_preset = 15
@@ -233,176 +469,3 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 0)
 script = ExtResource("11_cinyw")
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_ke55c")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 0, 100, 0)
-
-[node name="Ground" type="StaticBody3D" parent="."]
-collision_layer = 32
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
-shape = SubResource("BoxShape3D_klrrp")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
-transform = Transform3D(500, 0, 0, 0, 1, 0, 0, 0, 500, 0, 0.5, 0)
-mesh = SubResource("PlaneMesh_fdj5p")
-surface_material_override/0 = SubResource("StandardMaterial3D_tlxtn")
-
-[node name="PracticeRoom" parent="." instance=ExtResource("10_pfvab")]
-transform = Transform3D(30, 0, 0, 0, 30, 0, 0, 0, 30, 0, 30, 100)
-
-[node name="PlayerContainer" parent="." node_paths=PackedStringArray("World") instance=ExtResource("14_wru3w")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 200)
-World = NodePath("../World")
-
-[node name="KillBlock" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 75, 45)
-collision_layer = 128
-script = ExtResource("12_b214n")
-
-[node name="ShapeCast3D" type="CollisionShape3D" parent="KillBlock"]
-shape = SubResource("BoxShape3D_wwd8a")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="KillBlock"]
-transform = Transform3D(20, 0, 0, 0, 30, 0, 0, 0, 30, 0, 0, 0)
-mesh = SubResource("BoxMesh_738im")
-surface_material_override/0 = SubResource("StandardMaterial3D_5iss1")
-
-[node name="KillBlock2" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 75, -5)
-collision_layer = 128
-script = ExtResource("12_b214n")
-
-[node name="ShapeCast3D" type="CollisionShape3D" parent="KillBlock2"]
-shape = SubResource("BoxShape3D_b214n")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="KillBlock2"]
-transform = Transform3D(20, 0, 0, 0, 35, 0, 0, 0, 30, 0, 0, 0)
-mesh = SubResource("BoxMesh_738im")
-surface_material_override/0 = SubResource("StandardMaterial3D_5iss1")
-
-[node name="KillBlock3" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 75, -65)
-collision_layer = 128
-script = ExtResource("12_b214n")
-
-[node name="ShapeCast3D" type="CollisionShape3D" parent="KillBlock3"]
-shape = SubResource("BoxShape3D_b214n")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="KillBlock3"]
-transform = Transform3D(20, 0, 0, 0, 35, 0, 0, 0, 30, 0, 0, 0)
-mesh = SubResource("BoxMesh_738im")
-surface_material_override/0 = SubResource("StandardMaterial3D_5iss1")
-
-[node name="KillBlock4" type="Area3D" parent="."]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 50, -34.75)
-collision_layer = 128
-script = ExtResource("12_b214n")
-Persistent = true
-
-[node name="ShapeCast3D" type="CollisionShape3D" parent="KillBlock4"]
-shape = SubResource("BoxShape3D_738im")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="KillBlock4"]
-transform = Transform3D(20, 0, 0, 0, 50, 0, 0, 0, 90, 0, 0, 0)
-mesh = SubResource("BoxMesh_738im")
-surface_material_override/0 = SubResource("StandardMaterial3D_o6lgo")
-
-[node name="KillBlock5" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 75, -34.75)
-collision_layer = 128
-script = ExtResource("12_b214n")
-Persistent = true
-
-[node name="ShapeCast3D" type="CollisionShape3D" parent="KillBlock5"]
-shape = SubResource("BoxShape3D_5iss1")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="KillBlock5"]
-transform = Transform3D(20, 0, 0, 0, 40, 0, 0, 0, 90, 0, 0, 0)
-mesh = SubResource("BoxMesh_738im")
-surface_material_override/0 = SubResource("StandardMaterial3D_o6lgo")
-
-[node name="KillBlock6" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 75, -34.75)
-collision_layer = 128
-script = ExtResource("12_b214n")
-Persistent = true
-
-[node name="ShapeCast3D" type="CollisionShape3D" parent="KillBlock6"]
-shape = SubResource("BoxShape3D_o6lgo")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="KillBlock6"]
-transform = Transform3D(20, 0, 0, 0, 40, 0, 0, 0, 90, 0, 0, 0)
-mesh = SubResource("BoxMesh_738im")
-surface_material_override/0 = SubResource("StandardMaterial3D_o6lgo")
-
-[node name="EndPracticeHealth" parent="." instance=ExtResource("15_5iss1")]
-transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 60, -110)
-script = ExtResource("17_jxj1b")
-HP = 25
-
-[node name="SkipTutorialPracticeHealth" parent="." instance=ExtResource("15_5iss1")]
-transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 30, 3, 145)
-script = ExtResource("17_jxj1b")
-HP = 1
-
-[node name="Climb" type="Label3D" parent="."]
-transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -20, 7, 145)
-pixel_size = 0.05
-double_sided = false
-text = "HOLD RIGHT CLICK IN 
-FRONT OF THE WALL TO CLIMB."
-
-[node name="SkipTutorial" type="Label3D" parent="."]
-transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 30, 10, 145)
-pixel_size = 0.05
-double_sided = false
-text = "HIT THIS TO SKIP TUTORIAL 
-AND FIGHT THE GIANT!"
-
-[node name="StaminaWhileClimbing" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 45, 140)
-pixel_size = 0.05
-double_sided = false
-text = "CLIMBING OR HANGING DRAINS YOUR STAMINA.
-IF YOUR STAMINA EMPTIES YOU'LL ENTER FATIGUE 
-AND WILL NEED TO WAIT UNTIL YOUR STAMINA IS FULL TO DO ANYTHING."
-
-[node name="StaminaWhileCrawling" type="Label3D" parent="."]
-transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 25, 70, 110)
-pixel_size = 0.05
-double_sided = false
-text = "HOLDING RIGHT CLICK WHILE ON AN 
-UPRIGHT SURFACE PUTS YOU IN CRAWL. 
-YOU'll LATCH ONTO THE SURFACE 
-AND YOUR STAMINA REPLENISHES SLOWER."
-
-[node name="DontTouchRed" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 90, 75)
-pixel_size = 0.05
-double_sided = false
-text = "DONT TOUCH THE RED BLOCKS WHEN FULLY VISIBLE. 
-PRESS LEFT CTRL TO DASH THROUGH THEM.
-(DASH DOES NOT DRAIN STAMINA BUT DOES HAVE COOL DOWN)"
-
-[node name="DontTouchMagma" type="Label3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -8, 70, 20)
-pixel_size = 0.05
-double_sided = false
-text = "DONT TOUCH MAGMA.
-YOU CAN DASH IN MID AIR 
-(LEFT CTRL OR PRESS SPACE 
-TWICE TO DASH DIRECTLY UP)"
-
-[node name="AttackRed" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 78.31, -140)
-pixel_size = 0.05
-double_sided = false
-text = "ATTACK THE RED ORB.
-PRESS LEFT CLICK TO ATTACK 
-(HOLD TO CHARGE ATTACK FOR MORE DAMAGE)
-
-BRING HP DOWN TO 0 TO FIGHT GIANT!"

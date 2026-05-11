@@ -211,11 +211,13 @@ public partial class CharacterController : CharacterBody3D
         return false;
     }
     
-    public bool SurfaceDetectedOnDifferentBone(ClimbableEntity climbableEntity, RayCast3D rayCast3D, HashSet<string> bonesOn)
+    public bool SurfaceDetectedOnDifferentBone(ClimbableEntity climbableEntity, RayCast3D rayCast3D, int faceOnId)
     {
         if (climbableEntity != rayCast3D.GetCollider())
             return true;
 
+        HashSet<string> bonesOn = climbableEntity.GetFaceBones(faceOnId);
+        
         if (bonesOn == null || bonesOn.Count == 0)
             return true;
 

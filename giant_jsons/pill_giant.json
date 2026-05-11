@@ -97,6 +97,7 @@
 			"Hand.R"
 		]
 	},
+	"ExternalAttackType": "EXTERNAL",
 	"SlamAnimation": "pill_giant/slam",
 	"FloorAnimation": "pill_giant/stomp",
 	"MidAnimation": "pill_giant/clap",

@@ -1,0 +1,72 @@
+{
+	"ShakeAnimations": {
+		"hammer_beret/shake_hammer_left": [
+			"Hand.L",
+			"Forearm.L"
+		],
+		"hammer_beret/shake_hammer_right": [
+			"Hand.R",
+			"Forearm.R"
+		],
+		"hammer_beret/shake_body": [
+			"Body",
+			"Upperarm.L",
+			"Upperarm.R"
+		]
+	},
+	"AttackAnimations": {
+		"hammer_beret/attack_shoulder_left": [
+			"Upperarm.L"
+		],
+		"hammer_beret/attack_shoulder_right": [
+			"Upperarm.R"
+		],
+		"hammer_beret/hammer_clap": [
+			"Forearm.L",
+			"Hand.L",
+			"Forearm.R",
+			"Hand.R"
+		]
+	},
+	"StunBones": {
+		"hammer_beret/shake_hammer_left": [
+			"Hand.L",
+			"Forearm.L"
+		],
+		"hammer_beret/shake_hammer_right": [
+			"Hand.R",
+			"Forearm.R"
+		],
+		"hammer_beret/shake_body": [
+			"Body",
+			"Upperarm.L",
+			"Upperarm.R"
+		],
+		"hammer_beret/attack_shoulder_left": [
+			"Upperarm.L",
+			"Forearm.L"
+		],
+		"hammer_beret/attack_shoulder_right": [
+			"Upperarm.R",
+			"Forearm.R"
+		],
+		"hammer_beret/hammer_clap": [
+			"Upperarm.L",
+			"Forearm.L",
+			"Hand.L",
+			"Upperarm.R",
+			"Forearm.R",
+			"Hand.R"
+		]
+	},
+	"ExternalAttackType": "CHARGE",
+	"SlamAnimation": "hammer_beret/idle",
+	"FloorAnimation": "hammer_beret/slam",
+	"MidAnimation": "hammer_beret/idle",
+	"TopAnimation": "hammer_beret/idle",
+	"IdleAnimation": "hammer_beret/idle",
+	"ExternalAttackAnimation": "hammer_beret/dash_attack_swing",
+	"ChargeAttackAnimation": "hammer_beret/dash_attack_charge",
+	"DeadAnimation": "hammer_beret/dead",
+	"DesperationAnimation": "hammer_beret/tornado"
+}

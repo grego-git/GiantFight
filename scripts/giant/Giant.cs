@@ -29,6 +29,8 @@ public partial class Giant : Node3D
     public bool StunPlayer { get; set; }
     [Export]
     public bool ShakeCamera { get; set; }
+    [Export]
+    public bool ShakeGround { get; set; }
 
     [Export]
     public ClimbableAnimatedEntity[] ClimbAnimatedEntities { get; set; }
@@ -53,18 +55,24 @@ public partial class Giant : Node3D
     public PlayerDetection PlayerDetection { get; set; }
     public AnimationPlayer AnimPlayer { get; set; }
     public GiantProfile GiantProfile { get; set; }
+    public GiantActionDispenser ActionDispenser { get; set; }
     public Meter AgroMeter { get; set; }
     public Meter SlamTimer { get; set; }
     public HashSet<string> BonesPlayerIsOn { get; set; }
 
     public int MaxHP { get; private set; }
     public int CurrentHP { get; private set; }
+    public bool Dead { get; private set; }
 
+    [Export]
     public Node3D LeftLegIKTarget { get; set; }
+    [Export]
     public Node3D LeftArmIKTarget { get; set; }
+    [Export]
     public Node3D RightArmIKTarget { get; set; }
 
     private StandardMaterial3D material;
+    private IGiantAction desperationAction;
     private float yRot;
 
     public override void _Ready()
@@ -72,13 +80,10 @@ public partial class Giant : Node3D
         base._Ready();
 
         Skeleton = (Skeleton3D)GetNode("Armature/Skeleton3D");
-        Mesh = (MeshInstance3D)Skeleton.GetNode("Sphere_001");
+        Mesh = (MeshInstance3D)Skeleton.GetNode("Mesh");
         PlayerDetection = (PlayerDetection)GetNode("PlayerDetection");
         AnimPlayer = (AnimationPlayer)GetNode("AnimationPlayer");
-
-        LeftLegIKTarget = (Node3D)GetNode("LeftLegIKTarget");
-        LeftArmIKTarget = (Node3D)GetNode("LeftArmIKTarget");
-        RightArmIKTarget = (Node3D)GetNode("RightArmIKTarget");
+        ActionDispenser = (GiantActionDispenser)GetNode("GiantActionDispenser");
 
         string json = Godot.FileAccess.GetFileAsString("res://giant_jsons/" + GiantJson);
         GiantProfile = JsonConvert.DeserializeObject<GiantProfile>(json);
@@ -88,27 +93,29 @@ public partial class Giant : Node3D
 
         material = (StandardMaterial3D)Mesh.Mesh.SurfaceGetMaterial(0);
         
-        foreach (var hitPoint in HitPoints)
+        if (HitPoints != null && HitPoints.Length > 0)
         {
-            MaxHP += hitPoint.HP;
-            CurrentHP += hitPoint.HP;
+            foreach (var hitPoint in HitPoints)
+            {
+                hitPoint.HitPointDead += HitPointDead;
+                MaxHP += hitPoint.HP;
+                CurrentHP += hitPoint.HP;
+            }
         }
     }
 
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
-
-        bool dead;
         
         CurrentHP = 0;
 
         foreach (var hitPoint in HitPoints)
             CurrentHP += hitPoint.HP;
 
-        dead = CurrentHP <= 0;
+        Dead = CurrentHP <= 0;
 
-        if (!dead) 
+        if (!Dead) 
         {
             BonesPlayerIsOn = GetBonesPlayerIsOn();
 
@@ -128,6 +135,14 @@ public partial class Giant : Node3D
                     CharacterData.CameraController.Shake(1.0f, 5.0f);
                 
                 ShakeCamera = false;
+            }
+
+            if (ShakeGround)
+            {
+                if (BonesPlayerIsOn == null || BonesPlayerIsOn.Count == 0)
+                    CharacterData.CameraController.Shake(1.0f, 5.0f);
+                
+                ShakeGround = false;
             }
         }
         else
@@ -154,8 +169,10 @@ public partial class Giant : Node3D
                         if (SlamTimer.IsFilled())
                         {
                             SlamTimer.Empty();
-                            CurrentAction = new GiantActionPlayAnimation(this, GiantProfile.SlamAnimation);
-                            CurrentAction.Init();
+                            CurrentAction = ActionDispenser.NegateAction(this);
+
+                            if (CurrentAction != null)
+                                CurrentAction.Init();
                         }
                         break;
                     case PlayerDetection.DetectionZoneAreas.NONE:
@@ -164,7 +181,7 @@ public partial class Giant : Node3D
 
                         if (AgroMeter.IsFilled())
                         {
-                            CurrentAction = new GiantActionPlayAnimation(this, GiantProfile.ExternalAttackAnimation);
+                            CurrentAction = ActionDispenser.ExternalAction(this);                            
                             CurrentAction.Init();
                         }
                         break;
@@ -192,7 +209,7 @@ public partial class Giant : Node3D
                                     useLeftHand = false;
                             }
 
-                            CurrentAction = new GiantActionBodyAttack(this, attackAnimation,  useLeftHand);
+                            CurrentAction = ActionDispenser.AttackBodyAction(this, attackAnimation, useLeftHand);
                             CurrentAction.Init();
                         }
                         else if (!string.IsNullOrEmpty(shakeAnimation)) 
@@ -203,17 +220,17 @@ public partial class Giant : Node3D
                         break;
                     case PlayerDetection.DetectionZoneAreas.FLOOR:
                         SlamTimer.Empty();
-                        CurrentAction = new GiantActionTrackStomp(this);
+                        CurrentAction = ActionDispenser.BottomAction(this);
                         CurrentAction.Init();
                         break;
                     case PlayerDetection.DetectionZoneAreas.MIDDLE:
                         SlamTimer.Empty();
-                        CurrentAction = new GiantActionTrackClap(this);
+                        CurrentAction = ActionDispenser.MidAction(this);
                         CurrentAction.Init();
                         break;
                     case PlayerDetection.DetectionZoneAreas.TOP:
                         SlamTimer.Empty();
-                        CurrentAction = new GiantActionTrackPunch(this);
+                        CurrentAction = ActionDispenser.TopAction(this);
                         CurrentAction.Init();
                         break;
                     case PlayerDetection.DetectionZoneAreas.DEAD:
@@ -235,8 +252,17 @@ public partial class Giant : Node3D
 
                     if (CurrentAction.Complete())
                     {
-                        AnimPlayer.Play(GiantProfile.IdleAnimation);
-                        CurrentState = State.DETERMINING;
+                        if (desperationAction != null)
+                        {
+                            CurrentAction = desperationAction;
+                            CurrentAction.Init();
+                            desperationAction = null;
+                        }
+                        else 
+                        {
+                            AnimPlayer.Play(GiantProfile.IdleAnimation);
+                            CurrentState = State.DETERMINING;
+                        }
                     }
                 }
                 break;
@@ -250,6 +276,12 @@ public partial class Giant : Node3D
         float angleToPoint = Vector3.Back.SignedAngleTo(toPoint.Normalized(), Vector3.Up);
 
         yRot = (float)Utils.MoveTowardsAngle(yRot, angleToPoint, TurnSpeed * delta);
+        GlobalRotation = new Vector3(GlobalRotation.X, yRot, GlobalRotation.Z);
+    }
+
+    public void RotateYRot(float delta, float speed)
+    {
+        yRot += speed * delta;
         GlobalRotation = new Vector3(GlobalRotation.X, yRot, GlobalRotation.Z);
     }
 
@@ -318,5 +350,18 @@ public partial class Giant : Node3D
         }
 
         return "";
+    }
+
+    private void HitPointDead()
+    {
+        // There's already an action queued up
+        if (desperationAction != null)
+            return;
+        
+        // There's already an action in play
+        if (CurrentAction != null && CurrentAction.GetType().Name == ActionDispenser.GetDesperationActionType())
+            return;
+
+        desperationAction = ActionDispenser.DesperationAction(this);
     }
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://cbnhcgf14nygg"]
+[gd_scene load_steps=63 format=3 uid="uid://cbnhcgf14nygg"]
 
 [ext_resource type="Script" uid="uid://cxbc5aocp4eyw" path="res://scripts/giant/Giant.cs" id="1_54ejs"]
 [ext_resource type="Animation" uid="uid://bk4jchgawo4uh" path="res://models/giants/pill_giant/animations/idle.res" id="2_vqffu"]
@@ -37,6 +37,7 @@
 [ext_resource type="PackedScene" uid="uid://4akc6iql5kwk" path="res://prefabs/giants/break_apart_wall_trail.tscn" id="33_vqy42"]
 [ext_resource type="AudioStream" uid="uid://c4vpogssy726x" path="res://sounds/Stomp.wav" id="36_vqy42"]
 [ext_resource type="AudioStream" uid="uid://kqdk2bjafmo0" path="res://sounds/GiantPunch.wav" id="37_4u47r"]
+[ext_resource type="Script" uid="uid://i30wegqvtke8" path="res://scripts/giant/dispensers/PillGiantDispenser.cs" id="38_q2oi1"]
 
 [sub_resource type="Skin" id="Skin_0qfme"]
 resource_name = "Skin"
@@ -362,11 +363,11 @@ _data = {
 }
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3hmej"]
-radius = 1.5
+radius = 1.75
 height = 4.5
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_6qws1"]
-radius = 1.5
+radius = 1.75
 height = 4.5
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6qws1"]
@@ -446,18 +447,21 @@ transparency = 1
 shading_mode = 0
 albedo_color = Color(0, 0.25, 1, 0.25098)
 
-[node name="PillGiant" type="Node3D" node_paths=PackedStringArray("StompSound", "ClimbAnimatedEntities", "ArmLimbs", "Fists", "HitPoints", "LeftLegIK", "LeftArmIK", "RightArmIK")]
+[node name="PillGiant" type="Node3D" node_paths=PackedStringArray("StompSound", "ClimbAnimatedEntities", "ArmLimbs", "Fists", "HitPoints", "LeftLegIK", "LeftArmIK", "RightArmIK", "LeftLegIKTarget", "LeftArmIKTarget", "RightArmIKTarget")]
 script = ExtResource("1_54ejs")
 StompSound = NodePath("StompSound")
 GiantJson = "pill_giant.json"
-TurnSpeed = 2.0
-ClimbAnimatedEntities = [NodePath("Armature/Skeleton3D/Sphere_001/AnimatedClimbableEntity")]
+TurnSpeed = 5.0
+ClimbAnimatedEntities = [NodePath("Armature/Skeleton3D/Mesh/AnimatedClimbableEntity")]
 ArmLimbs = [NodePath("LeftUpperarm"), NodePath("LeftForearm"), NodePath("RightUpperarm"), NodePath("RightForearm")]
 Fists = [NodePath("LeftFist"), NodePath("RightFist")]
 HitPoints = [NodePath("ElbowHitPoint"), NodePath("HandHitPoint"), NodePath("FootHitPoint"), NodePath("KneeHitPoint")]
 LeftLegIK = NodePath("Armature/Skeleton3D/LeftLegIK")
 LeftArmIK = NodePath("Armature/Skeleton3D/LeftArmIK")
 RightArmIK = NodePath("Armature/Skeleton3D/RightArmIK")
+LeftLegIKTarget = NodePath("LeftLegIKTarget")
+LeftArmIKTarget = NodePath("LeftArmIKTarget")
+RightArmIKTarget = NodePath("RightArmIKTarget")
 
 [node name="Armature" type="Node3D" parent="."]
 
@@ -582,11 +586,11 @@ bones/16/position = Vector3(-2.11009, -2.5, 5)
 bones/16/rotation = Quaternion(0.707107, 1.37679e-07, 1.37679e-07, 0.707107)
 bones/16/scale = Vector3(1, 1, 1)
 
-[node name="Sphere_001" type="MeshInstance3D" parent="Armature/Skeleton3D"]
+[node name="Mesh" type="MeshInstance3D" parent="Armature/Skeleton3D"]
 mesh = ExtResource("2_xuk4y")
 skin = SubResource("Skin_0qfme")
 
-[node name="AnimatedClimbableEntity" parent="Armature/Skeleton3D/Sphere_001" instance=ExtResource("2_w8ufm")]
+[node name="AnimatedClimbableEntity" parent="Armature/Skeleton3D/Mesh" instance=ExtResource("2_w8ufm")]
 
 [node name="LeftLegIK" type="SkeletonIK3D" parent="Armature/Skeleton3D"]
 influence = 0.0
@@ -614,18 +618,18 @@ libraries = {
 autoplay = "pill_giant/idle"
 
 [node name="Body" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
-transform = Transform3D(1, 0, 0, 0, 0.984808, -0.173648, 0, 0.173648, 0.984808, 0, 0, -0.15)
+transform = Transform3D(1, 0, 0, 0, 0.984808, -0.173648, 0, 0.173648, 0.984808, 0, 0, 0)
 collision_layer = 64
 script = ExtResource("4_w8ufm")
 Bone = "Body"
 Skeleton = NodePath("../Armature/Skeleton3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Body"]
-transform = Transform3D(1, 0, 0, 0, 1, -1.49012e-08, 0, 1.49012e-08, 1, 0, -3.72529e-09, 0.35)
+transform = Transform3D(1, 0, 0, 0, 1, -1.49012e-08, 0, 1.49012e-08, 1, 0, -3.72529e-09, 0)
 shape = SubResource("CapsuleShape3D_3hmej")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Body"]
-transform = Transform3D(1, 0, 0, 0, 1, -1.49012e-08, 0, 1.49012e-08, 1, 0, -3.72529e-09, 0.35)
+transform = Transform3D(1, 0, 0, 0, 1, -1.49012e-08, 0, 1.49012e-08, 1, 0, -3.72529e-09, 0)
 mesh = SubResource("CapsuleMesh_6qws1")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_6qws1")
@@ -886,3 +890,6 @@ volume_db = 10.0
 [node name="PunchSound" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("37_4u47r")
 volume_db = 10.0
+
+[node name="GiantActionDispenser" type="Node3D" parent="."]
+script = ExtResource("38_q2oi1")

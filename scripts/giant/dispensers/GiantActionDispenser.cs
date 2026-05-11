@@ -1,0 +1,45 @@
+using Godot;
+using System;
+
+public partial class GiantActionDispenser : Node3D, IActionDispenser
+{
+    public virtual IGiantAction BottomAction(Giant giant)
+    {
+        return null;
+    }
+
+    public virtual IGiantAction MidAction(Giant giant)
+    {
+        return null;
+    }
+
+    public virtual IGiantAction TopAction(Giant giant)
+    {
+        return null;
+    }
+
+    public virtual IGiantAction ExternalAction(Giant giant)
+    {
+        return null;
+    }
+
+    public virtual IGiantAction NegateAction(Giant giant)
+    {
+        return null;
+    }
+
+    public virtual IGiantAction DesperationAction(Giant giant)
+    {
+        return null;
+    }
+
+    public virtual IGiantAction AttackBodyAction(Giant giant, string animation, bool useLeftHand)
+    {
+        return null;
+    }
+
+    public virtual string GetDesperationActionType()
+    {
+        return null;
+    }
+}
