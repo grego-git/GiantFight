@@ -59,7 +59,6 @@
 			"Hand.R"
 		]
 	},
-	"ExternalAttackType": "CHARGE",
 	"SlamAnimation": "hammer_beret/idle",
 	"FloorAnimation": "hammer_beret/slam",
 	"MidAnimation": "hammer_beret/idle",

@@ -32,7 +32,7 @@ public class GiantActionPlayAnimation : IGiantAction
             giant.PlayerDetection.PlayerDetectionZone != PlayerDetection.DetectionZoneAreas.ON_GIANT && 
             giant.TrackPlayer)
         {
-            giant.RotateTowardsPoint(delta, giant.PlayerDetection.PlayerPosition);
+            giant.RotateTowardsPoint(delta, giant.PlayerDetection.PlayerPosition, giant.TurnSpeed);
         }
     }
 
@@ -40,6 +40,8 @@ public class GiantActionPlayAnimation : IGiantAction
     {
         complete = true;
         giant.AnimPlayer.AnimationFinished -= AnimationComplete;
+        giant.LeftArmIK.Stop();
+        giant.RightArmIK.Stop();
         giant.AgroMeter.Empty();
     }
 }

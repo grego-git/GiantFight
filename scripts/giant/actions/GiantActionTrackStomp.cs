@@ -37,7 +37,7 @@ public class GiantActionTrackStomp : IGiantAction
             giant.TrackPlayer)
             rotatePoint = giant.PlayerDetection.PlayerPosition;
         
-        giant.RotateTowardsPoint(delta, rotatePoint);
+        giant.RotateTowardsPoint(delta, rotatePoint, giant.TurnSpeed);
         giant.LeftLegIKTarget.GlobalPosition = stompTarget + (Vector3.Up * giant.StompPadding);
     }
 

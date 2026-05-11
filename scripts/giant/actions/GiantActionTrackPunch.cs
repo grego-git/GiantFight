@@ -40,7 +40,7 @@ public class GiantActionTrackPunch : IGiantAction
         Vector3 shoulderPos = (giant.Skeleton.GlobalTransform * giant.Skeleton.GetBoneGlobalPose(giant.Skeleton.FindBone("Upperarm.L"))).Origin;
         Vector3 punchDir = (punchTarget - shoulderPos).Normalized();
 
-        giant.RotateTowardsPoint(delta, rotatePoint);
+        giant.RotateTowardsPoint(delta, rotatePoint, giant.TurnSpeed);
         giant.LeftArmIKTarget.GlobalPosition = shoulderPos + (punchDir * 100.0f);
     }
 

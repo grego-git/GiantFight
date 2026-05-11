@@ -1,0 +1,17 @@
+{
+	"ShakeAnimations": {
+	},
+	"AttackAnimations": {
+	},
+	"StunBones": {
+	},
+	"SlamAnimation": "bronze_giant/idle",
+	"FloorAnimation": "bronze_giant/floor_attack",
+	"MidAnimation": "bronze_giant/idle",
+	"TopAnimation": "bronze_giant/idle",
+	"IdleAnimation": "bronze_giant/idle",
+	"ExternalAttackAnimation": "bronze_giant/external_attack",
+	"ChargeAttackAnimation": "bronze_giant/idle",
+	"DeadAnimation": "bronze_giant/idle",
+	"DesperationAnimation": "bronze_giant/idle"
+}

@@ -1,0 +1,720 @@
+[gd_scene load_steps=48 format=3 uid="uid://dq2vaks5hc8qm"]
+
+[ext_resource type="ArrayMesh" uid="uid://bojxhgev3sbfb" path="res://models/giants/bronze_giant/meshes/bronze_giant.res" id="1_47rom"]
+[ext_resource type="Script" uid="uid://cxbc5aocp4eyw" path="res://scripts/giant/Giant.cs" id="1_wmo47"]
+[ext_resource type="Animation" uid="uid://bfrkkj7rl8s6e" path="res://models/giants/bronze_giant/animations/attack_arm_left.res" id="2_wmo47"]
+[ext_resource type="PackedScene" uid="uid://c06728ka5lnsp" path="res://prefabs/climb/animated_climbable_entity.tscn" id="3_jgy7n"]
+[ext_resource type="Animation" uid="uid://y2ogy6kw8ruk" path="res://models/giants/bronze_giant/animations/attack_arm_right.res" id="3_mv4ex"]
+[ext_resource type="Animation" uid="uid://3pdyirhrl8f2" path="res://models/giants/bronze_giant/animations/bottom_attack.res" id="4_b2em0"]
+[ext_resource type="Animation" uid="uid://ca4kkilarpgro" path="res://models/giants/bronze_giant/animations/external_attack.res" id="5_jgy7n"]
+[ext_resource type="Animation" uid="uid://b1ul0jqxmk6d4" path="res://models/giants/bronze_giant/animations/idle.res" id="6_dwcg7"]
+[ext_resource type="Animation" uid="uid://e00jolploktq" path="res://models/giants/bronze_giant/animations/mid_attack.res" id="7_il5lg"]
+[ext_resource type="Script" uid="uid://btmifgegnirye" path="res://scripts/giant/GiantLimb.cs" id="8_ludbg"]
+[ext_resource type="Animation" uid="uid://b250j575aniqk" path="res://models/giants/bronze_giant/animations/floor_attack.res" id="10_xidiy"]
+[ext_resource type="AudioStream" uid="uid://c4vpogssy726x" path="res://sounds/Stomp.wav" id="11_dwcg7"]
+[ext_resource type="AudioStream" uid="uid://kqdk2bjafmo0" path="res://sounds/GiantPunch.wav" id="12_il5lg"]
+[ext_resource type="Script" uid="uid://bdbiac3np3x03" path="res://scripts/giant/PlayerDetection.cs" id="13_dwcg7"]
+[ext_resource type="Script" uid="uid://ds8rq38jt1ytl" path="res://scripts/giant/dispensers/BronzeGiantDispenser.cs" id="14_il5lg"]
+[ext_resource type="PackedScene" uid="uid://b3y03b005tnj5" path="res://prefabs/giants/giant_hit_point.tscn" id="15_ludbg"]
+[ext_resource type="Script" uid="uid://d4gj8b81wlecy" path="res://scripts/giant/SpawnFirePillar.cs" id="16_8x61c"]
+[ext_resource type="PackedScene" uid="uid://cygd83q8tng2v" path="res://prefabs/giants/fire_pillar.tscn" id="17_xidiy"]
+[ext_resource type="Script" uid="uid://b1f3u2r5y28rp" path="res://scripts/giant/DetectRing.cs" id="19_5dss7"]
+[ext_resource type="PackedScene" uid="uid://cdn0g01wmlig3" path="res://prefabs/giants/particles/fire_particles.tscn" id="20_l4nfn"]
+[ext_resource type="Texture2D" uid="uid://cwe5cm68ds6df" path="res://textures/FlameParticle.png" id="21_ftrdt"]
+[ext_resource type="Script" uid="uid://sbueogfis8dk" path="res://scripts/giant/GiantHitBox.cs" id="22_ftrdt"]
+
+[sub_resource type="Skin" id="Skin_wd778"]
+resource_name = "Skin"
+bind_count = 19
+bind/0/name = &"Pelvis"
+bind/0/bone = -1
+bind/0/pose = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.96333, -1.23319e-08)
+bind/1/name = &"Chest"
+bind/1/bone = -1
+bind/1/pose = Transform3D(1, 0, 0, 0, 1, 1.2071e-08, 0, -1.2071e-08, 1, 0, -1.23868, 2.62025e-09)
+bind/2/name = &"Head"
+bind/2/bone = -1
+bind/2/pose = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.15489, -5.96046e-08)
+bind/3/name = &"Upperarm.L"
+bind/3/bone = -1
+bind/3/pose = Transform3D(5.27604e-15, -1, 7.54979e-08, 1, -2.90279e-15, -6.02501e-08, 6.02501e-08, 7.54979e-08, 1, 3.60493, -3.20458, -4.65241e-07)
+bind/4/name = &"Forearm.L"
+bind/4/bone = -1
+bind/4/pose = Transform3D(-4.23516e-22, -1, 7.54979e-08, 1, -3.63007e-15, 2.74063e-22, 3.19746e-29, 7.54979e-08, 1, 3.60493, -6.17244, -9.33509e-08)
+bind/5/name = &"Hand.L"
+bind/5/bone = -1
+bind/5/pose = Transform3D(2.41402e-36, -1, 7.54979e-08, 1, -3.63007e-15, 2.74063e-22, -1.82169e-43, 7.54979e-08, 1, 3.60493, -9.67244, -9.33509e-08)
+bind/6/name = &"Upperarm.R"
+bind/6/bone = -1
+bind/6/pose = Transform3D(5.27604e-15, 1, -7.54979e-08, -1, -2.90279e-15, -6.02501e-08, -6.02501e-08, 7.54979e-08, 1, -3.60493, -3.20458, -4.65241e-07)
+bind/7/name = &"Forearm.R"
+bind/7/bone = -1
+bind/7/pose = Transform3D(-4.23516e-22, 1, -7.54979e-08, -1, -3.63007e-15, 2.74063e-22, -3.19746e-29, 7.54979e-08, 1, -3.60493, -6.17244, -9.33509e-08)
+bind/8/name = &"Hand.R"
+bind/8/bone = -1
+bind/8/pose = Transform3D(2.41402e-36, 1, -7.54979e-08, -1, -3.63007e-15, 2.74063e-22, 1.82169e-43, 7.54979e-08, 1, -3.60493, -9.67244, -9.33509e-08)
+bind/9/name = &"Thigh.L"
+bind/9/bone = -1
+bind/9/pose = Transform3D(-1.35474e-06, 0.0281965, 0.999602, -3.28833e-06, -0.999602, 0.0281965, 1.00012, 4.6757e-09, 1.35497e-06, 0.0493521, -1.74952, -1.62858)
+bind/10/name = &"Calf.L"
+bind/10/bone = -1
+bind/10/pose = Transform3D(-6.39726e-07, -0.0266572, 0.999645, -3.2499e-06, -0.999645, -0.0266572, 1.00012, -1.22938e-08, 4.61019e-07, -0.241122, -5.29079, -1.62858)
+bind/11/name = &"Foot.L"
+bind/11/bone = -1
+bind/11/pose = Transform3D(-1.83484e-08, -1, 3.72378e-09, -9.1794e-08, -1.60186e-07, 1, -1.00012, -3.23478e-06, 6.88956e-14, -9.04535, -1.31924e-06, 1.62855)
+bind/12/name = &"Thigh.R"
+bind/12/bone = -1
+bind/12/pose = Transform3D(-1.35474e-06, -0.0281965, -0.999602, 3.28833e-06, -0.999602, 0.0281965, -1.00012, 4.6757e-09, 1.35497e-06, -0.0493521, -1.74952, -1.62858)
+bind/13/name = &"Calf.R"
+bind/13/bone = -1
+bind/13/pose = Transform3D(-6.39726e-07, 0.0266572, -0.999645, 3.2499e-06, -0.999645, -0.0266572, -1.00012, -1.22938e-08, 4.61019e-07, 0.241122, -5.29079, -1.62858)
+bind/14/name = &"Foot.R"
+bind/14/bone = -1
+bind/14/pose = Transform3D(-1.83484e-08, 1, -3.72378e-09, 9.1794e-08, -1.60186e-07, 1, 1.00012, -3.23478e-06, 6.88956e-14, 9.04535, -1.31924e-06, 1.62855)
+bind/15/name = &"LegControl.L"
+bind/15/bone = -1
+bind/15/pose = Transform3D(7.54979e-08, 1, 0, 0, 0, -1, -1, 7.54979e-08, 0, 9.04535, 8.88178e-16, 1.62839)
+bind/16/name = &"LegPoleTarget.L"
+bind/16/bone = -1
+bind/16/pose = Transform3D(4.01339e-07, -1, 0, 0, 0, 1, -1, -4.01339e-07, 0, -5.29535, -10.1, 1.62839)
+bind/17/name = &"LegControl.R"
+bind/17/bone = -1
+bind/17/pose = Transform3D(7.54979e-08, -1, 0, 0, 0, -1, 1, 7.54979e-08, 0, -9.04535, 8.88178e-16, 1.62839)
+bind/18/name = &"LegPoleTarget.R"
+bind/18/bone = -1
+bind/18/pose = Transform3D(4.01339e-07, 1, 0, 0, 0, 1, 1, -4.01339e-07, 0, 5.29535, -10.1, 1.62839)
+
+[sub_resource type="Animation" id="Animation_8x61c"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpawnFirePillar:Spawn")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:ShakeGround")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:TrackPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Armature/Skeleton3D/LeftArmIK:influence")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Armature/Skeleton3D/RightArmIK:influence")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("FlamethrowerHitBox:monitoring")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("FlamethrowerHitBox:monitorable")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("FlamethrowerParticles:emitting")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xidiy"]
+_data = {
+&"RESET": SubResource("Animation_8x61c")
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jgy7n"]
+_data = {
+&"attack_arm_left": ExtResource("2_wmo47"),
+&"attack_arm_right": ExtResource("3_mv4ex"),
+&"bottom_attack": ExtResource("4_b2em0"),
+&"external_attack": ExtResource("5_jgy7n"),
+&"floor_attack": ExtResource("10_xidiy"),
+&"idle": ExtResource("6_dwcg7"),
+&"mid_attack": ExtResource("7_il5lg")
+}
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0u6x8"]
+radius = 2.5
+height = 8.0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_8x61c"]
+radius = 2.5
+height = 8.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xidiy"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 0.12549)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_47rom"]
+radius = 1.5
+height = 4.5
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_wmo47"]
+radius = 1.5
+height = 4.5
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mv4ex"]
+radius = 2.0
+height = 6.0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_b2em0"]
+radius = 2.0
+height = 6.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jgy7n"]
+radius = 1.75
+height = 5.0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_dwcg7"]
+radius = 1.75
+height = 5.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_h2mcp"]
+height = 7.5
+radius = 12.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_l4nfn"]
+top_radius = 12.5
+bottom_radius = 12.5
+height = 7.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ftrdt"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0, 1, 0.116667, 0.25098)
+
+[sub_resource type="SphereMesh" id="SphereMesh_5dss7"]
+
+[sub_resource type="Gradient" id="Gradient_xk8ni"]
+offsets = PackedFloat32Array(0, 0.25, 0.5, 0.75, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 0.883333, 0, 0.501961, 1, 0, 0, 0.25098, 0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_07pi0"]
+gradient = SubResource("Gradient_xk8ni")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4lt1k"]
+emission_shape_offset = Vector3(0, 0, -10)
+emission_shape_scale = Vector3(0.5, 0.5, 10)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+gravity = Vector3(0, 4.9, 0)
+color_ramp = SubResource("GradientTexture1D_07pi0")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2e36f"]
+render_priority = 10
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("21_ftrdt")
+texture_filter = 0
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_ftrdt"]
+material = SubResource("StandardMaterial3D_2e36f")
+size = Vector2(20, 20)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xk8ni"]
+height = 20.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_07pi0"]
+height = 20.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4lt1k"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1, 0, 0.983333, 0.12549)
+
+[node name="BronzeGiant" type="Node3D" node_paths=PackedStringArray("StompSound", "ClimbAnimatedEntities", "ArmLimbs", "Fists", "HitPoints", "LeftLegIK", "LeftArmIK", "RightArmIK", "LeftLegIKTarget", "LeftArmIKTarget", "RightArmIKTarget")]
+script = ExtResource("1_wmo47")
+StompSound = NodePath("StompSound")
+GiantJson = "bronze_giant.json"
+TurnSpeed = 5.0
+ClimbAnimatedEntities = [NodePath("Armature/Skeleton3D/Mesh/AnimatedClimbableEntity")]
+ArmLimbs = [NodePath("UpperarmLeft"), NodePath("ForearmLeft"), NodePath("UpperarmRight"), NodePath("ForearmRight")]
+Fists = []
+HitPoints = [NodePath("HitPoint")]
+LeftLegIK = NodePath("Armature/Skeleton3D/LeftLegIK")
+LeftArmIK = NodePath("Armature/Skeleton3D/LeftArmIK")
+RightArmIK = NodePath("Armature/Skeleton3D/RightArmIK")
+LeftLegIKTarget = NodePath("LeftLegIKTarget")
+LeftArmIKTarget = NodePath("LeftArmIKTarget")
+RightArmIKTarget = NodePath("RightArmIKTarget")
+
+[node name="Armature" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.96333, 0)
+
+[node name="Skeleton3D" type="Skeleton3D" parent="Armature"]
+bones/0/name = "Pelvis"
+bones/0/parent = -1
+bones/0/rest = Transform3D(1, 2.16569e-17, -1.05867e-18, -2.16569e-17, 0.995232, -0.0975341, -1.05867e-18, 0.0975341, 0.995232, 0, -0.185843, -0.410566)
+bones/0/enabled = true
+bones/0/position = Vector3(0, -0.185843, -0.410566)
+bones/0/rotation = Quaternion(0.0488253, -1.72163e-26, -1.08414e-17, 0.998807)
+bones/0/scale = Vector3(1, 1, 1)
+bones/1/name = "Chest"
+bones/1/parent = 0
+bones/1/rest = Transform3D(1, -1.65436e-24, 1.03398e-25, 1.65436e-24, 1, -1.2071e-08, -1.03398e-25, 1.2071e-08, 1, -7.03104e-24, 3.20201, 0)
+bones/1/enabled = true
+bones/1/position = Vector3(-7.03104e-24, 3.20201, 0)
+bones/1/rotation = Quaternion(6.03552e-09, 5.16988e-26, 8.27181e-25, 1)
+bones/1/scale = Vector3(1, 1, 1)
+bones/2/name = "Head"
+bones/2/parent = 1
+bones/2/rest = Transform3D(1, 7.88013e-18, -1.39872e-19, -7.88013e-18, 0.99937, -0.0354889, -1.39873e-19, 0.0354889, 0.99937, -4.01183e-23, 3.91622, -2.98023e-08)
+bones/2/enabled = true
+bones/2/position = Vector3(-4.01183e-23, 3.91622, -2.98023e-08)
+bones/2/rotation = Quaternion(0.0177473, 2.87051e-25, -3.94068e-18, 0.999843)
+bones/2/scale = Vector3(1, 1, 1)
+bones/3/name = "Upperarm.L"
+bones/3/parent = 1
+bones/3/rest = Transform3D(-0.940562, 0.339266, 0.0155839, -0.339555, -0.93846, -0.0632146, -0.00682172, -0.0647488, 0.997878, 3.20458, 2.36626, -4.0895e-08)
+bones/3/enabled = true
+bones/3/position = Vector3(3.20458, 2.36626, -4.0895e-08)
+bones/3/rotation = Quaternion(0.00222504, -0.0324948, 0.984492, -0.172378)
+bones/3/scale = Vector3(1, 1, 1)
+bones/4/name = "Forearm.L"
+bones/4/parent = 3
+bones/4/rest = Transform3D(1, -1.40265e-08, 7.92026e-09, 1.57758e-08, 0.952175, -0.305555, -3.2556e-09, 0.305555, 0.952175, 1.77636e-14, 2.96786, 2.12393e-14)
+bones/4/enabled = true
+bones/4/position = Vector3(1.77636e-14, 2.96786, 2.12393e-14)
+bones/4/rotation = Quaternion(0.154637, 2.82798e-09, 7.54129e-09, 0.987971)
+bones/4/scale = Vector3(1, 1, 1)
+bones/5/name = "Hand.L"
+bones/5/parent = 4
+bones/5/rest = Transform3D(1, -6.93889e-18, 3.72529e-09, -6.93889e-18, 1, 3.72529e-09, -3.72529e-09, -3.72529e-09, 1, -1.42109e-14, 3.5, -2.98023e-08)
+bones/5/enabled = true
+bones/5/position = Vector3(-1.42109e-14, 3.5, -2.98023e-08)
+bones/5/rotation = Quaternion(-1.86265e-09, 1.86265e-09, 0, 1)
+bones/5/scale = Vector3(1, 1, 1)
+bones/6/name = "Upperarm.R"
+bones/6/parent = 1
+bones/6/rest = Transform3D(-0.940562, -0.339266, -0.0155839, 0.339555, -0.93846, -0.0632146, 0.00682172, -0.0647488, 0.997878, -3.20458, 2.36626, -4.0895e-08)
+bones/6/enabled = true
+bones/6/position = Vector3(-3.20458, 2.36626, -4.0895e-08)
+bones/6/rotation = Quaternion(-0.00222504, -0.0324948, 0.984492, 0.172378)
+bones/6/scale = Vector3(1, 1, 1)
+bones/7/name = "Forearm.R"
+bones/7/parent = 6
+bones/7/rest = Transform3D(1, 2.83446e-08, -1.39779e-08, -3.126e-08, 0.952175, -0.305555, 4.64856e-09, 0.305555, 0.952175, 4.76837e-07, 2.96786, 1.4057e-14)
+bones/7/enabled = true
+bones/7/position = Vector3(4.76837e-07, 2.96786, 1.4057e-14)
+bones/7/rotation = Quaternion(0.154637, -4.71331e-09, -1.50826e-08, 0.987971)
+bones/7/scale = Vector3(1, 1, 1)
+bones/8/name = "Hand.R"
+bones/8/parent = 7
+bones/8/rest = Transform3D(1, 1.49012e-08, -5.58793e-09, -1.49012e-08, 1, -3.72529e-09, 5.58794e-09, 3.72529e-09, 1, 1.42109e-14, 3.5, 2.98023e-08)
+bones/8/enabled = true
+bones/8/position = Vector3(1.42109e-14, 3.5, 2.98023e-08)
+bones/8/rotation = Quaternion(1.86265e-09, -2.79397e-09, -7.45058e-09, 1)
+bones/8/scale = Vector3(1, 1, 1)
+bones/9/name = "Thigh.L"
+bones/9/parent = 0
+bones/9/rest = Transform3D(0.0374891, 0.130778, 0.990359, 0.354291, -0.928739, 0.109154, 0.934383, 0.346904, -0.0811228, 1.62839, 0.21311, 1.36141e-07)
+bones/9/enabled = true
+bones/9/position = Vector3(1.62839, 0.21311, 1.36141e-07)
+bones/9/rotation = Quaternion(0.715435, 0.169497, 0.6727, 0.0830609)
+bones/9/scale = Vector3(1, 1, 0.999653)
+bones/10/name = "Calf.L"
+bones/10/parent = 9
+bones/10/rest = Transform3D(0.921342, -0.388532, -0.0131069, 0.388683, 0.920018, 0.0499284, -0.00734022, -0.0510956, 0.998666, -1.71735e-07, 3.54654, 7.07844e-10)
+bones/10/enabled = true
+bones/10/position = Vector3(-1.71735e-07, 3.54654, 7.07844e-10)
+bones/10/rotation = Quaternion(-0.0257767, -0.00147158, 0.19831, 0.979799)
+bones/10/scale = Vector3(1, 1, 0.999999)
+bones/11/name = "Foot.L"
+bones/11/parent = 10
+bones/11/rest = Transform3D(0.0266572, 0.999645, 5.44029e-07, 0.999645, -0.0266572, 3.23272e-06, 3.24607e-06, 4.57661e-07, -1, 1.09926e-08, 3.75133, -1.51355e-07)
+bones/11/enabled = true
+bones/11/position = Vector3(1.09926e-08, 3.75133, -1.51355e-07)
+bones/11/rotation = Quaternion(0.71647, 0.697618, 1.32025e-06, -9.6866e-07)
+bones/11/scale = Vector3(1, 1, 1)
+bones/12/name = "Thigh.R"
+bones/12/parent = 0
+bones/12/rest = Transform3D(0.0374891, -0.130778, -0.990359, -0.354291, -0.928739, 0.109153, -0.934383, 0.346904, -0.0811228, -1.62839, 0.21311, 1.36141e-07)
+bones/12/enabled = true
+bones/12/position = Vector3(-1.62839, 0.21311, 1.36141e-07)
+bones/12/rotation = Quaternion(0.715435, -0.169497, -0.6727, 0.0830609)
+bones/12/scale = Vector3(1, 1, 0.999651)
+bones/13/name = "Calf.R"
+bones/13/parent = 12
+bones/13/rest = Transform3D(0.921342, 0.388532, 0.0131069, -0.388683, 0.920018, 0.0499284, 0.00734022, -0.0510956, 0.998666, 3.7826e-08, 3.54654, -2.37711e-07)
+bones/13/enabled = true
+bones/13/position = Vector3(3.7826e-08, 3.54654, -2.37711e-07)
+bones/13/rotation = Quaternion(-0.0257767, 0.00147158, -0.19831, 0.979799)
+bones/13/scale = Vector3(1, 1, 0.999999)
+bones/14/name = "Foot.R"
+bones/14/parent = 13
+bones/14/rest = Transform3D(0.0266572, -0.999645, -5.52086e-07, -0.999645, -0.0266572, 3.23283e-06, -3.2464e-06, 4.65712e-07, -1, -2.37036e-08, 3.75133, -3.21442e-08)
+bones/14/enabled = true
+bones/14/position = Vector3(-2.37036e-08, 3.75133, -3.21442e-08)
+bones/14/rotation = Quaternion(0.71647, -0.697618, -1.32313e-06, -9.68375e-07)
+bones/14/scale = Vector3(1, 1, 1)
+bones/15/name = "LegControl.L"
+bones/15/parent = -1
+bones/15/rest = Transform3D(0, 5.96046e-08, -1, 1, -1.19209e-07, 5.96046e-08, -5.96046e-08, -1, -1.19209e-07, 2.29905, -7.08202, -1.23319e-08)
+bones/15/enabled = true
+bones/15/position = Vector3(2.29905, -7.08202, -1.23319e-08)
+bones/15/rotation = Quaternion(0.5, 0.5, -0.5, -0.5)
+bones/15/scale = Vector3(1, 1, 1)
+bones/16/name = "LegPoleTarget.L"
+bones/16/parent = -1
+bones/16/rest = Transform3D(2.38419e-07, -5.96047e-08, -1, -1, -5.96047e-08, -2.38419e-07, -5.96046e-08, 1, -5.96047e-08, 2.62839, -3.33202, 10.1)
+bones/16/enabled = true
+bones/16/position = Vector3(2.62839, -3.33202, 10.1)
+bones/16/rotation = Quaternion(0.5, -0.5, -0.5, 0.5)
+bones/16/scale = Vector3(1, 1, 1)
+bones/17/name = "LegControl.R"
+bones/17/parent = -1
+bones/17/rest = Transform3D(0, -5.96046e-08, 1, -1, -1.19209e-07, 5.96046e-08, 5.96046e-08, -1, -1.19209e-07, -2.29905, -7.08202, -1.23319e-08)
+bones/17/enabled = true
+bones/17/position = Vector3(-2.29905, -7.08202, -1.23319e-08)
+bones/17/rotation = Quaternion(0.5, -0.5, 0.5, -0.5)
+bones/17/scale = Vector3(1, 1, 1)
+bones/18/name = "LegPoleTarget.R"
+bones/18/parent = -1
+bones/18/rest = Transform3D(2.38419e-07, 5.96047e-08, 1, 1, -5.96047e-08, -2.38419e-07, 5.96046e-08, 1, -5.96047e-08, -2.62839, -3.33202, 10.1)
+bones/18/enabled = true
+bones/18/position = Vector3(-2.62839, -3.33202, 10.1)
+bones/18/rotation = Quaternion(0.5, 0.5, 0.5, 0.5)
+bones/18/scale = Vector3(1, 1, 1)
+
+[node name="Mesh" type="MeshInstance3D" parent="Armature/Skeleton3D"]
+mesh = ExtResource("1_47rom")
+skin = SubResource("Skin_wd778")
+
+[node name="AnimatedClimbableEntity" parent="Armature/Skeleton3D/Mesh" instance=ExtResource("3_jgy7n")]
+
+[node name="LeftLegIK" type="SkeletonIK3D" parent="Armature/Skeleton3D"]
+influence = 0.0
+root_bone = &"Thigh.L"
+tip_bone = &"Foot.L"
+target_node = NodePath("../../../LeftLegIKTarget")
+
+[node name="LeftArmIK" type="SkeletonIK3D" parent="Armature/Skeleton3D"]
+influence = 0.0
+root_bone = &"Upperarm.L"
+tip_bone = &"Hand.L"
+target_node = NodePath("../../../LeftArmIKTarget")
+
+[node name="RightArmIK" type="SkeletonIK3D" parent="Armature/Skeleton3D"]
+influence = 0.0
+root_bone = &"Upperarm.R"
+tip_bone = &"Hand.R"
+target_node = NodePath("../../../RightArmIKTarget")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_xidiy"),
+&"bronze_giant": SubResource("AnimationLibrary_jgy7n")
+}
+autoplay = "bronze_giant/idle"
+
+[node name="Body" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
+transform = Transform3D(1, 0, 0, 0, 0.996195, -0.0871558, 0, 0.0871558, 0.996195, 0, 1, 0)
+collision_layer = 64
+script = ExtResource("8_ludbg")
+Bone = "Pelvis"
+Skeleton = NodePath("../Armature/Skeleton3D")
+AdditionalDetectBones = PackedStringArray("Chest")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.49012e-08, 0, 1.49012e-08, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_0u6x8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_8x61c")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_xidiy")
+
+[node name="Head" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
+transform = Transform3D(1, 0, 0, 0, 0.991445, -0.130526, 0, 0.130526, 0.991445, 0, 5.5, 0.35)
+collision_layer = 64
+script = ExtResource("8_ludbg")
+Bone = "Head"
+Skeleton = NodePath("../Armature/Skeleton3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.49012e-08, 0, 1.49012e-08, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_47rom")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_wmo47")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_xidiy")
+
+[node name="UpperarmLeft" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
+transform = Transform3D(0.939693, -0.34202, 0, 0.340719, 0.936117, -0.0871558, 0.029809, 0.0818996, 0.996195, 3.5, 2.5, 0.1)
+collision_layer = 64
+script = ExtResource("8_ludbg")
+Bone = "Upperarm.L"
+Skeleton = NodePath("../Armature/Skeleton3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="UpperarmLeft"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.49012e-08, 0, 1.49012e-08, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_mv4ex")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="UpperarmLeft"]
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_b2em0")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_xidiy")
+
+[node name="ForearmLeft" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
+transform = Transform3D(0.939693, -0.34202, 0, 0.340719, 0.936117, 0.0871558, -0.029809, -0.0818996, 0.996195, 4.6, -0.6, -0.125)
+collision_layer = 64
+script = ExtResource("8_ludbg")
+Bone = "Forearm.L"
+Skeleton = NodePath("../Armature/Skeleton3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForearmLeft"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.49012e-08, 0, 1.49012e-08, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_mv4ex")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ForearmLeft"]
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_b2em0")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_xidiy")
+
+[node name="UpperarmRight" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
+transform = Transform3D(0.939693, 0.34202, 0, -0.340719, 0.936117, -0.0871558, -0.029809, 0.0818996, 0.996195, -3.5, 2.5, 0.1)
+collision_layer = 64
+script = ExtResource("8_ludbg")
+Bone = "Upperarm.R"
+Skeleton = NodePath("../Armature/Skeleton3D")
+AdditionalDetectBones = PackedStringArray("Chest")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="UpperarmRight"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.49012e-08, 0, 1.49012e-08, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_mv4ex")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="UpperarmRight"]
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_b2em0")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_xidiy")
+
+[node name="ForearmRight" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
+transform = Transform3D(0.939693, 0.34202, 0, -0.340719, 0.936117, 0.0871558, 0.029809, -0.0818996, 0.996195, -4.6, -0.6, -0.125)
+collision_layer = 64
+script = ExtResource("8_ludbg")
+Bone = "Forearm.R"
+Skeleton = NodePath("../Armature/Skeleton3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForearmRight"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.49012e-08, 0, 1.49012e-08, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_mv4ex")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ForearmRight"]
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_b2em0")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_xidiy")
+
+[node name="ThighLeft" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
+transform = Transform3D(0.984808, -0.173648, 0, 0.172987, 0.981061, 0.0871558, -0.0151344, -0.0858317, 0.996195, 1.8, -2.64, -0.25)
+collision_layer = 64
+script = ExtResource("8_ludbg")
+Bone = "Thigh.L"
+Skeleton = NodePath("../Armature/Skeleton3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ThighLeft"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.49012e-08, 0, 1.49012e-08, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_jgy7n")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ThighLeft"]
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_dwcg7")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_xidiy")
+
+[node name="CalfLeft" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
+transform = Transform3D(1, 0, 0, 0, 0.996195, -0.0871558, 0, 0.0871558, 0.996195, 2.2, -6.8, 0.3)
+collision_layer = 64
+script = ExtResource("8_ludbg")
+Bone = "Calf.L"
+Skeleton = NodePath("../Armature/Skeleton3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CalfLeft"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.49012e-08, 0, 1.49012e-08, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_mv4ex")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CalfLeft"]
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_b2em0")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_xidiy")
+
+[node name="ThighRight" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
+transform = Transform3D(0.984808, 0.173648, 0, -0.172987, 0.981061, 0.0871558, 0.0151344, -0.0858317, 0.996195, -1.8, -2.64, -0.25)
+collision_layer = 64
+script = ExtResource("8_ludbg")
+Bone = "Thigh.R"
+Skeleton = NodePath("../Armature/Skeleton3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ThighRight"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.49012e-08, 0, 1.49012e-08, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_jgy7n")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ThighRight"]
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_dwcg7")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_xidiy")
+
+[node name="CalfRight" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
+transform = Transform3D(1, 0, 0, 0, 0.996195, -0.0871558, 0, 0.0871558, 0.996195, -2.2, -6.8, 0.3)
+collision_layer = 64
+script = ExtResource("8_ludbg")
+Bone = "Calf.R"
+Skeleton = NodePath("../Armature/Skeleton3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CalfRight"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.49012e-08, 0, 1.49012e-08, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_mv4ex")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CalfRight"]
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_b2em0")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_xidiy")
+
+[node name="StompSound" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 1.75)
+stream = ExtResource("11_dwcg7")
+volume_db = 10.0
+
+[node name="PunchSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("12_il5lg")
+volume_db = 10.0
+
+[node name="PlayerDetection" type="Node3D" parent="." node_paths=PackedStringArray("DetectionZones")]
+script = ExtResource("13_dwcg7")
+DetectionZones = [null, null, null, NodePath("../FloorDetectRing")]
+
+[node name="GiantActionDispenser" type="Node3D" parent="." node_paths=PackedStringArray("FlamethrowerParticles", "FlamethrowerHitBox")]
+script = ExtResource("14_il5lg")
+FlamethrowerParticles = NodePath("../FlamethrowerParticles")
+FlamethrowerHitBox = NodePath("../FlamethrowerHitBox")
+
+[node name="HitPoint" parent="." node_paths=PackedStringArray("Skeleton") instance=ExtResource("15_ludbg")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 10, 0)
+HP = 12
+Bone = "Head"
+Skeleton = NodePath("../Armature/Skeleton3D")
+
+[node name="SpawnFirePillar" type="Node3D" parent="."]
+script = ExtResource("16_8x61c")
+FirePillarScene = ExtResource("17_xidiy")
+
+[node name="FloorDetectRing" type="ShapeCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.5, 0)
+shape = SubResource("CylinderShape3D_h2mcp")
+target_position = Vector3(0, 0, 0)
+script = ExtResource("19_5dss7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FloorDetectRing"]
+mesh = SubResource("CylinderMesh_l4nfn")
+surface_material_override/0 = SubResource("StandardMaterial3D_ftrdt")
+
+[node name="LeftLegIKTarget" type="Node3D" parent="."]
+
+[node name="LeftArmIKTarget" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LeftArmIKTarget"]
+mesh = SubResource("SphereMesh_5dss7")
+
+[node name="RightArmIKTarget" type="Node3D" parent="."]
+
+[node name="FlamethrowerParticles" parent="." instance=ExtResource("20_l4nfn")]
+emitting = false
+amount = 750
+lifetime = 0.5
+visibility_aabb = AABB(-50.1, -59.9948, -50.0999, 100.2, 120.076, 100.2)
+process_material = SubResource("ParticleProcessMaterial_4lt1k")
+draw_pass_1 = SubResource("QuadMesh_ftrdt")
+
+[node name="FlamethrowerHitBox" type="Area3D" parent="."]
+collision_layer = 128
+monitoring = false
+monitorable = false
+script = ExtResource("22_ftrdt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FlamethrowerHitBox"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -10)
+shape = SubResource("CylinderShape3D_xk8ni")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FlamethrowerHitBox"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -10)
+mesh = SubResource("CylinderMesh_07pi0")
+surface_material_override/0 = SubResource("StandardMaterial3D_4lt1k")

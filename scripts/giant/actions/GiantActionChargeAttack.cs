@@ -37,7 +37,7 @@ public class GiantActionChargeAttack : IGiantAction
         if (atPlayerPos)
             return;
         
-        giant.RotateTowardsPoint(delta, giant.PlayerDetection.PlayerPosition);
+        giant.RotateTowardsPoint(delta, giant.PlayerDetection.PlayerPosition, giant.TurnSpeed);
         
         if (chargeAtPlayer) 
         {
