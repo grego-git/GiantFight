@@ -29,7 +29,7 @@ public class GiantActionFlamethrower : IGiantAction
         maxTurnSpeed = 0.25f;
         turnSpeed = minTurnSpeed;
 
-        acceleration = 0.04f;
+        acceleration = 0.06f;
         decceleration = 0.03f;
     }
 
@@ -90,9 +90,9 @@ public class GiantActionFlamethrower : IGiantAction
 
         target = giant.GlobalPosition + targetOffset;
 
-        if (Mathf.Abs(Mathf.RadToDeg(angleToPlayer)) > 6.0f)
+        if (target.DistanceTo(giant.PlayerDetection.PlayerPosition) > 10.0f)
             turnSpeed += delta * acceleration;
-        else if (Mathf.Abs(Mathf.RadToDeg(angleToPlayer)) < 3.0f)
+        else if (target.DistanceTo(giant.PlayerDetection.PlayerPosition) < 5.0f)
             turnSpeed -= delta * decceleration;
 
         turnSpeed = Mathf.Clamp(turnSpeed, minTurnSpeed, maxTurnSpeed);

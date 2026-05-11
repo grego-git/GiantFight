@@ -20,7 +20,7 @@ public partial class BronzeGiantDispenser : GiantActionDispenser, IActionDispens
 
     public override IGiantAction TopAction(Giant giant)
     {
-        return null;
+        return new GiantActionFlamethrower(giant, FlamethrowerParticles, FlamethrowerHitBox, giant.GiantProfile.FloorAnimation);
     }
 
     public override IGiantAction ExternalAction(Giant giant)
