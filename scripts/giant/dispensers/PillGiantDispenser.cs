@@ -10,7 +10,7 @@ public partial class PillGiantDispenser : GiantActionDispenser, IActionDispenser
 
     public override IGiantAction MidAction(Giant giant)
     {
-        return new GiantActionTrackClap(giant);
+        return new GiantActionTrackClap(giant, Vector3.Zero, Vector3.Zero);
     }
 
     public override IGiantAction TopAction(Giant giant)

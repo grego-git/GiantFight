@@ -7,7 +7,7 @@
 	},
 	"SlamAnimation": "bronze_giant/idle",
 	"FloorAnimation": "bronze_giant/floor_attack",
-	"MidAnimation": "bronze_giant/idle",
+	"MidAnimation": "bronze_giant/mid_attack",
 	"TopAnimation": "bronze_giant/idle",
 	"IdleAnimation": "bronze_giant/idle",
 	"ExternalAttackAnimation": "bronze_giant/external_attack",

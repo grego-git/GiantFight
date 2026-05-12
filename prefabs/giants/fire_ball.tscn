@@ -1,0 +1,64 @@
+[gd_scene load_steps=12 format=3 uid="uid://d0bbnspt27v3c"]
+
+[ext_resource type="PackedScene" uid="uid://cdn0g01wmlig3" path="res://prefabs/giants/particles/fire_particles.tscn" id="1_7vle1"]
+[ext_resource type="Script" uid="uid://dldiowqqcq2x" path="res://scripts/giant/FireBall.cs" id="1_nyyan"]
+[ext_resource type="Texture2D" uid="uid://cwe5cm68ds6df" path="res://textures/FlameParticle.png" id="2_c0w2m"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_c0w2m"]
+radius = 15.0
+
+[sub_resource type="Gradient" id="Gradient_juxjw"]
+offsets = PackedFloat32Array(0, 0.25, 0.5, 0.75, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 0.883333, 0, 0.501961, 1, 0, 0, 0.25098, 0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_dl67n"]
+gradient = SubResource("Gradient_juxjw")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nyyan"]
+emission_shape_scale = Vector3(15, 15, 15)
+emission_shape = 1
+emission_sphere_radius = 1.0
+gravity = Vector3(0, 4.9, 0)
+color_ramp = SubResource("GradientTexture1D_dl67n")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m2hcj"]
+render_priority = 10
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("2_c0w2m")
+texture_filter = 0
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_nyyan"]
+material = SubResource("StandardMaterial3D_m2hcj")
+size = Vector2(15, 15)
+
+[sub_resource type="SphereMesh" id="SphereMesh_mtw32"]
+radius = 15.0
+height = 30.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mjod7"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1, 0, 0.983333, 0.12549)
+
+[node name="FireBall" type="Node3D"]
+script = ExtResource("1_nyyan")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 128
+collision_mask = 129
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_c0w2m")
+
+[node name="Particles" parent="Area3D" instance=ExtResource("1_7vle1")]
+amount = 500
+process_material = SubResource("ParticleProcessMaterial_nyyan")
+draw_pass_1 = SubResource("QuadMesh_nyyan")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D"]
+mesh = SubResource("SphereMesh_mtw32")
+surface_material_override/0 = SubResource("StandardMaterial3D_mjod7")

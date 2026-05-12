@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://dq2vaks5hc8qm"]
+[gd_scene load_steps=58 format=3 uid="uid://dq2vaks5hc8qm"]
 
 [ext_resource type="ArrayMesh" uid="uid://bojxhgev3sbfb" path="res://models/giants/bronze_giant/meshes/bronze_giant.res" id="1_47rom"]
 [ext_resource type="Script" uid="uid://cxbc5aocp4eyw" path="res://scripts/giant/Giant.cs" id="1_wmo47"]
@@ -14,7 +14,9 @@
 [ext_resource type="AudioStream" uid="uid://c4vpogssy726x" path="res://sounds/Stomp.wav" id="11_dwcg7"]
 [ext_resource type="AudioStream" uid="uid://kqdk2bjafmo0" path="res://sounds/GiantPunch.wav" id="12_il5lg"]
 [ext_resource type="Script" uid="uid://bdbiac3np3x03" path="res://scripts/giant/PlayerDetection.cs" id="13_dwcg7"]
+[ext_resource type="Script" uid="uid://c8f0y7k741o26" path="res://scripts/giant/FireBallSpawner.cs" id="14_07pi0"]
 [ext_resource type="Script" uid="uid://ds8rq38jt1ytl" path="res://scripts/giant/dispensers/BronzeGiantDispenser.cs" id="14_il5lg"]
+[ext_resource type="PackedScene" uid="uid://d0bbnspt27v3c" path="res://prefabs/giants/fire_ball.tscn" id="15_4lt1k"]
 [ext_resource type="PackedScene" uid="uid://b3y03b005tnj5" path="res://prefabs/giants/giant_hit_point.tscn" id="15_ludbg"]
 [ext_resource type="Script" uid="uid://d4gj8b81wlecy" path="res://scripts/giant/SpawnFirePillar.cs" id="16_8x61c"]
 [ext_resource type="PackedScene" uid="uid://cygd83q8tng2v" path="res://prefabs/giants/fire_pillar.tscn" id="17_xidiy"]
@@ -218,6 +220,42 @@ tracks/10/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath(".:StompPadding")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("ForearmLeft/FlameParticles/FireBallSpawner:Spawn")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("ForearmRight/FlameParticles/FireBallSpawner:Spawn")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xidiy"]
 _data = {
@@ -274,7 +312,7 @@ gradient = SubResource("Gradient_xk8ni")
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ftrdt"]
 emission_shape_scale = Vector3(0.5, 0.5, 0.5)
 emission_shape = 1
-emission_sphere_radius = 5.0
+emission_sphere_radius = 2.0
 gravity = Vector3(0, 4.9, 0)
 color_ramp = SubResource("GradientTexture1D_07pi0")
 
@@ -290,7 +328,7 @@ billboard_mode = 1
 
 [sub_resource type="QuadMesh" id="QuadMesh_xk8ni"]
 material = SubResource("StandardMaterial3D_2e36f")
-size = Vector2(50, 50)
+size = Vector2(30, 30)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jgy7n"]
 radius = 1.75
@@ -302,7 +340,7 @@ height = 5.0
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_ftrdt"]
 height = 20.0
-radius = 4.0
+radius = 3.0
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_xk8ni"]
 top_radius = 3.0
@@ -327,6 +365,15 @@ height = 5.0
 transparency = 1
 shading_mode = 0
 albedo_color = Color(0, 1, 0.116667, 0.25098)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_07pi0"]
+height = 10.0
+radius = 6.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_4lt1k"]
+top_radius = 6.0
+bottom_radius = 6.0
+height = 10.0
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_ftrdt"]
 height = 0.01
@@ -383,8 +430,8 @@ bones/0/name = "Pelvis"
 bones/0/parent = -1
 bones/0/rest = Transform3D(1, 2.16569e-17, -1.05867e-18, -2.16569e-17, 0.995232, -0.0975341, -1.05867e-18, 0.0975341, 0.995232, 0, -0.185843, -0.410566)
 bones/0/enabled = true
-bones/0/position = Vector3(0, -0.381806, 0.195605)
-bones/0/rotation = Quaternion(0.11247, -7.75482e-25, -2.5279e-17, 0.993655)
+bones/0/position = Vector3(0, -0.349803, 0.195605)
+bones/0/rotation = Quaternion(0.0596184, -7.75484e-25, -2.53005e-17, 0.998221)
 bones/0/scale = Vector3(1, 1, 1)
 bones/1/name = "Chest"
 bones/1/parent = 0
@@ -398,21 +445,21 @@ bones/2/parent = 1
 bones/2/rest = Transform3D(1, 7.88013e-18, -1.39872e-19, -7.88013e-18, 0.99937, -0.0354889, -1.39873e-19, 0.0354889, 0.99937, -4.01183e-23, 3.91622, -2.98023e-08)
 bones/2/enabled = true
 bones/2/position = Vector3(-4.01183e-23, 3.91622, -2.98023e-08)
-bones/2/rotation = Quaternion(0.124043, 2.58494e-26, -2.78358e-17, 0.992277)
+bones/2/rotation = Quaternion(0.0887632, 1.08567e-24, -2.78319e-17, 0.996053)
 bones/2/scale = Vector3(1, 1, 1)
 bones/3/name = "Upperarm.L"
 bones/3/parent = 1
 bones/3/rest = Transform3D(-0.940562, 0.339266, 0.0155839, -0.339555, -0.93846, -0.0632146, -0.00682172, -0.0647488, 0.997878, 3.20458, 2.36626, -4.0895e-08)
 bones/3/enabled = true
 bones/3/position = Vector3(3.20458, 2.36626, -4.0895e-08)
-bones/3/rotation = Quaternion(-0.636552, 0.493242, 0.507281, -0.306889)
+bones/3/rotation = Quaternion(-0.0289431, 0.567011, 0.781735, -0.257975)
 bones/3/scale = Vector3(1, 1, 1)
 bones/4/name = "Forearm.L"
 bones/4/parent = 3
 bones/4/rest = Transform3D(1, -1.40265e-08, 7.92026e-09, 1.57758e-08, 0.952175, -0.305555, -3.2556e-09, 0.305555, 0.952175, 1.77636e-14, 2.96786, 2.12393e-14)
 bones/4/enabled = true
 bones/4/position = Vector3(1.77636e-14, 2.96786, 2.12393e-14)
-bones/4/rotation = Quaternion(0.00133449, 1.09355e-08, 1.49012e-08, 0.999999)
+bones/4/rotation = Quaternion(0.597144, 0.374192, -0.423111, 0.569541)
 bones/4/scale = Vector3(1, 1, 1)
 bones/5/name = "Hand.L"
 bones/5/parent = 4
@@ -426,14 +473,14 @@ bones/6/parent = 1
 bones/6/rest = Transform3D(-0.940562, -0.339266, -0.0155839, 0.339555, -0.93846, -0.0632146, 0.00682172, -0.0647488, 0.997878, -3.20458, 2.36626, -4.0895e-08)
 bones/6/enabled = true
 bones/6/position = Vector3(-3.20458, 2.36626, -4.0895e-08)
-bones/6/rotation = Quaternion(0.636552, 0.493242, 0.507281, 0.306888)
+bones/6/rotation = Quaternion(0.0289431, 0.567011, 0.781735, 0.257975)
 bones/6/scale = Vector3(1, 1, 1)
 bones/7/name = "Forearm.R"
 bones/7/parent = 6
 bones/7/rest = Transform3D(1, 2.83446e-08, -1.39779e-08, -3.126e-08, 0.952175, -0.305555, 4.64856e-09, 0.305555, 0.952175, 4.76837e-07, 2.96786, 1.4057e-14)
 bones/7/enabled = true
 bones/7/position = Vector3(4.76837e-07, 2.96786, 1.4057e-14)
-bones/7/rotation = Quaternion(0.00133449, -7.33042e-09, 6.96991e-09, 0.999999)
+bones/7/rotation = Quaternion(0.597142, -0.37419, 0.423109, 0.569546)
 bones/7/scale = Vector3(1, 1, 1)
 bones/8/name = "Hand.R"
 bones/8/parent = 7
@@ -447,14 +494,14 @@ bones/9/parent = 0
 bones/9/rest = Transform3D(0.0374891, 0.130778, 0.990359, 0.354291, -0.928739, 0.109154, 0.934383, 0.346904, -0.0811228, 1.62839, 0.21311, 1.36141e-07)
 bones/9/enabled = true
 bones/9/position = Vector3(1.62839, 0.21311, 1.36141e-07)
-bones/9/rotation = Quaternion(0.706592, 0.229521, 0.656854, 0.128805)
+bones/9/rotation = Quaternion(0.713694, 0.187846, 0.669182, 0.0868934)
 bones/9/scale = Vector3(1, 1, 0.999653)
 bones/10/name = "Calf.L"
 bones/10/parent = 9
 bones/10/rest = Transform3D(0.921342, -0.388532, -0.0131069, 0.388683, 0.920018, 0.0499284, -0.00734022, -0.0510956, 0.998666, -1.71735e-07, 3.54654, 7.07844e-10)
 bones/10/enabled = true
 bones/10/position = Vector3(-1.71735e-07, 3.54654, 7.07844e-10)
-bones/10/rotation = Quaternion(-0.0396314, -0.00142692, 0.3049, 0.951558)
+bones/10/rotation = Quaternion(-0.0376516, -0.00143458, 0.289668, 0.956385)
 bones/10/scale = Vector3(1, 1, 0.999999)
 bones/11/name = "Foot.L"
 bones/11/parent = 10
@@ -468,14 +515,14 @@ bones/12/parent = 0
 bones/12/rest = Transform3D(0.0374891, -0.130778, -0.990359, -0.354291, -0.928739, 0.109153, -0.934383, 0.346904, -0.0811228, -1.62839, 0.21311, 1.36141e-07)
 bones/12/enabled = true
 bones/12/position = Vector3(-1.62839, 0.21311, 1.36141e-07)
-bones/12/rotation = Quaternion(0.691321, -0.273843, -0.639391, 0.195611)
+bones/12/rotation = Quaternion(0.703237, -0.231321, -0.657724, 0.139096)
 bones/12/scale = Vector3(1, 1, 0.999651)
 bones/13/name = "Calf.R"
 bones/13/parent = 12
 bones/13/rest = Transform3D(0.921342, 0.388532, 0.0131069, -0.388683, 0.920018, 0.0499284, 0.00734022, -0.0510956, 0.998666, 3.7826e-08, 3.54654, -2.37711e-07)
 bones/13/enabled = true
 bones/13/position = Vector3(3.7826e-08, 3.54654, -2.37711e-07)
-bones/13/rotation = Quaternion(-0.0250313, 0.00147342, -0.192575, 0.980962)
+bones/13/rotation = Quaternion(-0.0336147, 0.00144883, -0.258611, 0.965396)
 bones/13/scale = Vector3(1, 1, 0.999999)
 bones/14/name = "Foot.R"
 bones/14/parent = 13
@@ -502,7 +549,7 @@ bones/17/name = "LegControl.R"
 bones/17/parent = -1
 bones/17/rest = Transform3D(0, -5.96046e-08, 1, -1, -1.19209e-07, 5.96046e-08, 5.96046e-08, -1, -1.19209e-07, -2.29905, -7.08202, -1.23319e-08)
 bones/17/enabled = true
-bones/17/position = Vector3(-2.29905, -7.08202, 1.99927)
+bones/17/position = Vector3(-2.29905, -7.08202, 1.20602)
 bones/17/rotation = Quaternion(0.5, -0.5, 0.5, -0.5)
 bones/17/scale = Vector3(1, 1, 1)
 bones/18/name = "LegPoleTarget.R"
@@ -622,6 +669,12 @@ visibility_aabb = AABB(-50.1, -59.9948, -50.0999, 100.2, 120.076, 100.2)
 process_material = SubResource("ParticleProcessMaterial_ftrdt")
 draw_pass_1 = SubResource("QuadMesh_xk8ni")
 
+[node name="FireBallSpawner" type="Node3D" parent="ForearmLeft/FlameParticles" node_paths=PackedStringArray("Giant")]
+script = ExtResource("14_07pi0")
+FireBallScene = ExtResource("15_4lt1k")
+Giant = NodePath("../../..")
+LeftSpawner = true
+
 [node name="UpperarmRight" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
 transform = Transform3D(0.939693, 0.34202, 0, -0.340719, 0.936117, -0.0871558, -0.029809, 0.0818996, 0.996195, -3.5, 2.5, 0.1)
 collision_layer = 64
@@ -665,6 +718,11 @@ lifetime = 0.5
 visibility_aabb = AABB(-50.1, -59.9948, -50.0999, 100.2, 120.076, 100.2)
 process_material = SubResource("ParticleProcessMaterial_ftrdt")
 draw_pass_1 = SubResource("QuadMesh_xk8ni")
+
+[node name="FireBallSpawner" type="Node3D" parent="ForearmRight/FlameParticles" node_paths=PackedStringArray("Giant")]
+script = ExtResource("14_07pi0")
+FireBallScene = ExtResource("15_4lt1k")
+Giant = NodePath("../../..")
 
 [node name="ThighLeft" type="Area3D" parent="." node_paths=PackedStringArray("Skeleton")]
 transform = Transform3D(0.984808, -0.173648, 0, 0.172987, 0.981061, 0.0871558, -0.0151344, -0.0858317, 0.996195, 1.8, -2.64, -0.25)
@@ -745,7 +803,7 @@ volume_db = 10.0
 
 [node name="PlayerDetection" type="Node3D" parent="." node_paths=PackedStringArray("DetectionZones")]
 script = ExtResource("13_dwcg7")
-DetectionZones = [NodePath("../NegateDetectRing"), NodePath("../TopDetectRing"), null, NodePath("../FloorDetectRing")]
+DetectionZones = [NodePath("../NegateDetectRing"), NodePath("../TopDetectRing"), NodePath("../MidDetectRing"), NodePath("../FloorDetectRing")]
 
 [node name="GiantActionDispenser" type="Node3D" parent="." node_paths=PackedStringArray("FlamethrowerParticles", "FlamethrowerHitBox")]
 script = ExtResource("14_il5lg")
@@ -780,6 +838,16 @@ script = ExtResource("19_5dss7")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="TopDetectRing"]
 mesh = SubResource("CylinderMesh_l4nfn")
+surface_material_override/0 = SubResource("StandardMaterial3D_ftrdt")
+
+[node name="MidDetectRing" type="ShapeCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+shape = SubResource("CylinderShape3D_07pi0")
+target_position = Vector3(0, 0, 0)
+script = ExtResource("19_5dss7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MidDetectRing"]
+mesh = SubResource("CylinderMesh_4lt1k")
 surface_material_override/0 = SubResource("StandardMaterial3D_ftrdt")
 
 [node name="FloorDetectRing" type="ShapeCast3D" parent="."]

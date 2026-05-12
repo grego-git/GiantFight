@@ -15,7 +15,7 @@ public partial class BronzeGiantDispenser : GiantActionDispenser, IActionDispens
 
     public override IGiantAction MidAction(Giant giant)
     {
-        return null;
+        return new GiantActionTrackClap(giant, Vector3.Down * 100.0f, Vector3.Down * 100.0f);
     }
 
     public override IGiantAction TopAction(Giant giant)
