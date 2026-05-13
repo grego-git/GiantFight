@@ -7,10 +7,12 @@ public partial class BronzeGiantDispenser : GiantActionDispenser, IActionDispens
     public Node3D FlamethrowerParticles { get; set; }
     [Export]
     public Node3D FlamethrowerHitBox { get; set; }
+    [Export]
+    public Node3D FlamethrowerWarningCircle { get; set; }
 
     public override IGiantAction BottomAction(Giant giant)
     {
-        return new GiantActionFlamethrower(giant, FlamethrowerParticles, FlamethrowerHitBox, giant.GiantProfile.FloorAnimation);
+        return new GiantActionFlamethrower(giant, FlamethrowerParticles, FlamethrowerHitBox, FlamethrowerWarningCircle, giant.GiantProfile.FloorAnimation);
     }
 
     public override IGiantAction MidAction(Giant giant)
@@ -20,7 +22,7 @@ public partial class BronzeGiantDispenser : GiantActionDispenser, IActionDispens
 
     public override IGiantAction TopAction(Giant giant)
     {
-        return new GiantActionFlamethrower(giant, FlamethrowerParticles, FlamethrowerHitBox, giant.GiantProfile.FloorAnimation);
+        return new GiantActionFlamethrower(giant, FlamethrowerParticles, FlamethrowerHitBox, FlamethrowerWarningCircle, giant.GiantProfile.FloorAnimation);
     }
 
     public override IGiantAction ExternalAction(Giant giant)

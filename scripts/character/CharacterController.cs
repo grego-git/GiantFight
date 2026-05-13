@@ -100,7 +100,7 @@ public partial class CharacterController : CharacterBody3D
 
                 if (HangRayCast.IsInsideTree())
                 {
-                    HangRayCast.GlobalPosition = GlobalPosition;
+                    HangRayCast.GlobalPosition = GlobalPosition + (-GlobalBasis.Y.Normalized() * 0.5f);
                     HangRayCast.TargetPosition = Vector3.Forward * 2.0f;
                 }
                 break;

@@ -5,6 +5,7 @@ public class GiantActionFlamethrower : IGiantAction
     private Giant giant;
     private Node3D particles;
     private Node3D hitbox;
+    private Node3D warningCircle;
     private Vector3 target;
     private string animation;
     private bool complete;
@@ -15,11 +16,12 @@ public class GiantActionFlamethrower : IGiantAction
     private float acceleration;
     private float decceleration;
 
-    public GiantActionFlamethrower(Giant giant, Node3D particles, Node3D hitbox, string animation)
+    public GiantActionFlamethrower(Giant giant, Node3D particles, Node3D hitbox, Node3D warningCircle, string animation)
     {
         this.giant = giant;
         this.particles = particles;
         this.hitbox = hitbox;
+        this.warningCircle = warningCircle;
         this.animation = animation;
 
         complete = false;
@@ -52,6 +54,8 @@ public class GiantActionFlamethrower : IGiantAction
         if (giant.PlayerDetection.PlayerDetectionZone != PlayerDetection.DetectionZoneAreas.NEGATE &&
             giant.PlayerDetection.PlayerDetectionZone != PlayerDetection.DetectionZoneAreas.ON_GIANT)
         {
+            warningCircle.Visible = true;
+
             if (giant.TrackPlayer)
             {
                 start = false;
@@ -62,6 +66,8 @@ public class GiantActionFlamethrower : IGiantAction
                 giant.RotateTowardsPoint(delta, giant.PlayerDetection.PlayerPosition, giant.TurnSpeed);
             }
         }
+        else
+            warningCircle.Visible = false;
 
         GD.Print("TS: " + turnSpeed);
 
@@ -88,7 +94,7 @@ public class GiantActionFlamethrower : IGiantAction
         float angleToPlayer = new Vector3(targetOffset.X, 0.0f, targetOffset.Z).SignedAngleTo(giant.GlobalBasis.Z, Vector3.Up);
         targetOffset = targetOffset.Rotated(Vector3.Up, angleToPlayer);
 
-        target = giant.GlobalPosition + targetOffset;
+        target = giant.GlobalPosition + targetOffset + (Vector3.Down * 0.65f);
 
         if (target.DistanceTo(giant.PlayerDetection.PlayerPosition) > 10.0f)
             turnSpeed += delta * acceleration;

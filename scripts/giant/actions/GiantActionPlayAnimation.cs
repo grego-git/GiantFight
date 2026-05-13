@@ -40,8 +40,6 @@ public class GiantActionPlayAnimation : IGiantAction
     {
         complete = true;
         giant.AnimPlayer.AnimationFinished -= AnimationComplete;
-        giant.LeftArmIK.Stop();
-        giant.RightArmIK.Stop();
         giant.AgroMeter.Empty();
     }
 }
