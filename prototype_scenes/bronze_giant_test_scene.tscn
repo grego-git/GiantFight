@@ -70,7 +70,7 @@ CharacterData = NodePath("../PlayerContainer")
 Giant = NodePath("../BronzeGiant")
 
 [node name="PlayerContainer" parent="." node_paths=PackedStringArray("World") instance=ExtResource("6_p55li")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 100)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -100)
 World = NodePath("../World")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

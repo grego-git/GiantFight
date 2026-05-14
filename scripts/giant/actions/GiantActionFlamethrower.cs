@@ -28,10 +28,10 @@ public class GiantActionFlamethrower : IGiantAction
         start = true;
         
         minTurnSpeed = 0.03f;
-        maxTurnSpeed = 0.25f;
+        maxTurnSpeed = 0.75f;
         turnSpeed = minTurnSpeed;
 
-        acceleration = 0.06f;
+        acceleration = 0.1f;
         decceleration = 0.03f;
     }
 
