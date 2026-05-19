@@ -20,8 +20,8 @@ public partial class FirePillar : Node3D
         base._Ready();
 
         fireMeter = new Meter(1.25f);
-        flickerTimer = new Meter(0.05f);
-        killTimer = new Meter(2.0f);
+        flickerTimer = new Meter(0.1f);
+        killTimer = new Meter(1.0f);
 
         hitCylinder = (Area3D)GetNode("Area3D");
         particles = (GpuParticles3D)hitCylinder.GetNode("Particles");
@@ -42,7 +42,7 @@ public partial class FirePillar : Node3D
                 GlobalPosition = new Vector3(Giant.PlayerDetection.PlayerPosition.X, 1.0f, Giant.PlayerDetection.PlayerPosition.Z);
 
                 StandardMaterial3D mat = (StandardMaterial3D)WarningRing.GetSurfaceOverrideMaterial(0);
-                mat.AlbedoColor = new Color(1.0f, 0.0f, 0.0f, 0.0f).Lerp(Colors.Red, (fireMeter.NormalizedFill() / 0.25f) * 0.5f);
+                mat.AlbedoColor = new Color(1.0f, 0.0f, 1.0f, 0.0f).Lerp(Colors.Magenta, (fireMeter.NormalizedFill() / 0.25f) * 0.5f);
             }
             else if (fireMeter.NormalizedFill() < 1.0f)
             {

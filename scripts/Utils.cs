@@ -202,4 +202,9 @@ public static class Utils
 
         return result;
     }
+
+    public static void ReScaleParticles(ParticleProcessMaterial processMaterial, float minScale, float scaleMultiplier)
+    {
+        processMaterial.ScaleMin = minScale * scaleMultiplier;
+    }
 }

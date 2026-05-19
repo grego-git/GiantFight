@@ -69,8 +69,6 @@ public class GiantActionFlamethrower : IGiantAction
         else
             warningCircle.Visible = false;
 
-        GD.Print("TS: " + turnSpeed);
-
         if (giant.TrackPlayer)
         {
             particles.GlobalPosition = giant.ArmLimbs[1].GlobalPosition.Lerp(giant.ArmLimbs[3].GlobalPosition, 0.5f);

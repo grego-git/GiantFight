@@ -19,9 +19,10 @@ emission_shape_scale = Vector3(15, 15, 15)
 emission_shape = 1
 emission_sphere_radius = 1.0
 gravity = Vector3(0, 4.9, 0)
+scale_max = 15.0
 color_ramp = SubResource("GradientTexture1D_dl67n")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m2hcj"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nyyan"]
 render_priority = 10
 transparency = 1
 blend_mode = 1
@@ -30,10 +31,10 @@ vertex_color_use_as_albedo = true
 albedo_texture = ExtResource("2_c0w2m")
 texture_filter = 0
 billboard_mode = 1
+billboard_keep_scale = true
 
 [sub_resource type="QuadMesh" id="QuadMesh_nyyan"]
-material = SubResource("StandardMaterial3D_m2hcj")
-size = Vector2(15, 15)
+material = SubResource("StandardMaterial3D_nyyan")
 
 [sub_resource type="SphereMesh" id="SphereMesh_mtw32"]
 radius = 15.0
@@ -55,7 +56,7 @@ collision_mask = 129
 shape = SubResource("SphereShape3D_c0w2m")
 
 [node name="Particles" parent="Area3D" instance=ExtResource("1_7vle1")]
-amount = 500
+amount = 5000
 process_material = SubResource("ParticleProcessMaterial_nyyan")
 draw_pass_1 = SubResource("QuadMesh_nyyan")
 

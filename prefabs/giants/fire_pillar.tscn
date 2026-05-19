@@ -11,7 +11,7 @@ radius = 0.75
 
 [sub_resource type="Gradient" id="Gradient_juxjw"]
 offsets = PackedFloat32Array(0, 0.25, 0.5, 0.75, 1)
-colors = PackedColorArray(1, 1, 1, 1, 1, 0.883333, 0, 0.501961, 1, 0, 0, 0.25098, 0, 0, 0, 1, 0, 0, 0, 1)
+colors = PackedColorArray(1, 1, 1, 0.25098, 1, 0.883333, 0, 0.25098, 1, 0, 0, 0.12549, 0, 0, 0, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_juxjw"]
 gradient = SubResource("Gradient_juxjw")
@@ -21,9 +21,11 @@ emission_shape_scale = Vector3(0.5, 10, 0.5)
 emission_shape = 3
 emission_box_extents = Vector3(1, 1, 1)
 gravity = Vector3(0, 4.9, 0)
+scale_min = 15.0
+scale_max = 15.0
 color_ramp = SubResource("GradientTexture1D_juxjw")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nj3fg"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_juxjw"]
 render_priority = 10
 transparency = 1
 blend_mode = 1
@@ -32,10 +34,10 @@ vertex_color_use_as_albedo = true
 albedo_texture = ExtResource("2_22a7c")
 texture_filter = 0
 billboard_mode = 1
+billboard_keep_scale = true
 
 [sub_resource type="QuadMesh" id="QuadMesh_tqeod"]
-material = SubResource("StandardMaterial3D_nj3fg")
-size = Vector2(30, 30)
+material = SubResource("StandardMaterial3D_juxjw")
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_22a7c"]
 top_radius = 0.75
@@ -75,7 +77,7 @@ shape = SubResource("CylinderShape3D_22a7c")
 
 [node name="Particles" parent="Area3D" instance=ExtResource("1_bbxka")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
-amount = 750
+amount = 10000
 lifetime = 0.5
 visibility_aabb = AABB(-50.1, -59.9948, -50.0999, 100.2, 120.076, 100.2)
 process_material = SubResource("ParticleProcessMaterial_tqeod")

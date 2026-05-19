@@ -372,7 +372,7 @@ AccelerationStunThreshold = 25.0
 AccelerationKnockBackThreshold = 25.0
 
 [node name="CharacterController" type="CharacterBody3D" parent="." node_paths=PackedStringArray("Feet")]
-collision_mask = 103
+collision_mask = 359
 script = ExtResource("2_828ix")
 Feet = NodePath("../Feet")
 WaveParticles = ExtResource("3_t0l7h")

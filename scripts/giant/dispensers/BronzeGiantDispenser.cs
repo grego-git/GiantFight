@@ -37,6 +37,6 @@ public partial class BronzeGiantDispenser : GiantActionDispenser, IActionDispens
 
     public override IGiantAction AttackBodyAction(Giant giant, string animation, bool useLeftHand)
     {
-        return null;
+        return new GiantActionBodyAttack(giant, animation, useLeftHand);
     }
 }

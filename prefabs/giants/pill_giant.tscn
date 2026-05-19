@@ -860,24 +860,28 @@ TrailScene = ExtResource("33_vqy42")
 
 [node name="ElbowHitPoint" parent="." node_paths=PackedStringArray("Skeleton") instance=ExtResource("25_ncafl")]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -1.85, -1.475, -0.525)
+collision_layer = 256
 HP = 25
 Bone = "Forearm.R"
 Skeleton = NodePath("../Armature/Skeleton3D")
 
 [node name="HandHitPoint" parent="." node_paths=PackedStringArray("Skeleton") instance=ExtResource("25_ncafl")]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 2.275, -1.95, -0.275)
+collision_layer = 256
 HP = 25
 Bone = "Hand.L"
 Skeleton = NodePath("../Armature/Skeleton3D")
 
 [node name="FootHitPoint" parent="." node_paths=PackedStringArray("Skeleton") instance=ExtResource("25_ncafl")]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -0.95, -3.5, 0.3)
+collision_layer = 256
 HP = 25
 Bone = "Foot.R"
 Skeleton = NodePath("../Armature/Skeleton3D")
 
 [node name="KneeHitPoint" parent="." node_paths=PackedStringArray("Skeleton") instance=ExtResource("25_ncafl")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 1.2, -2.5, 0.3)
+collision_layer = 256
 HP = 25
 Bone = "Thigh.L"
 Skeleton = NodePath("../Armature/Skeleton3D")
