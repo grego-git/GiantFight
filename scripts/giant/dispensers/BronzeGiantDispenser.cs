@@ -4,9 +4,9 @@ using System;
 public partial class BronzeGiantDispenser : GiantActionDispenser, IActionDispenser
 {
     [Export]
-    public Node3D FlamethrowerParticles { get; set; }
+    public GpuParticles3D FlamethrowerParticles { get; set; }
     [Export]
-    public Node3D FlamethrowerHitBox { get; set; }
+    public Area3D FlamethrowerHitBox { get; set; }
     [Export]
     public Node3D FlamethrowerWarningCircle { get; set; }
 
@@ -38,5 +38,15 @@ public partial class BronzeGiantDispenser : GiantActionDispenser, IActionDispens
     public override IGiantAction AttackBodyAction(Giant giant, string animation, bool useLeftHand)
     {
         return new GiantActionBodyAttack(giant, animation, useLeftHand);
+    }
+
+    public override IGiantAction DesperationAction(Giant giant)
+    {
+        return new GiantActionFireHose(giant, FlamethrowerParticles, FlamethrowerHitBox, FlamethrowerWarningCircle, giant.GiantProfile.DesperationAnimation);
+    }
+
+    public override string GetDesperationActionType()
+    {
+        return typeof(GiantActionFireHose).Name;
     }
 }

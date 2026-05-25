@@ -79,7 +79,7 @@ public class GiantActionTornado : IGiantAction
         rotSpeed += rotAccel * delta;
         rotSpeed = Mathf.Clamp(rotSpeed, 0.0f, maxRotSpeed);
 
-        giant.RotateYRot(delta, rotSpeed);
+        giant.RotateYRot(rotSpeed * Mathf.Abs(delta));
     }
 
     private void Chase(float delta)

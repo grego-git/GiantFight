@@ -31,8 +31,8 @@ public class GiantActionFlamethrower : IGiantAction
         maxTurnSpeed = 0.75f;
         turnSpeed = minTurnSpeed;
 
-        acceleration = 0.1f;
-        decceleration = 0.03f;
+        acceleration = 0.09f;
+        decceleration = 0.04f;
     }
 
     public bool Complete()
@@ -51,6 +51,8 @@ public class GiantActionFlamethrower : IGiantAction
 
     public void Update(float delta)
     {
+        warningCircle.Rotation = Vector3.Zero;
+        
         if (giant.PlayerDetection.PlayerDetectionZone != PlayerDetection.DetectionZoneAreas.NEGATE &&
             giant.PlayerDetection.PlayerDetectionZone != PlayerDetection.DetectionZoneAreas.ON_GIANT)
         {
@@ -63,12 +65,14 @@ public class GiantActionFlamethrower : IGiantAction
             }
             else if (start)
             {
-                giant.RotateTowardsPoint(delta, giant.PlayerDetection.PlayerPosition, giant.TurnSpeed);
+                giant.RotateTowardsPoint(delta, giant.PlayerDetection.PlayerPosition, 7.0f);
             }
         }
         else
-            warningCircle.Visible = false;
-
+            warningCircle.Visible = giant.TrackPlayer;
+        
+        warningCircle.Scale = new Vector3(warningCircle.Scale.X, warningCircle.Scale.Y, warningCircle.Scale.X / (Mathf.Sin(particles.Rotation.X) == 0.0f ? 1.0f : Mathf.Sin(particles.Rotation.X)));
+        
         if (giant.TrackPlayer)
         {
             particles.GlobalPosition = giant.ArmLimbs[1].GlobalPosition.Lerp(giant.ArmLimbs[3].GlobalPosition, 0.5f);
@@ -103,5 +107,7 @@ public class GiantActionFlamethrower : IGiantAction
 
         giant.LeftArmIKTarget.GlobalPosition = target;
         giant.RightArmIKTarget.GlobalPosition = target;
+
+        warningCircle.GlobalPosition = target;
     }
 }

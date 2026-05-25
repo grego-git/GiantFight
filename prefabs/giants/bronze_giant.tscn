@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://dq2vaks5hc8qm"]
+[gd_scene load_steps=82 format=3 uid="uid://dq2vaks5hc8qm"]
 
 [ext_resource type="ArrayMesh" uid="uid://bojxhgev3sbfb" path="res://models/giants/bronze_giant/meshes/bronze_giant.res" id="1_47rom"]
 [ext_resource type="Script" uid="uid://cxbc5aocp4eyw" path="res://scripts/giant/Giant.cs" id="1_wmo47"]
@@ -6,14 +6,23 @@
 [ext_resource type="PackedScene" uid="uid://c06728ka5lnsp" path="res://prefabs/climb/animated_climbable_entity.tscn" id="3_jgy7n"]
 [ext_resource type="Animation" uid="uid://dxntfvbuomyk3" path="res://models/giants/bronze_giant/animations/attack_arm_right.res" id="3_mv4ex"]
 [ext_resource type="Animation" uid="uid://3pdyirhrl8f2" path="res://models/giants/bronze_giant/animations/bottom_attack.res" id="4_b2em0"]
+[ext_resource type="ArrayMesh" uid="uid://d2oh3e0u5bj4x" path="res://models/giants/bronze_giant/meshes/bronze_giant_head.res" id="4_oomqa"]
+[ext_resource type="ArrayMesh" uid="uid://bc0np6kh6mcte" path="res://models/giants/bronze_giant/meshes/bronze_giant_left_upperarm.res" id="5_g3ubn"]
 [ext_resource type="Animation" uid="uid://ca4kkilarpgro" path="res://models/giants/bronze_giant/animations/external_attack.res" id="5_jgy7n"]
+[ext_resource type="ArrayMesh" uid="uid://f0f75qnrv3wh" path="res://models/giants/bronze_giant/meshes/bronze_giant_left_forearm.res" id="6_bjpsv"]
 [ext_resource type="Animation" uid="uid://b1ul0jqxmk6d4" path="res://models/giants/bronze_giant/animations/idle.res" id="6_dwcg7"]
+[ext_resource type="ArrayMesh" uid="uid://ekq1v86gawoi" path="res://models/giants/bronze_giant/meshes/bronze_giant_right_upperarm.res" id="7_gq54h"]
 [ext_resource type="Animation" uid="uid://e00jolploktq" path="res://models/giants/bronze_giant/animations/mid_attack.res" id="7_il5lg"]
+[ext_resource type="ArrayMesh" uid="uid://2gidv218janj" path="res://models/giants/bronze_giant/meshes/bronze_giant_right_forearm.res" id="8_btvka"]
 [ext_resource type="Script" uid="uid://btmifgegnirye" path="res://scripts/giant/GiantLimb.cs" id="8_ludbg"]
+[ext_resource type="ArrayMesh" uid="uid://tyr8tly2q57" path="res://models/giants/bronze_giant/meshes/bronze_giant_left_thigh.res" id="9_fm5pe"]
+[ext_resource type="ArrayMesh" uid="uid://kku3kvqdnp6n" path="res://models/giants/bronze_giant/meshes/bronze_giant_left_calf.res" id="10_0n4eb"]
 [ext_resource type="Animation" uid="uid://b250j575aniqk" path="res://models/giants/bronze_giant/animations/floor_attack.res" id="10_xidiy"]
 [ext_resource type="AudioStream" uid="uid://c4vpogssy726x" path="res://sounds/Stomp.wav" id="11_dwcg7"]
+[ext_resource type="ArrayMesh" uid="uid://ddtdauumxcer3" path="res://models/giants/bronze_giant/meshes/bronze_giant_right_thigh.res" id="11_hph4g"]
 [ext_resource type="Animation" uid="uid://e48u4wggbij5" path="res://models/giants/bronze_giant/animations/heat_up.res" id="11_ui232"]
 [ext_resource type="AudioStream" uid="uid://kqdk2bjafmo0" path="res://sounds/GiantPunch.wav" id="12_il5lg"]
+[ext_resource type="ArrayMesh" uid="uid://cw8ys6rqn0lnd" path="res://models/giants/bronze_giant/meshes/bronze_giant_right_calf.res" id="12_o5jqw"]
 [ext_resource type="Animation" uid="uid://ekn67ljbm6cd" path="res://models/giants/bronze_giant/animations/shake_arm_left.res" id="12_w3wii"]
 [ext_resource type="Script" uid="uid://bdbiac3np3x03" path="res://scripts/giant/PlayerDetection.cs" id="13_dwcg7"]
 [ext_resource type="Animation" uid="uid://b63pto3gu20tf" path="res://models/giants/bronze_giant/animations/shake_arm_right.res" id="13_p0t06"]
@@ -23,8 +32,11 @@
 [ext_resource type="Animation" uid="uid://bmcf7w135c044" path="res://models/giants/bronze_giant/animations/body_shake.res" id="14_p0t06"]
 [ext_resource type="Script" uid="uid://cl72je8qpafbm" path="res://scripts/ReScaleParticle.cs" id="15_2e36f"]
 [ext_resource type="PackedScene" uid="uid://d0bbnspt27v3c" path="res://prefabs/giants/fire_ball.tscn" id="15_4lt1k"]
+[ext_resource type="Animation" uid="uid://b7kanmgcknl1e" path="res://models/giants/bronze_giant/animations/fire_hose.res" id="15_f8grr"]
 [ext_resource type="PackedScene" uid="uid://b3y03b005tnj5" path="res://prefabs/giants/giant_hit_point.tscn" id="15_ludbg"]
 [ext_resource type="Script" uid="uid://d4gj8b81wlecy" path="res://scripts/giant/SpawnFirePillar.cs" id="16_8x61c"]
+[ext_resource type="Animation" uid="uid://b35cskjoikqmq" path="res://models/giants/bronze_giant/animations/fire_hose_end.res" id="16_btamc"]
+[ext_resource type="Animation" uid="uid://48b125vdgpw7" path="res://models/giants/bronze_giant/animations/dead.res" id="17_4t2in"]
 [ext_resource type="PackedScene" uid="uid://cygd83q8tng2v" path="res://prefabs/giants/fire_pillar.tscn" id="17_xidiy"]
 [ext_resource type="Script" uid="uid://b1f3u2r5y28rp" path="res://scripts/giant/DetectRing.cs" id="19_5dss7"]
 [ext_resource type="Script" uid="uid://1x3hcpvj3ydm" path="res://scripts/giant/NozzleFlame.cs" id="20_awxev"]
@@ -32,7 +44,7 @@
 [ext_resource type="Texture2D" uid="uid://cwe5cm68ds6df" path="res://textures/FlameParticle.png" id="21_ftrdt"]
 [ext_resource type="Script" uid="uid://sbueogfis8dk" path="res://scripts/giant/GiantHitBox.cs" id="22_ftrdt"]
 
-[sub_resource type="Skin" id="Skin_wd778"]
+[sub_resource type="Skin" id="Skin_oomqa"]
 resource_name = "Skin"
 bind_count = 19
 bind/0/name = &"Pelvis"
@@ -41,7 +53,7 @@ bind/0/pose = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.96333, -1.23319e-08)
 bind/1/name = &"Chest"
 bind/1/bone = -1
 bind/1/pose = Transform3D(1, 0, 0, 0, 1, 1.2071e-08, 0, -1.2071e-08, 1, 0, -1.23868, 2.62025e-09)
-bind/2/name = &"Head"
+bind/2/name = &"Head_2"
 bind/2/bone = -1
 bind/2/pose = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.15489, -5.96046e-08)
 bind/3/name = &"Upperarm.L"
@@ -134,31 +146,31 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Armature/Skeleton3D/LeftArmIK:influence")
+tracks/3/path = NodePath("FlamethrowerHitBox:monitoring")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
+"update": 1,
+"values": [false]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Armature/Skeleton3D/RightArmIK:influence")
+tracks/4/path = NodePath("FlamethrowerHitBox:monitorable")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
+"update": 1,
+"values": [false]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("FlamethrowerHitBox:monitoring")
+tracks/5/path = NodePath("FlamethrowerParticles:emitting")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -170,19 +182,19 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("FlamethrowerHitBox:monitorable")
+tracks/6/path = NodePath("FlamethrowerWarning:surface_material_override/0:albedo_color")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"update": 0,
+"values": [Color(1, 0, 0, 0)]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("FlamethrowerParticles:emitting")
+tracks/7/path = NodePath("ForearmLeft/FlameParticles:emitting")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
@@ -194,31 +206,31 @@ tracks/7/keys = {
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("LeftArmIKTarget/FlamethrowerWarning:surface_material_override/0:albedo_color")
+tracks/8/path = NodePath("ForearmRight/FlameParticles:emitting")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 0, 0, 0)]
+"update": 1,
+"values": [false]
 }
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("ForearmLeft/FlameParticles:emitting")
+tracks/9/path = NodePath(".:StompPadding")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"update": 0,
+"values": [0.0]
 }
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("ForearmRight/FlameParticles:emitting")
+tracks/10/path = NodePath("ForearmLeft/FlameParticles/FireBallSpawner:Spawn")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
@@ -230,43 +242,43 @@ tracks/10/keys = {
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath(".:StompPadding")
+tracks/11/path = NodePath("ForearmRight/FlameParticles/FireBallSpawner:Spawn")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
+"update": 1,
+"values": [false]
 }
 tracks/12/type = "value"
 tracks/12/imported = false
 tracks/12/enabled = true
-tracks/12/path = NodePath("ForearmLeft/FlameParticles/FireBallSpawner:Spawn")
+tracks/12/path = NodePath("Body/FlameLimb:Heat")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"update": 0,
+"values": [0.0]
 }
 tracks/13/type = "value"
 tracks/13/imported = false
 tracks/13/enabled = true
-tracks/13/path = NodePath("ForearmRight/FlameParticles/FireBallSpawner:Spawn")
+tracks/13/path = NodePath("UpperarmLeft/FlameLimb:Heat")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"update": 0,
+"values": [0.0]
 }
 tracks/14/type = "value"
 tracks/14/imported = false
 tracks/14/enabled = true
-tracks/14/path = NodePath("Body/FlameLimb:Heat")
+tracks/14/path = NodePath("ForearmLeft/FlameLimb:Heat")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
@@ -278,7 +290,7 @@ tracks/14/keys = {
 tracks/15/type = "value"
 tracks/15/imported = false
 tracks/15/enabled = true
-tracks/15/path = NodePath("UpperarmLeft/FlameLimb:Heat")
+tracks/15/path = NodePath("UpperarmRight/FlameLimb:Heat")
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = {
@@ -290,7 +302,7 @@ tracks/15/keys = {
 tracks/16/type = "value"
 tracks/16/imported = false
 tracks/16/enabled = true
-tracks/16/path = NodePath("ForearmLeft/FlameLimb:Heat")
+tracks/16/path = NodePath("ForearmRight/FlameLimb:Heat")
 tracks/16/interp = 1
 tracks/16/loop_wrap = true
 tracks/16/keys = {
@@ -302,7 +314,7 @@ tracks/16/keys = {
 tracks/17/type = "value"
 tracks/17/imported = false
 tracks/17/enabled = true
-tracks/17/path = NodePath("UpperarmRight/FlameLimb:Heat")
+tracks/17/path = NodePath("ThighLeft/FlameLimb:Heat")
 tracks/17/interp = 1
 tracks/17/loop_wrap = true
 tracks/17/keys = {
@@ -314,7 +326,7 @@ tracks/17/keys = {
 tracks/18/type = "value"
 tracks/18/imported = false
 tracks/18/enabled = true
-tracks/18/path = NodePath("ForearmRight/FlameLimb:Heat")
+tracks/18/path = NodePath("CalfLeft/FlameLimb:Heat")
 tracks/18/interp = 1
 tracks/18/loop_wrap = true
 tracks/18/keys = {
@@ -326,7 +338,7 @@ tracks/18/keys = {
 tracks/19/type = "value"
 tracks/19/imported = false
 tracks/19/enabled = true
-tracks/19/path = NodePath("ThighLeft/FlameLimb:Heat")
+tracks/19/path = NodePath("ThighRight/FlameLimb:Heat")
 tracks/19/interp = 1
 tracks/19/loop_wrap = true
 tracks/19/keys = {
@@ -338,7 +350,7 @@ tracks/19/keys = {
 tracks/20/type = "value"
 tracks/20/imported = false
 tracks/20/enabled = true
-tracks/20/path = NodePath("CalfLeft/FlameLimb:Heat")
+tracks/20/path = NodePath("CalfRight/FlameLimb:Heat")
 tracks/20/interp = 1
 tracks/20/loop_wrap = true
 tracks/20/keys = {
@@ -350,7 +362,7 @@ tracks/20/keys = {
 tracks/21/type = "value"
 tracks/21/imported = false
 tracks/21/enabled = true
-tracks/21/path = NodePath("ThighRight/FlameLimb:Heat")
+tracks/21/path = NodePath("Head/FlameLimb:Heat")
 tracks/21/interp = 1
 tracks/21/loop_wrap = true
 tracks/21/keys = {
@@ -362,38 +374,50 @@ tracks/21/keys = {
 tracks/22/type = "value"
 tracks/22/imported = false
 tracks/22/enabled = true
-tracks/22/path = NodePath("CalfRight/FlameLimb:Heat")
+tracks/22/path = NodePath(".:StunPlayer")
 tracks/22/interp = 1
 tracks/22/loop_wrap = true
 tracks/22/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
+"update": 1,
+"values": [false]
 }
 tracks/23/type = "value"
 tracks/23/imported = false
 tracks/23/enabled = true
-tracks/23/path = NodePath("Head/FlameLimb:Heat")
+tracks/23/path = NodePath("SpecialFlameColumn:emitting")
 tracks/23/interp = 1
 tracks/23/loop_wrap = true
 tracks/23/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [1.0]
+"values": [false]
 }
 tracks/24/type = "value"
 tracks/24/imported = false
 tracks/24/enabled = true
-tracks/24/path = NodePath(".:StunPlayer")
+tracks/24/path = NodePath("Armature/Skeleton3D/LeftArmIK:influence")
 tracks/24/interp = 1
 tracks/24/loop_wrap = true
 tracks/24/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"update": 0,
+"values": [0.0]
+}
+tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("Armature/Skeleton3D/RightArmIK:influence")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xidiy"]
@@ -407,7 +431,10 @@ _data = {
 &"attack_arm_right": ExtResource("3_mv4ex"),
 &"body_shake": ExtResource("14_p0t06"),
 &"bottom_attack": ExtResource("4_b2em0"),
+&"dead": ExtResource("17_4t2in"),
 &"external_attack": ExtResource("5_jgy7n"),
+&"fire_hose": ExtResource("15_f8grr"),
+&"fire_hose_end": ExtResource("16_btamc"),
 &"floor_attack": ExtResource("10_xidiy"),
 &"heat_up": ExtResource("11_ui232"),
 &"idle": ExtResource("6_dwcg7"),
@@ -532,7 +559,7 @@ radius = 8.0
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_4lt1k"]
 top_radius = 8.0
-bottom_radius = 6.0
+bottom_radius = 8.0
 height = 15.0
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_ftrdt"]
@@ -544,35 +571,57 @@ shading_mode = 0
 albedo_color = Color(1, 0, 0, 0)
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4lt1k"]
-emission_shape_offset = Vector3(0, 0, -10)
-emission_shape_scale = Vector3(0.5, 0.5, 10)
-emission_shape = 3
-emission_box_extents = Vector3(1, 1, 1)
+emission_shape_offset = Vector3(0, 0, -50)
+emission_shape_scale = Vector3(0.5, 0.5, 100)
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 0.0
+emission_ring_cone_angle = 90.0
 gravity = Vector3(0, 4.9, 0)
-scale_min = 0.75
-scale_max = 0.75
+scale_min = 0.5
+scale_max = 0.5
 color_ramp = SubResource("GradientTexture1D_07pi0")
 
 [sub_resource type="QuadMesh" id="QuadMesh_ftrdt"]
 material = SubResource("StandardMaterial3D_2e36f")
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_xk8ni"]
-height = 20.0
+height = 100.0
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_07pi0"]
-height = 20.0
+height = 100.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4lt1k"]
 transparency = 1
 shading_mode = 0
 albedo_color = Color(1, 0, 0.983333, 0.12549)
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_f8grr"]
+emission_shape_scale = Vector3(10, 60, 10)
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 1.0
+emission_ring_radius = 0.75
+emission_ring_inner_radius = 0.6
+emission_ring_cone_angle = 90.0
+gravity = Vector3(0, 4.9, 0)
+scale_min = 5.0
+scale_max = 5.0
+color_ramp = SubResource("GradientTexture1D_07pi0")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_btamc"]
+height = 60.0
+radius = 7.5
+
 [node name="BronzeGiant" type="Node3D" node_paths=PackedStringArray("StompSound", "ClimbAnimatedEntities", "ArmLimbs", "Fists", "HitPoints", "LeftLegIK", "LeftArmIK", "RightArmIK", "LeftLegIKTarget", "LeftArmIKTarget", "RightArmIKTarget")]
 script = ExtResource("1_wmo47")
 StompSound = NodePath("StompSound")
+ExtraBodyParts = 9
 GiantJson = "bronze_giant.json"
 TurnSpeed = 5.0
-ClimbAnimatedEntities = [NodePath("Armature/Skeleton3D/Mesh/AnimatedClimbableEntity")]
+ClimbAnimatedEntities = [NodePath("Armature/Skeleton3D/Mesh/AnimatedClimbableEntity"), NodePath("Armature/Skeleton3D/Mesh1/AnimatedClimbableEntity"), NodePath("Armature/Skeleton3D/Mesh2/AnimatedClimbableEntity"), NodePath("Armature/Skeleton3D/Mesh3/AnimatedClimbableEntity"), NodePath("Armature/Skeleton3D/Mesh4/AnimatedClimbableEntity"), NodePath("Armature/Skeleton3D/Mesh5/AnimatedClimbableEntity"), NodePath("Armature/Skeleton3D/Mesh6/AnimatedClimbableEntity"), NodePath("Armature/Skeleton3D/Mesh7/AnimatedClimbableEntity"), NodePath("Armature/Skeleton3D/Mesh8/AnimatedClimbableEntity"), NodePath("Armature/Skeleton3D/Mesh9/AnimatedClimbableEntity")]
 ArmLimbs = [NodePath("UpperarmLeft"), NodePath("ForearmLeft"), NodePath("UpperarmRight"), NodePath("ForearmRight")]
 Fists = []
 HitPoints = [NodePath("HitPoint"), NodePath("LeftHitPoint"), NodePath("RightHitPoint")]
@@ -591,8 +640,8 @@ bones/0/name = "Pelvis"
 bones/0/parent = -1
 bones/0/rest = Transform3D(1, 2.16569e-17, -1.05867e-18, -2.16569e-17, 0.995232, -0.0975341, -1.05867e-18, 0.0975341, 0.995232, 0, -0.185843, -0.410566)
 bones/0/enabled = true
-bones/0/position = Vector3(0, -0.055668, 0.183965)
-bones/0/rotation = Quaternion(-0.081963, -3.10193e-25, 1.81994e-17, 0.996635)
+bones/0/position = Vector3(0, -0.185843, -0.410566)
+bones/0/rotation = Quaternion(0.0488253, -1.72163e-26, -1.08414e-17, 0.998807)
 bones/0/scale = Vector3(1, 1, 1)
 bones/1/name = "Chest"
 bones/1/parent = 0
@@ -601,68 +650,68 @@ bones/1/enabled = true
 bones/1/position = Vector3(-7.03104e-24, 3.20201, 0)
 bones/1/rotation = Quaternion(6.03552e-09, 5.16988e-26, 8.27181e-25, 1)
 bones/1/scale = Vector3(1, 1, 1)
-bones/2/name = "Head"
+bones/2/name = "Head_2"
 bones/2/parent = 1
 bones/2/rest = Transform3D(1, 7.88013e-18, -1.39872e-19, -7.88013e-18, 0.99937, -0.0354889, -1.39873e-19, 0.0354889, 0.99937, -4.01183e-23, 3.91622, -2.98023e-08)
 bones/2/enabled = true
 bones/2/position = Vector3(-4.01183e-23, 3.91622, -2.98023e-08)
-bones/2/rotation = Quaternion(-0.241226, 2.53324e-24, 2.48565e-17, 0.970469)
+bones/2/rotation = Quaternion(0.0177473, 2.87051e-25, -3.94068e-18, 0.999843)
 bones/2/scale = Vector3(1, 1, 1)
 bones/3/name = "Upperarm.L"
 bones/3/parent = 1
 bones/3/rest = Transform3D(-0.940562, 0.339266, 0.0155839, -0.339555, -0.93846, -0.0632146, -0.00682172, -0.0647488, 0.997878, 3.20458, 2.36626, -4.0895e-08)
 bones/3/enabled = true
 bones/3/position = Vector3(3.20458, 2.36626, -4.0895e-08)
-bones/3/rotation = Quaternion(-0.042455, 0.998481, 0.0342332, -0.00784193)
+bones/3/rotation = Quaternion(0.00222504, -0.0324948, 0.984492, -0.172378)
 bones/3/scale = Vector3(1, 1, 1)
 bones/4/name = "Forearm.L"
 bones/4/parent = 3
 bones/4/rest = Transform3D(1, -1.40265e-08, 7.92026e-09, 1.57758e-08, 0.952175, -0.305555, -3.2556e-09, 0.305555, 0.952175, 1.77636e-14, 2.96786, 2.12393e-14)
 bones/4/enabled = true
 bones/4/position = Vector3(1.77636e-14, 2.96786, 2.12393e-14)
-bones/4/rotation = Quaternion(0.404121, 0.0222849, 0.00137592, 0.914433)
+bones/4/rotation = Quaternion(0.154637, 2.82798e-09, 7.54129e-09, 0.987971)
 bones/4/scale = Vector3(1, 1, 1)
 bones/5/name = "Hand.L"
 bones/5/parent = 4
 bones/5/rest = Transform3D(1, -6.93889e-18, 3.72529e-09, -6.93889e-18, 1, 3.72529e-09, -3.72529e-09, -3.72529e-09, 1, -1.42109e-14, 3.5, -2.98023e-08)
 bones/5/enabled = true
 bones/5/position = Vector3(-1.42109e-14, 3.5, -2.98023e-08)
-bones/5/rotation = Quaternion(2.40288e-07, 1.81459e-08, -2.63466e-09, 1)
+bones/5/rotation = Quaternion(-1.86265e-09, 1.86265e-09, 2.11655e-22, 1)
 bones/5/scale = Vector3(1, 1, 1)
 bones/6/name = "Upperarm.R"
 bones/6/parent = 1
 bones/6/rest = Transform3D(-0.940562, -0.339266, -0.0155839, 0.339555, -0.93846, -0.0632146, 0.00682172, -0.0647488, 0.997878, -3.20458, 2.36626, -4.0895e-08)
 bones/6/enabled = true
 bones/6/position = Vector3(-3.20458, 2.36626, -4.0895e-08)
-bones/6/rotation = Quaternion(0.0424551, 0.998481, 0.0342332, 0.00784193)
+bones/6/rotation = Quaternion(-0.00222504, -0.0324948, 0.984492, 0.172378)
 bones/6/scale = Vector3(1, 1, 1)
 bones/7/name = "Forearm.R"
 bones/7/parent = 6
 bones/7/rest = Transform3D(1, 2.83446e-08, -1.39779e-08, -3.126e-08, 0.952175, -0.305555, 4.64856e-09, 0.305555, 0.952175, 4.76837e-07, 2.96786, 1.4057e-14)
 bones/7/enabled = true
 bones/7/position = Vector3(4.76837e-07, 2.96786, 1.4057e-14)
-bones/7/rotation = Quaternion(0.404121, -0.0222849, -0.00137593, 0.914433)
+bones/7/rotation = Quaternion(0.154637, -4.71331e-09, -1.50826e-08, 0.987971)
 bones/7/scale = Vector3(1, 1, 1)
 bones/8/name = "Hand.R"
 bones/8/parent = 7
 bones/8/rest = Transform3D(1, 1.49012e-08, -5.58793e-09, -1.49012e-08, 1, -3.72529e-09, 5.58794e-09, 3.72529e-09, 1, 1.42109e-14, 3.5, 2.98023e-08)
 bones/8/enabled = true
 bones/8/position = Vector3(1.42109e-14, 3.5, 2.98023e-08)
-bones/8/rotation = Quaternion(2.10486e-07, -1.81459e-08, -1.5926e-10, 1)
+bones/8/rotation = Quaternion(1.86265e-09, -2.79397e-09, -7.45058e-09, 1)
 bones/8/scale = Vector3(1, 1, 1)
 bones/9/name = "Thigh.L"
 bones/9/parent = 0
 bones/9/rest = Transform3D(0.0374891, 0.130778, 0.990359, 0.354291, -0.928739, 0.109154, 0.934383, 0.346904, -0.0811228, 1.62839, 0.21311, 1.36141e-07)
 bones/9/enabled = true
 bones/9/position = Vector3(1.62839, 0.21311, 1.36141e-07)
-bones/9/rotation = Quaternion(0.736139, -0.000602379, 0.675705, -0.0390198)
+bones/9/rotation = Quaternion(0.715435, 0.169497, 0.6727, 0.0830609)
 bones/9/scale = Vector3(1, 1, 0.999651)
 bones/10/name = "Calf.L"
 bones/10/parent = 9
 bones/10/rest = Transform3D(0.921342, -0.388532, -0.0131069, 0.388683, 0.920018, 0.0499284, -0.00734022, -0.0510956, 0.998666, -1.71735e-07, 3.54654, 7.07844e-10)
 bones/10/enabled = true
 bones/10/position = Vector3(-1.71735e-07, 3.54654, 7.07844e-10)
-bones/10/rotation = Quaternion(-0.0161775, -0.00149093, 0.124458, 0.992092)
+bones/10/rotation = Quaternion(-0.0257767, -0.00147158, 0.19831, 0.979799)
 bones/10/scale = Vector3(1, 1, 0.999999)
 bones/11/name = "Foot.L"
 bones/11/parent = 10
@@ -676,14 +725,14 @@ bones/12/parent = 0
 bones/12/rest = Transform3D(0.0374891, -0.130778, -0.990359, -0.354291, -0.928739, 0.109153, -0.934383, 0.346904, -0.0811228, -1.62839, 0.21311, 1.36141e-07)
 bones/12/enabled = true
 bones/12/position = Vector3(-1.62839, 0.21311, 1.36141e-07)
-bones/12/rotation = Quaternion(0.736139, 0.000602379, -0.675705, -0.0390198)
+bones/12/rotation = Quaternion(0.715435, -0.169497, -0.6727, 0.0830609)
 bones/12/scale = Vector3(1, 1, 0.999651)
 bones/13/name = "Calf.R"
 bones/13/parent = 12
 bones/13/rest = Transform3D(0.921342, 0.388532, 0.0131069, -0.388683, 0.920018, 0.0499284, 0.00734022, -0.0510956, 0.998666, 3.7826e-08, 3.54654, -2.37711e-07)
 bones/13/enabled = true
 bones/13/position = Vector3(3.7826e-08, 3.54654, -2.37711e-07)
-bones/13/rotation = Quaternion(-0.0161775, 0.00149093, -0.124458, 0.992092)
+bones/13/rotation = Quaternion(-0.0257767, 0.00147158, -0.19831, 0.979799)
 bones/13/scale = Vector3(1, 1, 0.999999)
 bones/14/name = "Foot.R"
 bones/14/parent = 13
@@ -696,7 +745,7 @@ bones/15/name = "LegControl.L"
 bones/15/parent = -1
 bones/15/rest = Transform3D(0, 5.96046e-08, -1, 1, -1.19209e-07, 5.96046e-08, -5.96046e-08, -1, -1.19209e-07, 2.29905, -7.08202, -1.23319e-08)
 bones/15/enabled = true
-bones/15/position = Vector3(1.79905, -7.08202, -1.23319e-08)
+bones/15/position = Vector3(2.29905, -7.08202, -1.23319e-08)
 bones/15/rotation = Quaternion(0.5, 0.5, -0.5, -0.5)
 bones/15/scale = Vector3(1, 1, 1)
 bones/16/name = "LegPoleTarget.L"
@@ -710,7 +759,7 @@ bones/17/name = "LegControl.R"
 bones/17/parent = -1
 bones/17/rest = Transform3D(0, -5.96046e-08, 1, -1, -1.19209e-07, 5.96046e-08, 5.96046e-08, -1, -1.19209e-07, -2.29905, -7.08202, -1.23319e-08)
 bones/17/enabled = true
-bones/17/position = Vector3(-1.79905, -7.08202, -1.23319e-08)
+bones/17/position = Vector3(-2.29905, -7.08202, -1.23319e-08)
 bones/17/rotation = Quaternion(0.5, -0.5, 0.5, -0.5)
 bones/17/scale = Vector3(1, 1, 1)
 bones/18/name = "LegPoleTarget.R"
@@ -723,9 +772,63 @@ bones/18/scale = Vector3(1, 1, 1)
 
 [node name="Mesh" type="MeshInstance3D" parent="Armature/Skeleton3D"]
 mesh = ExtResource("1_47rom")
-skin = SubResource("Skin_wd778")
+skin = SubResource("Skin_oomqa")
 
 [node name="AnimatedClimbableEntity" parent="Armature/Skeleton3D/Mesh" instance=ExtResource("3_jgy7n")]
+
+[node name="Mesh1" type="MeshInstance3D" parent="Armature/Skeleton3D"]
+mesh = ExtResource("4_oomqa")
+skin = SubResource("Skin_oomqa")
+
+[node name="AnimatedClimbableEntity" parent="Armature/Skeleton3D/Mesh1" instance=ExtResource("3_jgy7n")]
+
+[node name="Mesh2" type="MeshInstance3D" parent="Armature/Skeleton3D"]
+mesh = ExtResource("10_0n4eb")
+skin = SubResource("Skin_oomqa")
+
+[node name="AnimatedClimbableEntity" parent="Armature/Skeleton3D/Mesh2" instance=ExtResource("3_jgy7n")]
+
+[node name="Mesh3" type="MeshInstance3D" parent="Armature/Skeleton3D"]
+mesh = ExtResource("6_bjpsv")
+skin = SubResource("Skin_oomqa")
+
+[node name="AnimatedClimbableEntity" parent="Armature/Skeleton3D/Mesh3" instance=ExtResource("3_jgy7n")]
+
+[node name="Mesh4" type="MeshInstance3D" parent="Armature/Skeleton3D"]
+mesh = ExtResource("9_fm5pe")
+skin = SubResource("Skin_oomqa")
+
+[node name="AnimatedClimbableEntity" parent="Armature/Skeleton3D/Mesh4" instance=ExtResource("3_jgy7n")]
+
+[node name="Mesh5" type="MeshInstance3D" parent="Armature/Skeleton3D"]
+mesh = ExtResource("5_g3ubn")
+skin = SubResource("Skin_oomqa")
+
+[node name="AnimatedClimbableEntity" parent="Armature/Skeleton3D/Mesh5" instance=ExtResource("3_jgy7n")]
+
+[node name="Mesh6" type="MeshInstance3D" parent="Armature/Skeleton3D"]
+mesh = ExtResource("12_o5jqw")
+skin = SubResource("Skin_oomqa")
+
+[node name="AnimatedClimbableEntity" parent="Armature/Skeleton3D/Mesh6" instance=ExtResource("3_jgy7n")]
+
+[node name="Mesh7" type="MeshInstance3D" parent="Armature/Skeleton3D"]
+mesh = ExtResource("8_btvka")
+skin = SubResource("Skin_oomqa")
+
+[node name="AnimatedClimbableEntity" parent="Armature/Skeleton3D/Mesh7" instance=ExtResource("3_jgy7n")]
+
+[node name="Mesh8" type="MeshInstance3D" parent="Armature/Skeleton3D"]
+mesh = ExtResource("11_hph4g")
+skin = SubResource("Skin_oomqa")
+
+[node name="AnimatedClimbableEntity" parent="Armature/Skeleton3D/Mesh8" instance=ExtResource("3_jgy7n")]
+
+[node name="Mesh9" type="MeshInstance3D" parent="Armature/Skeleton3D"]
+mesh = ExtResource("7_gq54h")
+skin = SubResource("Skin_oomqa")
+
+[node name="AnimatedClimbableEntity" parent="Armature/Skeleton3D/Mesh9" instance=ExtResource("3_jgy7n")]
 
 [node name="LeftLegIK" type="SkeletonIK3D" parent="Armature/Skeleton3D"]
 influence = 0.0
@@ -770,7 +873,7 @@ mesh = SubResource("CapsuleMesh_8x61c")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_xidiy")
 
-[node name="FlameLimb" parent="Body" instance=ExtResource("20_l4nfn")]
+[node name="FlameLimb" parent="Body" node_paths=PackedStringArray("Mesh") instance=ExtResource("20_l4nfn")]
 transform = Transform3D(0.999999, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0, 0, 0)
 emitting = false
 amount = 250
@@ -779,6 +882,7 @@ visibility_aabb = AABB(-50.1, -59.9948, -50.0999, 100.2, 120.076, 100.2)
 process_material = SubResource("ParticleProcessMaterial_07pi0")
 draw_pass_1 = SubResource("QuadMesh_xk8ni")
 script = ExtResource("14_4lt1k")
+Mesh = NodePath("../../Armature/Skeleton3D/Mesh")
 MinScale = 2.0
 
 [node name="HitBox" type="Area3D" parent="Body/FlameLimb"]
@@ -801,7 +905,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_ui232")
 transform = Transform3D(1, 0, 0, 0, 0.991445, -0.130526, 0, 0.130526, 0.991445, 0, 5.5, 0.35)
 collision_layer = 64
 script = ExtResource("8_ludbg")
-Bone = "Head"
+Bone = "Head_2"
 Skeleton = NodePath("../Armature/Skeleton3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Head"]
@@ -814,7 +918,7 @@ mesh = SubResource("CapsuleMesh_wmo47")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_xidiy")
 
-[node name="FlameLimb" parent="Head" instance=ExtResource("20_l4nfn")]
+[node name="FlameLimb" parent="Head" node_paths=PackedStringArray("Mesh") instance=ExtResource("20_l4nfn")]
 transform = Transform3D(0.999999, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0, 0, 0)
 emitting = false
 amount = 250
@@ -823,8 +927,8 @@ visibility_aabb = AABB(-50.1, -59.9948, -50.0999, 100.2, 120.076, 100.2)
 process_material = SubResource("ParticleProcessMaterial_07pi0")
 draw_pass_1 = SubResource("QuadMesh_xk8ni")
 script = ExtResource("14_4lt1k")
+Mesh = NodePath("../../Armature/Skeleton3D/Mesh1")
 MinScale = 2.0
-Heat = 1.0
 
 [node name="HitBox" type="Area3D" parent="Head/FlameLimb"]
 collision_layer = 128
@@ -859,7 +963,7 @@ mesh = SubResource("CapsuleMesh_b2em0")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_xidiy")
 
-[node name="FlameLimb" parent="UpperarmLeft" instance=ExtResource("20_l4nfn")]
+[node name="FlameLimb" parent="UpperarmLeft" node_paths=PackedStringArray("Mesh") instance=ExtResource("20_l4nfn")]
 transform = Transform3D(0.999999, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0, 0, 0)
 emitting = false
 amount = 250
@@ -868,6 +972,7 @@ visibility_aabb = AABB(-50.1, -59.9948, -50.0999, 100.2, 120.076, 100.2)
 process_material = SubResource("ParticleProcessMaterial_07pi0")
 draw_pass_1 = SubResource("QuadMesh_xk8ni")
 script = ExtResource("14_4lt1k")
+Mesh = NodePath("../../Armature/Skeleton3D/Mesh5")
 MinScale = 2.0
 
 [node name="HitBox" type="Area3D" parent="UpperarmLeft/FlameLimb"]
@@ -928,7 +1033,7 @@ collision_mask = 65
 collide_with_areas = true
 script = ExtResource("20_awxev")
 
-[node name="FlameLimb" parent="ForearmLeft" instance=ExtResource("20_l4nfn")]
+[node name="FlameLimb" parent="ForearmLeft" node_paths=PackedStringArray("Mesh") instance=ExtResource("20_l4nfn")]
 transform = Transform3D(0.999999, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0, 0, 0)
 emitting = false
 amount = 250
@@ -937,6 +1042,7 @@ visibility_aabb = AABB(-50.1, -59.9948, -50.0999, 100.2, 120.076, 100.2)
 process_material = SubResource("ParticleProcessMaterial_07pi0")
 draw_pass_1 = SubResource("QuadMesh_xk8ni")
 script = ExtResource("14_4lt1k")
+Mesh = NodePath("../../Armature/Skeleton3D/Mesh3")
 MinScale = 2.0
 
 [node name="HitBox" type="Area3D" parent="ForearmLeft/FlameLimb"]
@@ -961,7 +1067,6 @@ collision_layer = 64
 script = ExtResource("8_ludbg")
 Bone = "Upperarm.R"
 Skeleton = NodePath("../Armature/Skeleton3D")
-AdditionalDetectBones = PackedStringArray("Chest")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="UpperarmRight"]
 transform = Transform3D(1, 0, 0, 0, 1, -1.49012e-08, 0, 1.49012e-08, 1, 0, 0, 0)
@@ -973,7 +1078,7 @@ mesh = SubResource("CapsuleMesh_b2em0")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_xidiy")
 
-[node name="FlameLimb" parent="UpperarmRight" instance=ExtResource("20_l4nfn")]
+[node name="FlameLimb" parent="UpperarmRight" node_paths=PackedStringArray("Mesh") instance=ExtResource("20_l4nfn")]
 transform = Transform3D(0.999999, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0, 0, 0)
 emitting = false
 amount = 250
@@ -982,6 +1087,7 @@ visibility_aabb = AABB(-50.1, -59.9948, -50.0999, 100.2, 120.076, 100.2)
 process_material = SubResource("ParticleProcessMaterial_07pi0")
 draw_pass_1 = SubResource("QuadMesh_xk8ni")
 script = ExtResource("14_4lt1k")
+Mesh = NodePath("../../Armature/Skeleton3D/Mesh9")
 MinScale = 2.0
 
 [node name="HitBox" type="Area3D" parent="UpperarmRight/FlameLimb"]
@@ -1041,7 +1147,7 @@ collision_mask = 65
 collide_with_areas = true
 script = ExtResource("20_awxev")
 
-[node name="FlameLimb" parent="ForearmRight" instance=ExtResource("20_l4nfn")]
+[node name="FlameLimb" parent="ForearmRight" node_paths=PackedStringArray("Mesh") instance=ExtResource("20_l4nfn")]
 transform = Transform3D(0.999999, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0, 0, 0)
 emitting = false
 amount = 250
@@ -1050,6 +1156,7 @@ visibility_aabb = AABB(-50.1, -59.9948, -50.0999, 100.2, 120.076, 100.2)
 process_material = SubResource("ParticleProcessMaterial_07pi0")
 draw_pass_1 = SubResource("QuadMesh_xk8ni")
 script = ExtResource("14_4lt1k")
+Mesh = NodePath("../../Armature/Skeleton3D/Mesh7")
 MinScale = 2.0
 
 [node name="HitBox" type="Area3D" parent="ForearmRight/FlameLimb"]
@@ -1085,7 +1192,7 @@ mesh = SubResource("CapsuleMesh_dwcg7")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_xidiy")
 
-[node name="FlameLimb" parent="ThighLeft" instance=ExtResource("20_l4nfn")]
+[node name="FlameLimb" parent="ThighLeft" node_paths=PackedStringArray("Mesh") instance=ExtResource("20_l4nfn")]
 transform = Transform3D(0.999999, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0, 0, 0)
 emitting = false
 amount = 250
@@ -1094,6 +1201,7 @@ visibility_aabb = AABB(-50.1, -59.9948, -50.0999, 100.2, 120.076, 100.2)
 process_material = SubResource("ParticleProcessMaterial_07pi0")
 draw_pass_1 = SubResource("QuadMesh_xk8ni")
 script = ExtResource("14_4lt1k")
+Mesh = NodePath("../../Armature/Skeleton3D/Mesh4")
 MinScale = 2.0
 
 [node name="HitBox" type="Area3D" parent="ThighLeft/FlameLimb"]
@@ -1129,7 +1237,7 @@ mesh = SubResource("CapsuleMesh_b2em0")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_xidiy")
 
-[node name="FlameLimb" parent="CalfLeft" instance=ExtResource("20_l4nfn")]
+[node name="FlameLimb" parent="CalfLeft" node_paths=PackedStringArray("Mesh") instance=ExtResource("20_l4nfn")]
 transform = Transform3D(0.999999, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0, 0, 0)
 emitting = false
 amount = 250
@@ -1138,6 +1246,7 @@ visibility_aabb = AABB(-50.1, -59.9948, -50.0999, 100.2, 120.076, 100.2)
 process_material = SubResource("ParticleProcessMaterial_07pi0")
 draw_pass_1 = SubResource("QuadMesh_xk8ni")
 script = ExtResource("14_4lt1k")
+Mesh = NodePath("../../Armature/Skeleton3D/Mesh2")
 MinScale = 2.0
 
 [node name="HitBox" type="Area3D" parent="CalfLeft/FlameLimb"]
@@ -1173,7 +1282,7 @@ mesh = SubResource("CapsuleMesh_dwcg7")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_xidiy")
 
-[node name="FlameLimb" parent="ThighRight" instance=ExtResource("20_l4nfn")]
+[node name="FlameLimb" parent="ThighRight" node_paths=PackedStringArray("Mesh") instance=ExtResource("20_l4nfn")]
 transform = Transform3D(0.999999, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0, 0, 0)
 emitting = false
 amount = 250
@@ -1182,6 +1291,7 @@ visibility_aabb = AABB(-50.1, -59.9948, -50.0999, 100.2, 120.076, 100.2)
 process_material = SubResource("ParticleProcessMaterial_07pi0")
 draw_pass_1 = SubResource("QuadMesh_xk8ni")
 script = ExtResource("14_4lt1k")
+Mesh = NodePath("../../Armature/Skeleton3D/Mesh8")
 MinScale = 2.0
 
 [node name="HitBox" type="Area3D" parent="ThighRight/FlameLimb"]
@@ -1217,7 +1327,7 @@ mesh = SubResource("CapsuleMesh_b2em0")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_xidiy")
 
-[node name="FlameLimb" parent="CalfRight" instance=ExtResource("20_l4nfn")]
+[node name="FlameLimb" parent="CalfRight" node_paths=PackedStringArray("Mesh") instance=ExtResource("20_l4nfn")]
 transform = Transform3D(0.999999, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0, 0, 0)
 emitting = false
 amount = 250
@@ -1226,6 +1336,7 @@ visibility_aabb = AABB(-50.1, -59.9948, -50.0999, 100.2, 120.076, 100.2)
 process_material = SubResource("ParticleProcessMaterial_07pi0")
 draw_pass_1 = SubResource("QuadMesh_xk8ni")
 script = ExtResource("14_4lt1k")
+Mesh = NodePath("../../Armature/Skeleton3D/Mesh6")
 MinScale = 2.0
 
 [node name="HitBox" type="Area3D" parent="CalfRight/FlameLimb"]
@@ -1261,7 +1372,7 @@ DetectionZones = [NodePath("../NegateDetectRing"), null, NodePath("../MidDetectR
 script = ExtResource("14_il5lg")
 FlamethrowerParticles = NodePath("../FlamethrowerParticles")
 FlamethrowerHitBox = NodePath("../FlamethrowerHitBox")
-FlamethrowerWarningCircle = NodePath("../LeftArmIKTarget/FlamethrowerWarning")
+FlamethrowerWarningCircle = NodePath("../FlamethrowerWarning")
 
 [node name="HitPoint" parent="." node_paths=PackedStringArray("Skeleton") instance=ExtResource("15_ludbg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 2)
@@ -1333,22 +1444,24 @@ surface_material_override/0 = SubResource("StandardMaterial3D_ftrdt")
 
 [node name="LeftArmIKTarget" type="Node3D" parent="."]
 
-[node name="FlamethrowerWarning" type="MeshInstance3D" parent="LeftArmIKTarget"]
-mesh = SubResource("CylinderMesh_ftrdt")
-surface_material_override/0 = SubResource("StandardMaterial3D_xk8ni")
-
 [node name="RightArmIKTarget" type="Node3D" parent="."]
+
+[node name="FlamethrowerWarning" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("CylinderMesh_ftrdt")
+skeleton = NodePath("../LeftArmIKTarget")
+surface_material_override/0 = SubResource("StandardMaterial3D_xk8ni")
 
 [node name="FlamethrowerParticles" parent="." node_paths=PackedStringArray("ReScaleNode") instance=ExtResource("20_l4nfn")]
 emitting = false
-amount = 5000
-lifetime = 0.5
+amount = 50000
+lifetime = 1.0
 visibility_aabb = AABB(-50.1, -59.9948, -50.0999, 100.2, 120.076, 100.2)
 process_material = SubResource("ParticleProcessMaterial_4lt1k")
 draw_pass_1 = SubResource("QuadMesh_ftrdt")
 script = ExtResource("15_2e36f")
 ReScaleNode = NodePath("..")
-MinScale = 0.75
+MinScale = 0.5
 
 [node name="FlamethrowerHitBox" type="Area3D" parent="."]
 collision_layer = 128
@@ -1357,10 +1470,29 @@ monitorable = false
 script = ExtResource("22_ftrdt")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="FlamethrowerHitBox"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -10)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -50)
 shape = SubResource("CylinderShape3D_xk8ni")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="FlamethrowerHitBox"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -10)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -50)
 mesh = SubResource("CylinderMesh_07pi0")
 surface_material_override/0 = SubResource("StandardMaterial3D_4lt1k")
+
+[node name="SpecialFlameColumn" parent="." node_paths=PackedStringArray("ReScaleNode") instance=ExtResource("20_l4nfn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 0)
+emitting = false
+amount = 1000
+lifetime = 5.0
+visibility_aabb = AABB(-50.1, -59.9948, -50.0999, 100.2, 120.076, 100.2)
+process_material = SubResource("ParticleProcessMaterial_f8grr")
+draw_pass_1 = SubResource("QuadMesh_ftrdt")
+script = ExtResource("15_2e36f")
+ReScaleNode = NodePath("..")
+MinScale = 5.0
+
+[node name="NozzleFlame" type="ShapeCast3D" parent="SpecialFlameColumn"]
+shape = SubResource("CylinderShape3D_btamc")
+target_position = Vector3(0, 0, 0)
+collision_mask = 65
+collide_with_areas = true
+script = ExtResource("20_awxev")

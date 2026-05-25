@@ -4,6 +4,8 @@ using System;
 public partial class FireLimb : GpuParticles3D
 {
     [Export]
+    public MeshInstance3D Mesh { get; set; }
+    [Export]
     public float MinScale { get; set; }
     [Export]
     public float Heat { get; set; }
@@ -12,6 +14,7 @@ public partial class FireLimb : GpuParticles3D
 
     private ParticleProcessMaterial processMat;
     private GiantHitBox hitBox;
+    private StandardMaterial3D material;
 
     public override void _Ready()
     {
@@ -20,6 +23,7 @@ public partial class FireLimb : GpuParticles3D
         Utils.ReScaleParticles((ParticleProcessMaterial)ProcessMaterial, MinScale, ((Node3D)(GetParent().GetParent())).Scale.X);
 
         hitBox = (GiantHitBox)GetNode("HitBox");
+        material = (StandardMaterial3D)Mesh.Mesh.SurfaceGetMaterial(0);
     }
 
     public override void _PhysicsProcess(double delta)
@@ -39,8 +43,10 @@ public partial class FireLimb : GpuParticles3D
             Emitting = false;
         }
     
-        Heat += (float)delta * (HeatUp ? 0.5f : -0.5f);
+        Heat += (float)delta * (HeatUp ? 0.4f : -0.5f);
         Heat = Mathf.Clamp(Heat, 0.0f, 1.0f);
+
+        material.AlbedoColor = new Color(1.0f, 1.0f, 1.0f, material.AlbedoColor.A).Lerp(new Color(1.0f, 0.0f, 0.0f, material.AlbedoColor.A), Heat);
 
         HeatUp = false;
     }

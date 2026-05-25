@@ -1,0 +1,5 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://ccem0d0rmcjw7"]
+
+[resource]
+transparency = 1
+depth_draw_mode = 1

@@ -82,6 +82,6 @@
 	"IdleAnimation": "bronze_giant/idle",
 	"ExternalAttackAnimation": "bronze_giant/external_attack",
 	"ChargeAttackAnimation": "",
-	"DeadAnimation": "bronze_giant/idle",
-	"DesperationAnimation": "bronze_giant/idle"
+	"DeadAnimation": "bronze_giant/dead",
+	"DesperationAnimation": "bronze_giant/fire_hose"
 }
