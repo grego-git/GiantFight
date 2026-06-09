@@ -69,9 +69,10 @@ script = ExtResource("5_ssxrp")
 CharacterData = NodePath("../PlayerContainer")
 Giant = NodePath("../BronzeGiant")
 
-[node name="PlayerContainer" parent="." node_paths=PackedStringArray("World") instance=ExtResource("6_p55li")]
+[node name="PlayerContainer" parent="." node_paths=PackedStringArray("World", "Giant") instance=ExtResource("6_p55li")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 100)
 World = NodePath("../World")
+Giant = NodePath("../BronzeGiant")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

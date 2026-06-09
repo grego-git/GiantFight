@@ -18,7 +18,7 @@ public partial class CameraController : Node3D
     [Export]
     public float NormalFOV { get; set; }
     [Export]
-    public float ChargingFOV { get; set; }
+    public float DangerFOV { get; set; }
     [Export]
     public float DashFOV { get; set; }
     [Export]
@@ -40,6 +40,8 @@ public partial class CameraController : Node3D
     private RandomNumberGenerator rng;
     private Vector3 currentUp;
     private Vector2 rotations;
+    private float lockOnLerp;
+    private float unModdedFOV;
 
     public override void _Ready()
     {
@@ -57,6 +59,7 @@ public partial class CameraController : Node3D
         shakeStrength = 0.0f;
         shakeTimer = new Meter(1.0f);
         rng = new RandomNumberGenerator();
+        unModdedFOV = NormalFOV;
 
         ReOrientWeight = 1.0f;
         
@@ -98,7 +101,15 @@ public partial class CameraController : Node3D
         ReOrientWeight += delta;
         ReOrientWeight = Mathf.Clamp(ReOrientWeight, 0.0f, 1.0f);
 
-        UpdateRotations((float)delta);
+        if (characterData.Giant != null && !characterData.OnGiant && characterData.Giant.TrackPlayer)
+        {
+            LockOnToTarget(Utils.GetFlatSpatialVector(characterData.Giant.GlobalPosition, characterData.Controller.GlobalPosition.Y), (float)delta);
+        }
+        else 
+        {
+            lockOnLerp = 0.0f;
+            UpdateRotations((float)delta);
+        }
 
         CameraUpRotation.GlobalPosition = Target.GlobalPosition;
         RotateCamera();
@@ -156,17 +167,25 @@ public partial class CameraController : Node3D
     {
         float targetFOV = NormalFOV;
 
-        if (characterData.IsDashing())
+        if (!characterData.OnGiant)
         {
-            float weight = Mathf.Min(characterData.DashMeter.NormalizedFill() * 2.0f, 1.0f);
-            targetFOV = Mathf.Lerp(NormalFOV, DashFOV, weight);
+            if (characterData.Giant != null && characterData.Giant.TrackPlayer)
+                targetFOV = DangerFOV;
         }
-        else if (characterData.InGiantProximity && !characterData.IsFatigued)
+        else
         {
             targetFOV = ClimbFOV;
         }
 
-        Camera3D.Fov = Mathf.MoveToward(Camera3D.Fov, targetFOV, 100.0f * delta);
+        unModdedFOV = Mathf.MoveToward(unModdedFOV, targetFOV, 50.0f * delta);
+        Camera3D.Fov = unModdedFOV;
+        
+        if (characterData.IsDashing())
+        {
+            float weight = MathF.Sqrt(Mathf.Min(characterData.DashMeter.NormalizedFill() * 2.0f, 1.0f));
+            float addFOV = Mathf.Lerp(0.0f, DashFOV, weight);
+            Camera3D.Fov += addFOV;
+        }
     }
 
     public override void _UnhandledInput(InputEvent @event)
@@ -216,5 +235,29 @@ public partial class CameraController : Node3D
 
         TargetBasis = new Basis(right, up, forward);
         ReOrientWeight = 0.0f;
+    }
+
+    private void LockOnToTarget(Vector3 targetPos, float delta)
+    {
+        Vector3 flatCharToTarget = Utils.GetFlatDirectionalVector(targetPos - Target.GlobalPosition);
+
+        if (flatCharToTarget == Vector3.Zero)
+            UpdateRotations(delta);
+        else 
+        {
+            Vector2 newRotation = Vector2.Zero;
+            newRotation.Y = Vector3.Forward.SignedAngleTo(flatCharToTarget, Vector3.Up);
+
+            Vector3 newHeading = Vector3.Forward.Rotated(Vector3.Up, newRotation.Y);
+            Vector3 cross = newHeading.Cross(Vector3.Up);
+            newRotation.X = newHeading.SignedAngleTo((targetPos - Target.GlobalPosition).Normalized(), cross);
+            
+            if (Mathf.Abs(Mathf.RadToDeg(newRotation.X)) >= MaxXRotation)
+                newRotation.X = Mathf.DegToRad(MaxXRotation) * Mathf.Sign(CameraRightRotation.RotationDegrees.X);
+
+            rotations = Utils.LerpAngles(rotations, newRotation, lockOnLerp);;
+            lockOnLerp += delta * 0.5f;
+            lockOnLerp = Mathf.Clamp(lockOnLerp, 0.0f, 1.0f);
+        }
     }
 }

@@ -288,12 +288,12 @@ public partial class Giant : Node3D
         
     }
 
-    public void RotateTowardsPoint(float delta, Vector3 point, float turnSpeed)
+    public void RotateTowardsPoint(Vector3 point, float turnSpeed)
     {
         Vector3 toPoint = Utils.GetFlatSpatialVector(point, GlobalPosition.Y) - GlobalPosition;
         float angleToPoint = Vector3.Back.SignedAngleTo(toPoint.Normalized(), Vector3.Up);
 
-        yRot = (float)Utils.MoveTowardsAngle(yRot, angleToPoint, turnSpeed * delta);
+        yRot = (float)Utils.MoveTowardsAngle(yRot, angleToPoint, turnSpeed);
         GlobalRotation = new Vector3(GlobalRotation.X, yRot, GlobalRotation.Z);
     }
 

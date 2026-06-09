@@ -469,9 +469,9 @@ TargetToCameraRayCast = NodePath("../PlayerToCameraRayCast")
 PanSpeed = 4.0
 Distance = 25.0
 MaxXRotation = 60.0
-NormalFOV = 100.0
-ChargingFOV = 60.0
-DashFOV = 180.0
+NormalFOV = 80.0
+DangerFOV = 100.0
+DashFOV = 10.0
 ClimbFOV = 120.0
 
 [node name="CameraUpRotation" type="Node3D" parent="CameraOrientation"]

@@ -38,11 +38,14 @@ public partial class PlayerDetection : Node3D
             FacingPlayer = true;
             
             characterData.InGiantProximity = true;
+            characterData.OnGiant = true;
         }
         else 
         {
             PlayerDetectionZone = DetectionZoneAreas.NONE;
+            
             characterData.InGiantProximity = false;
+            characterData.OnGiant = false;
             
             for (int i = 0; i < DetectionZones.Length; i++)
             {

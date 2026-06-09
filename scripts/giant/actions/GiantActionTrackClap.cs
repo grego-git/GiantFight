@@ -55,7 +55,7 @@ public class GiantActionTrackClap : IGiantAction
             giant.TrackPlayer)
             rotatePoint = giant.PlayerDetection.PlayerPosition + (Vector3.Down * 15.0f);
         
-        giant.RotateTowardsPoint(delta, rotatePoint, giant.TurnSpeed);
+        giant.RotateTowardsPoint(rotatePoint, giant.TurnSpeed * delta);
         giant.LeftArmIKTarget.GlobalPosition = clapTarget + 
             (giant.GlobalBasis.X.Normalized() * giant.StompPadding);
         

@@ -61,11 +61,11 @@ public class GiantActionFlamethrower : IGiantAction
             if (giant.TrackPlayer)
             {
                 start = false;
-                giant.RotateTowardsPoint(delta, giant.PlayerDetection.PlayerPosition, turnSpeed);
+                giant.RotateTowardsPoint(giant.PlayerDetection.PlayerPosition, turnSpeed * delta);
             }
             else if (start)
             {
-                giant.RotateTowardsPoint(delta, giant.PlayerDetection.PlayerPosition, 7.0f);
+                giant.RotateTowardsPoint(giant.PlayerDetection.PlayerPosition, 7.0f * delta);
             }
         }
         else
