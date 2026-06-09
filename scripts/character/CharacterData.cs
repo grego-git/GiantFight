@@ -7,6 +7,8 @@ public partial class CharacterData : Node3D
     [Export]
     public World World { get; set; }
     [Export]
+    public Giant Giant { get; set; }
+    [Export]
     public float Speed { get; set; }
     [Export]
     public float ClimbSpeed { get; set; }
@@ -47,6 +49,7 @@ public partial class CharacterData : Node3D
     public bool Running { get; set; }
     public bool IsFatigued { get; set; }
     public bool InGiantProximity { get; set; }
+    public bool OnGiant { get; set; }
     public Meter HealthMeter { get; private set; }
     public Meter StunMeter { get; private set; }
     public Meter StaminaMeter { get; private set; }

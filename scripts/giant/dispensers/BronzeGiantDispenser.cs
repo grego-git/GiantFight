@@ -1,0 +1,52 @@
+using Godot;
+using System;
+
+public partial class BronzeGiantDispenser : GiantActionDispenser, IActionDispenser
+{
+    [Export]
+    public GpuParticles3D FlamethrowerParticles { get; set; }
+    [Export]
+    public Area3D FlamethrowerHitBox { get; set; }
+    [Export]
+    public Node3D FlamethrowerWarningCircle { get; set; }
+
+    public override IGiantAction BottomAction(Giant giant)
+    {
+        return new GiantActionFlamethrower(giant, FlamethrowerParticles, FlamethrowerHitBox, FlamethrowerWarningCircle, giant.GiantProfile.FloorAnimation);
+    }
+
+    public override IGiantAction MidAction(Giant giant)
+    {
+        return new GiantActionTrackClap(giant, Vector3.Down * 100.0f, Vector3.Down * 100.0f);
+    }
+
+    public override IGiantAction TopAction(Giant giant)
+    {
+        return new GiantActionFlamethrower(giant, FlamethrowerParticles, FlamethrowerHitBox, FlamethrowerWarningCircle, giant.GiantProfile.FloorAnimation);
+    }
+
+    public override IGiantAction ExternalAction(Giant giant)
+    {
+        return new GiantActionPlayAnimation(giant, giant.GiantProfile.ExternalAttackAnimation);
+    }
+
+    public override IGiantAction NegateAction(Giant giant)
+    {
+        return null;
+    }
+
+    public override IGiantAction AttackBodyAction(Giant giant, string animation, bool useLeftHand)
+    {
+        return new GiantActionBodyAttack(giant, animation, useLeftHand);
+    }
+
+    public override IGiantAction DesperationAction(Giant giant)
+    {
+        return new GiantActionFireHose(giant, FlamethrowerParticles, FlamethrowerHitBox, FlamethrowerWarningCircle, giant.GiantProfile.DesperationAnimation);
+    }
+
+    public override string GetDesperationActionType()
+    {
+        return typeof(GiantActionFireHose).Name;
+    }
+}

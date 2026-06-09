@@ -18,6 +18,8 @@ public partial class Giant : Node3D
     [Export]
     public AudioStreamPlayer3D StompSound { get; set; }
     [Export]
+    public int ExtraBodyParts { get; set; }
+    [Export]
     public string GiantJson { get; set; }
     [Export]
     public float TurnSpeed { get; set; }
@@ -51,7 +53,7 @@ public partial class Giant : Node3D
     public IGiantAction CurrentAction { get; set; }
     public State CurrentState { get; set; }
     public Skeleton3D Skeleton { get; set; }
-    public MeshInstance3D Mesh { get; set; }
+    public MeshInstance3D[] Meshes { get; set; }
     public PlayerDetection PlayerDetection { get; set; }
     public AnimationPlayer AnimPlayer { get; set; }
     public GiantProfile GiantProfile { get; set; }
@@ -71,7 +73,7 @@ public partial class Giant : Node3D
     [Export]
     public Node3D RightArmIKTarget { get; set; }
 
-    private StandardMaterial3D material;
+    private StandardMaterial3D[] materials;
     private IGiantAction desperationAction;
     private float yRot;
 
@@ -80,7 +82,12 @@ public partial class Giant : Node3D
         base._Ready();
 
         Skeleton = (Skeleton3D)GetNode("Armature/Skeleton3D");
-        Mesh = (MeshInstance3D)Skeleton.GetNode("Mesh");
+
+        Meshes = new MeshInstance3D[ExtraBodyParts + 1];
+
+        for (int i = 0; i < Meshes.Length; i++)
+            Meshes[i] = (MeshInstance3D)Skeleton.GetNode("Mesh" + (i == 0 ? "" : i.ToString()));
+
         PlayerDetection = (PlayerDetection)GetNode("PlayerDetection");
         AnimPlayer = (AnimationPlayer)GetNode("AnimationPlayer");
         ActionDispenser = (GiantActionDispenser)GetNode("GiantActionDispenser");
@@ -91,7 +98,10 @@ public partial class Giant : Node3D
         AgroMeter = new Meter(3.0f);
         SlamTimer = new Meter(10.0f);
 
-        material = (StandardMaterial3D)Mesh.Mesh.SurfaceGetMaterial(0);
+        materials =  new StandardMaterial3D[Meshes.Length];
+
+        for (int i = 0; i < materials.Length; i++)
+            materials[i] = (StandardMaterial3D)Meshes[i].Mesh.SurfaceGetMaterial(0);
         
         if (HitPoints != null && HitPoints.Length > 0)
         {
@@ -120,9 +130,15 @@ public partial class Giant : Node3D
             BonesPlayerIsOn = GetBonesPlayerIsOn();
 
             if (PlayerDetection.PlayerDetectionZone == PlayerDetection.DetectionZoneAreas.ON_GIANT)
-                material.AlbedoColor = new Color(1.0f, 1.0f, 1.0f, 0.5f);
+            {
+                foreach (var mat in materials)
+                    mat.AlbedoColor = new Color(mat.AlbedoColor.R, mat.AlbedoColor.G, mat.AlbedoColor.B, 0.5f);
+            }
             else
-                material.AlbedoColor = Colors.White;
+            {
+                foreach (var mat in materials)
+                    mat.AlbedoColor = new Color(mat.AlbedoColor.R, mat.AlbedoColor.G, mat.AlbedoColor.B, 1.0f);
+            }
 
             if (StunPlayer && !string.IsNullOrEmpty(AnimPlayer.CurrentAnimation) && BonesPlayerIsOn != null && BonesPlayerIsOn.Count > 0)
                 StunPlayerOnGiant();
@@ -153,7 +169,8 @@ public partial class Giant : Node3D
                 CurrentAction.Init();
             }
 
-            material.AlbedoColor = Colors.White;
+            foreach (var mat in materials)
+                mat.AlbedoColor = Colors.White;
 
             CharacterData.InGiantProximity = false;
         }
@@ -252,6 +269,7 @@ public partial class Giant : Node3D
 
                     if (CurrentAction.Complete())
                     {
+                        GD.Print("ACTION COMPLETE: " + CurrentAction.GetType().Name);
                         if (desperationAction != null)
                         {
                             CurrentAction = desperationAction;
@@ -270,18 +288,18 @@ public partial class Giant : Node3D
         
     }
 
-    public void RotateTowardsPoint(float delta, Vector3 point)
+    public void RotateTowardsPoint(Vector3 point, float turnSpeed)
     {
         Vector3 toPoint = Utils.GetFlatSpatialVector(point, GlobalPosition.Y) - GlobalPosition;
         float angleToPoint = Vector3.Back.SignedAngleTo(toPoint.Normalized(), Vector3.Up);
 
-        yRot = (float)Utils.MoveTowardsAngle(yRot, angleToPoint, TurnSpeed * delta);
+        yRot = (float)Utils.MoveTowardsAngle(yRot, angleToPoint, turnSpeed);
         GlobalRotation = new Vector3(GlobalRotation.X, yRot, GlobalRotation.Z);
     }
 
-    public void RotateYRot(float delta, float speed)
+    public void RotateYRot(float speed)
     {
-        yRot += speed * delta;
+        yRot += speed;
         GlobalRotation = new Vector3(GlobalRotation.X, yRot, GlobalRotation.Z);
     }
 
@@ -363,5 +381,6 @@ public partial class Giant : Node3D
             return;
 
         desperationAction = ActionDispenser.DesperationAction(this);
+        GD.Print("HIT POINT DEAD");
     }
 }

@@ -1,0 +1,87 @@
+{
+	"ShakeAnimations": {
+		"bronze_giant/heat_up": [
+			"Pelvis",
+			"Thigh.L",
+			"Calf.L",
+			"Thigh.R",
+			"Calf.R"
+		],
+		"bronze_giant/body_shake": [
+			"Head",
+			"Chest"
+		],
+		"bronze_giant/shake_arm_left": [
+			"Upperarm.L",
+			"Forearm.L"
+		],
+		"bronze_giant/shake_arm_right": [
+			"Upperarm.R",
+			"Forearm.R"
+		]
+	},
+	"AttackAnimations": {
+		"bronze_giant/heat_up": [
+			"Head",
+			"Chest",
+			"Pelvis"
+		],
+		"bronze_giant/attack_arm_right": [
+			"Upperarm.R",
+			"Forearm.R"
+		],
+		"bronze_giant/attack_arm_left": [
+			"Upperarm.L",
+			"Forearm.L"
+		]
+	},
+	"StunBones": {
+		"bronze_giant/heat_up": [
+			"Head",
+			"Chest",
+			"Pelvis",
+			"Upperarm.L",
+			"Forearm.L",
+			"Upperarm.R",
+			"Forearm.R",
+			"Thigh.L",
+			"Calf.L",
+			"Thigh.R",
+			"Calf.R"
+		],
+		"bronze_giant/body_shake": [
+			"Head",
+			"Chest",
+			"Pelvis",
+			"Upperarm.L",
+			"Forearm.L",
+			"Upperarm.R",
+			"Forearm.R"
+		],
+		"bronze_giant/attack_arm_right": [
+			"Upperarm.R",
+			"Forearm.R"
+		],
+		"bronze_giant/attack_arm_left": [
+			"Upperarm.L",
+			"Forearm.L"
+		],
+		"bronze_giant/shake_arm_left": [
+			"Upperarm.L",
+			"Forearm.L"
+		],
+		"bronze_giant/shake_arm_right": [
+			"Upperarm.R",
+			"Forearm.R"
+		]
+	},
+	"SlamAnimation": "",
+	"FloorAnimation": "bronze_giant/floor_attack",
+	"MidAnimation": "bronze_giant/mid_attack",
+	"TopAnimation": "",
+	"IdleAnimation": "bronze_giant/idle",
+	"ExternalAttackAnimation": "bronze_giant/external_attack",
+	"ChargeAttackAnimation": "",
+	"DeadAnimation": "bronze_giant/dead",
+	"DesperationAnimation": "bronze_giant/fire_hose"
+}

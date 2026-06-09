@@ -372,7 +372,7 @@ AccelerationStunThreshold = 25.0
 AccelerationKnockBackThreshold = 25.0
 
 [node name="CharacterController" type="CharacterBody3D" parent="." node_paths=PackedStringArray("Feet")]
-collision_mask = 103
+collision_mask = 359
 script = ExtResource("2_828ix")
 Feet = NodePath("../Feet")
 WaveParticles = ExtResource("3_t0l7h")
@@ -467,11 +467,11 @@ Camera3D = NodePath("../CharacterCamera")
 Target = NodePath("../CameraTarget")
 TargetToCameraRayCast = NodePath("../PlayerToCameraRayCast")
 PanSpeed = 4.0
-Distance = 20.0
+Distance = 25.0
 MaxXRotation = 60.0
-NormalFOV = 90.0
-ChargingFOV = 60.0
-DashFOV = 180.0
+NormalFOV = 80.0
+DangerFOV = 100.0
+DashFOV = 10.0
 ClimbFOV = 120.0
 
 [node name="CameraUpRotation" type="Node3D" parent="CameraOrientation"]

@@ -19,15 +19,12 @@ public partial class CameraTarget : Node3D
         switch (characterData.GetState())
         {
             default:
-                target += Vector3.Up * 3.0f;
+                target += Vector3.Up * 5.0f;
                 break;
             case "CLIMB":
             case "CRAWL":
             case "HANG":
-                target += characterData.Controller.GlobalBasis.Y * 3.0f;
-                break;
-            case "LEDGE":
-                target = characterData.Controller.Feet.GlobalPosition + characterData.Controller.GlobalBasis.Z;
+                target += characterData.Controller.GlobalBasis.Y * 5.0f;
                 break;
         }
 

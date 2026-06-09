@@ -32,7 +32,7 @@ public class GiantActionPlayAnimation : IGiantAction
             giant.PlayerDetection.PlayerDetectionZone != PlayerDetection.DetectionZoneAreas.ON_GIANT && 
             giant.TrackPlayer)
         {
-            giant.RotateTowardsPoint(delta, giant.PlayerDetection.PlayerPosition);
+            giant.RotateTowardsPoint(giant.PlayerDetection.PlayerPosition, giant.TurnSpeed * delta);
         }
     }
 

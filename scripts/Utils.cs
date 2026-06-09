@@ -202,4 +202,17 @@ public static class Utils
 
         return result;
     }
+
+    public static Vector2 LerpAngles(Vector2 from, Vector2 to, float t)
+    {
+        return new Vector2(
+            Mathf.LerpAngle(from.X, to.X, t),
+            Mathf.LerpAngle(from.Y, to.Y, t)
+        );
+    }
+
+    public static void ReScaleParticles(ParticleProcessMaterial processMaterial, float minScale, float scaleMultiplier)
+    {
+        processMaterial.ScaleMin = minScale * scaleMultiplier;
+    }
 }

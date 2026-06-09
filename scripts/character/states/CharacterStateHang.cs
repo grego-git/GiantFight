@@ -9,10 +9,13 @@ public class CharacterStateHang : ICharacterState
     private HangFace faceOn;
     private Vector3 lookAtDir;
     private Vector3 climbVelocity;
+    private float rayCastBuffer;
 
-    public CharacterStateHang(CharacterData characterData, SpecialFace attachedFace = null)
+    public CharacterStateHang(CharacterData characterData, SpecialFace attachedFace = null, float rayCastBuffer = 0.0f)
     {
         this.characterData = characterData;
+        this.rayCastBuffer = rayCastBuffer;
+
         lookAtDir = characterData.Controller.GetLookAtDir(-Vector3.Up, Vector3.Forward);
 
         GD.Print("ENTERING HANG STATE");
@@ -80,13 +83,17 @@ public class CharacterStateHang : ICharacterState
         {
             return new CharacterStateAir(characterData, Vector3.Zero, 0.0f, false);
         }
-        else if (!characterData.IsStunned() && characterData.Controller.DetectedClimbableWall())
+        else if (rayCastBuffer == 0.0f && !characterData.IsStunned() && characterData.Controller.DetectedClimbableWall())
         {
-            return new CharacterStateClimb(characterData);
+            return new CharacterStateClimb(characterData, rayCastBuffer: 0.1f);
         }
-        else if (!characterData.IsStunned() && characterData.Controller.DetectedHangableCeiling())
+        else if (rayCastBuffer == 0.0f && !characterData.IsStunned() && characterData.Controller.DetectedHangableCeiling())
         {
-            return new CharacterStateHang(characterData);
+            return new CharacterStateHang(characterData, rayCastBuffer: 0.1f);
+        }
+        else if (rayCastBuffer == 0.0f && !characterData.IsStunned() && characterData.Controller.DetectedCrawlableGround())
+        {
+            return new CharacterStateCrawl(characterData, rayCastBuffer: 0.1f);
         }
 
         return null;
@@ -161,6 +168,9 @@ public class CharacterStateHang : ICharacterState
                 characterData.Controller.Sword.Swing();
             }
         }
+
+        rayCastBuffer -= delta;
+        rayCastBuffer = Mathf.Max(rayCastBuffer, 0.0f);
     }
 
     public bool OnThisEntity(ClimbableEntity entity)

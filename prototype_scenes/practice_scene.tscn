@@ -182,24 +182,28 @@ surface_material_override/0 = SubResource("StandardMaterial3D_o6lgo")
 
 [node name="EndPracticeHealthPillGiant" parent="." instance=ExtResource("15_5iss1")]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -10, 60, -110)
+collision_layer = 256
 script = ExtResource("17_jxj1b")
 HP = 25
 Scene = "res://prototype_scenes/pill_giant_test_scene.tscn"
 
 [node name="EndPracticeHealthHammerBeret" parent="." instance=ExtResource("15_5iss1")]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 10, 60, -110)
+collision_layer = 256
 script = ExtResource("17_jxj1b")
 HP = 25
 Scene = "res://prototype_scenes/hammer_beret_test_scene.tscn"
 
 [node name="SkipTutorialPracticeHealthPillGiant" parent="." instance=ExtResource("15_5iss1")]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 30, 3, 145)
+collision_layer = 256
 script = ExtResource("17_jxj1b")
 HP = 1
 Scene = "res://prototype_scenes/pill_giant_test_scene.tscn"
 
 [node name="SkipTutorialPracticeHealthHammerBeret" parent="." instance=ExtResource("15_5iss1")]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 45, 3, 175)
+collision_layer = 256
 script = ExtResource("17_jxj1b")
 HP = 1
 Scene = "res://prototype_scenes/hammer_beret_test_scene.tscn"

@@ -1,10 +1,8 @@
 using System.Collections.Generic;
-using System.Linq;
 using Godot;
 
 public class CharacterStateClimb : ICharacterState
 {
-    private const float Y_OFFSET = 0.0f;
     private readonly CharacterData characterData;
     private Vector3 dashDir;
     private ClimbFace faceOn;
@@ -12,10 +10,12 @@ public class CharacterStateClimb : ICharacterState
     private Vector3 lookAtDir;
     private Vector3 refDir;
     private bool fromClimb;
+    private float rayCastBuffer;
 
-    public CharacterStateClimb(CharacterData characterData, SpecialFace attachedFace = null)
+    public CharacterStateClimb(CharacterData characterData, SpecialFace attachedFace = null, float rayCastBuffer = 0.0f)
     {
         this.characterData = characterData;
+        this.rayCastBuffer = rayCastBuffer;
 
         GD.Print("ENTERING CLIMB STATE");
 
@@ -30,7 +30,6 @@ public class CharacterStateClimb : ICharacterState
         }
         else
         {
-
             faceOn = ClimbFace.CreateClimbFaceFromRayCast(characterData.Controller.ClimbRayCast);
             lookAtDir = Vector3.Up;
 
@@ -99,17 +98,17 @@ public class CharacterStateClimb : ICharacterState
         {
             return new CharacterStateAir(characterData, Vector3.Zero, 0.0f, false);
         }
-        else if (!characterData.IsStunned() && characterData.Controller.DetectedCrawlableGround())
+        else if (rayCastBuffer == 0.0f && !characterData.IsStunned() && characterData.Controller.DetectedCrawlableGround())
         {
-            return new CharacterStateCrawl(characterData);
+            return new CharacterStateCrawl(characterData, rayCastBuffer: 0.1f);
         }
-        else if (!fromClimb && !characterData.IsStunned() && characterData.Controller.DetectedClimbableWall())
+        else if (rayCastBuffer == 0.0f && !fromClimb && !characterData.IsStunned() && characterData.Controller.DetectedClimbableWall())
         {
-            return new CharacterStateClimb(characterData);
+            return new CharacterStateClimb(characterData, rayCastBuffer: 0.1f);
         }
-        else if (!characterData.IsStunned() && characterData.Controller.DetectedHangableCeiling())
+        else if (rayCastBuffer == 0.0f && !characterData.IsStunned() && characterData.Controller.DetectedHangableCeiling())
         {
-            return new CharacterStateHang(characterData);
+            return new CharacterStateHang(characterData, rayCastBuffer: 0.1f);
         }
 
         fromClimb = false;
@@ -193,6 +192,9 @@ public class CharacterStateClimb : ICharacterState
                 characterData.Controller.Sword.Swing();
             }
         }
+
+        rayCastBuffer -= delta;
+        rayCastBuffer = Mathf.Max(rayCastBuffer, 0.0f);
     }
 
     public bool OnThisEntity(ClimbableEntity entity)
