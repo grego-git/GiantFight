@@ -14,7 +14,7 @@ public partial class Sword : Node3D
 
 
     [Export]
-    public AnimationPlayer anim { get; set; }
+    public DavyModel model { get; set; }
 
     public State CurrentState { get; set; }
     
@@ -40,7 +40,7 @@ public partial class Sword : Node3D
 
         chargeMeter = new Meter(1.5f);
 
-        anim.AnimationFinished += AnimationFinished;
+        model.AnimPlayer.AnimationFinished += AnimationFinished;
         swordBox.BodyEntered += BodyEntered;
     }
 
@@ -48,14 +48,15 @@ public partial class Sword : Node3D
     {
         base._PhysicsProcess(delta);
 
+        int swordBoneId = model.Skeleton.FindBone("Sword_2");
+        Transform3D swordBoneTransform = model.Skeleton.GlobalTransform * model.Skeleton.GetBoneGlobalPose(swordBoneId);
+
+        GlobalPosition = swordBoneTransform.Origin;
+        LookAt(GlobalPosition + swordBoneTransform.Basis.Z, swordBoneTransform.Basis.Y.Normalized());
+
         switch(CurrentState)
         {
             case State.IDLE:
-                if (chargeMeter.Value > 0.25f)
-                    anim.PlaySection("charge", chargeMeter.Value);
-                else
-                    anim.Play("idle");
-
                 swordBox.Monitorable = false;
                 swordBox.Monitoring = false;
                 hit = false;
@@ -95,12 +96,12 @@ public partial class Sword : Node3D
         if (chargeMeter.Value > 0.25f)
         {
             Damage = 3 + (int)(chargeMeter.NormalizedFill() * 3.0f);
-            anim.Play("charge_swing");
+            model.PlaySwingAnimation("charge_swing");
         }
         else 
         {
             Damage = 1;
-            anim.Play(SWING_ANIMATIONS[swing_index]);
+            model.PlaySwingAnimation(SWING_ANIMATIONS[swing_index]);
             swing_index = swing_index + 1 == SWING_ANIMATIONS.Length ? 0 : (swing_index + 1);
         }
 
@@ -135,5 +136,10 @@ public partial class Sword : Node3D
             EmitSignal("HitSomething");
             hit = true;
         }
+    }
+
+    public float GetCharge()
+    {
+        return chargeMeter.Value;
     }
 }

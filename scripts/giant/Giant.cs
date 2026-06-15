@@ -64,6 +64,7 @@ public partial class Giant : Node3D
 
     public int MaxHP { get; private set; }
     public int CurrentHP { get; private set; }
+    public bool Attacking { get; private set; }
     public bool Dead { get; private set; }
 
     [Export]
@@ -178,6 +179,8 @@ public partial class Giant : Node3D
         switch (CurrentState)
         {
             case State.DETERMINING:
+                Attacking = false;
+
                 switch (PlayerDetection.PlayerDetectionZone)
                 {
                     case PlayerDetection.DetectionZoneAreas.NEGATE:
@@ -189,7 +192,10 @@ public partial class Giant : Node3D
                             CurrentAction = ActionDispenser.NegateAction(this);
 
                             if (CurrentAction != null)
+                            {
                                 CurrentAction.Init();
+                                Attacking = true;
+                            }
                         }
                         break;
                     case PlayerDetection.DetectionZoneAreas.NONE:
@@ -200,6 +206,7 @@ public partial class Giant : Node3D
                         {
                             CurrentAction = ActionDispenser.ExternalAction(this);                            
                             CurrentAction.Init();
+                            Attacking = true;
                         }
                         break;
                     case PlayerDetection.DetectionZoneAreas.ON_GIANT:  
@@ -228,6 +235,7 @@ public partial class Giant : Node3D
 
                             CurrentAction = ActionDispenser.AttackBodyAction(this, attackAnimation, useLeftHand);
                             CurrentAction.Init();
+                            Attacking = true;
                         }
                         else if (!string.IsNullOrEmpty(shakeAnimation)) 
                         {
@@ -239,19 +247,23 @@ public partial class Giant : Node3D
                         SlamTimer.Empty();
                         CurrentAction = ActionDispenser.BottomAction(this);
                         CurrentAction.Init();
+                        Attacking = true;
                         break;
                     case PlayerDetection.DetectionZoneAreas.MIDDLE:
                         SlamTimer.Empty();
                         CurrentAction = ActionDispenser.MidAction(this);
                         CurrentAction.Init();
+                        Attacking = true;
                         break;
                     case PlayerDetection.DetectionZoneAreas.TOP:
                         SlamTimer.Empty();
                         CurrentAction = ActionDispenser.TopAction(this);
                         CurrentAction.Init();
+                        Attacking = true;
                         break;
                     case PlayerDetection.DetectionZoneAreas.DEAD:
                         SlamTimer.Empty();
+                        Attacking = false;
                         break;
                 }
                 break;
@@ -274,6 +286,7 @@ public partial class Giant : Node3D
                         {
                             CurrentAction = desperationAction;
                             CurrentAction.Init();
+                            Attacking = true;
                             desperationAction = null;
                         }
                         else 

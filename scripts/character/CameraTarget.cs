@@ -19,22 +19,32 @@ public partial class CameraTarget : Node3D
         switch (characterData.GetState())
         {
             default:
-                target += Vector3.Up * 5.0f;
+                target += Vector3.Up * GetPadding(characterData);
                 break;
             case "CLIMB":
             case "CRAWL":
             case "HANG":
-                target += characterData.Controller.GlobalBasis.Y * 5.0f;
+                target += characterData.Controller.GlobalBasis.Y * GetPadding(characterData);
                 break;
         }
 
         float lerpSpeed = 8.0f;
-        float maxOffset = 2.0f;
+        float maxOffset = 3.0f;
         float distanceToTarget = GlobalPosition.DistanceTo(target);
 
         if (distanceToTarget > (maxOffset + 0.1f))
             GlobalPosition = target + ((GlobalPosition - target).Normalized() * maxOffset);
         else
             GlobalPosition = GlobalPosition.MoveToward(target, lerpSpeed * (float)delta);
+    }
+
+    private float GetPadding(CharacterData characterData)
+    {
+        float padding = 1.0f;
+
+        if (characterData.Giant != null && characterData.Giant.Attacking)
+            padding = 4.0f;
+
+        return padding;
     }
 }

@@ -39,7 +39,7 @@ public class CharacterStateAir : ICharacterState
         {
             return new CharacterStateAir(characterData, horizontalVelocity, characterData.JumpSpeed, true);
         }
-        else if (verticalVelocity <= 0.0f && characterData.CanGrip() && characterData.Controller.GripInput() && characterData.Controller.DetectedClimbableWall())
+        else if (verticalVelocity <= 0.0f && characterData.CanGrip() && characterData.Controller.GripInput() && !characterData.IsStunned() && characterData.Controller.DetectedClimbableWall())
         {
             return new CharacterStateClimb(characterData, null);
         }

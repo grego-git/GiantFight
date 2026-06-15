@@ -1,0 +1,43 @@
+[gd_resource type="ShaderMaterial" load_steps=6 format=3 uid="uid://f7wqjjukarul"]
+
+[ext_resource type="Shader" uid="uid://dh6xown4w7kte" path="res://scripts/shaders/ps1.gdshader" id="1_xfji2"]
+[ext_resource type="Texture2D" uid="uid://c1lnhwjgvie5x" path="res://models/davy/Davy_DavyTexture.png" id="2_jcjw4"]
+[ext_resource type="Texture2D" uid="uid://cudb62timpgt8" path="res://textures/Reflection.png" id="3_sfe0x"]
+[ext_resource type="Shader" uid="uid://cal57alwp36gx" path="res://scripts/shaders/x_ray.gdshader" id="4_jcjw4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jcjw4"]
+render_priority = 1
+shader = ExtResource("1_xfji2")
+shader_parameter/affine_mapping = false
+shader_parameter/should_reflect = true
+shader_parameter/albedo = ExtResource("2_jcjw4")
+shader_parameter/sphere_map = ExtResource("3_sfe0x")
+shader_parameter/texture_scale = 1.0
+shader_parameter/alpha_scissor = 0.5
+shader_parameter/jitter = 0.25
+shader_parameter/reflect_strength = 0.1
+shader_parameter/metalness = 1.0
+shader_parameter/specular = 0.0
+shader_parameter/roughness = 0.302
+shader_parameter/resolution = Vector2i(320, 240)
+
+[resource]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_jcjw4")
+shader = ExtResource("4_jcjw4")
+shader_parameter/enable_glow = true
+shader_parameter/enable_lines = false
+shader_parameter/enable_flicker = false
+shader_parameter/enable_pattern = false
+shader_parameter/base_color = Color(1, 1, 0, 1)
+shader_parameter/glow_color = Color(1, 1, 1, 1)
+shader_parameter/glow_itensity = 4.5
+shader_parameter/glow_amount = 4.5
+shader_parameter/flickering = 0.55
+shader_parameter/line_width = 0.005
+shader_parameter/line_blur = 0.2
+shader_parameter/line_speed = 0.02
+shader_parameter/straight_lines = true
+shader_parameter/interrupt_width = 0.5
+shader_parameter/interrupt_blur = 0.25
+shader_parameter/interrupt_speed = 0.2

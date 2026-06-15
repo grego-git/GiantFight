@@ -12,17 +12,19 @@ public partial class CameraController : Node3D
     [Export]
     public float PanSpeed { get; set; }
     [Export]
-    public float Distance { get; set; }
-    [Export]
     public float MaxXRotation { get; set; }
+    [Export]
+    public float NormalDistance { get; set; }
+    [Export]
+    public float ClimbDistance { get; set; }
+    [Export]
+    public float DangerDistance { get; set; }
     [Export]
     public float NormalFOV { get; set; }
     [Export]
     public float DangerFOV { get; set; }
     [Export]
     public float DashFOV { get; set; }
-    [Export]
-    public float ClimbFOV { get; set; }
 
     public Basis TargetBasis { get; private set; }
     public Node3D CameraOrientation { get; private set; }
@@ -42,6 +44,7 @@ public partial class CameraController : Node3D
     private Vector2 rotations;
     private float lockOnLerp;
     private float unModdedFOV;
+    private float currentDistance;
 
     public override void _Ready()
     {
@@ -49,8 +52,6 @@ public partial class CameraController : Node3D
         CameraUpRotation = (Node3D)GetNode("CameraUpRotation");
         CameraRightRotation = (Node3D)CameraUpRotation.GetNode("CameraRightRotation");
         AimRayCast = (RayCast3D)CameraRightRotation.GetNode("SlingShotAim");
-
-        TargetToCameraRayCast.TargetPosition = Vector3.Forward * (Distance - 0.5f);
         
         ReOrient(Vector3.Up, -Vector3.Forward, false);
 
@@ -60,6 +61,7 @@ public partial class CameraController : Node3D
         shakeTimer = new Meter(1.0f);
         rng = new RandomNumberGenerator();
         unModdedFOV = NormalFOV;
+        currentDistance = NormalDistance;
 
         ReOrientWeight = 1.0f;
         
@@ -113,11 +115,12 @@ public partial class CameraController : Node3D
 
         CameraUpRotation.GlobalPosition = Target.GlobalPosition;
         RotateCamera();
-        ReAdjustCameraPosition((float)delta);
+        ReAdjustCameraPosition();
         
         Camera3D.GlobalTransform = Camera3D.GlobalTransform.InterpolateWith(CameraRightRotation.GlobalTransform, ReOrientWeight);
 
         UpdateFOV(delta, characterData);
+        UpdateDistance(delta, characterData);
 
         shakeTimer.FillMeter(-(float)delta);
         
@@ -146,11 +149,12 @@ public partial class CameraController : Node3D
         CameraRightRotation.Rotation = new Vector3(rotations.X, 0.0f, 0.0f);
     }
 
-    private void ReAdjustCameraPosition(float delta)
+    private void ReAdjustCameraPosition()
     {
-        float targetDistance = Distance;
-        Vector3 desiredPos = CameraUpRotation.GlobalPosition + (CameraRightRotation.GlobalBasis.Z * Distance);
+        float targetDistance = currentDistance;
+        Vector3 desiredPos = CameraUpRotation.GlobalPosition + (CameraRightRotation.GlobalBasis.Z * currentDistance);
 
+        TargetToCameraRayCast.TargetPosition = Vector3.Forward * (currentDistance - 0.5f);
         TargetToCameraRayCast.GlobalPosition = Target.GlobalPosition;
         TargetToCameraRayCast.LookAt(desiredPos, Vector3.Up);
         TargetToCameraRayCast.GlobalPosition -= TargetToCameraRayCast.GlobalBasis.Z * 0.5f;
@@ -163,19 +167,24 @@ public partial class CameraController : Node3D
         CameraRightRotation.Position = (Vector3.Up * rng.RandfRange(-0.25f, 0.25f) + Vector3.Right * rng.RandfRange(-0.25f, 0.25f)) * shakeTimer.NormalizedFill() * shakeStrength;
     }
 
+    private void UpdateDistance(float delta, CharacterData characterData)
+    {
+        float targetDistance = NormalDistance;
+
+        if (characterData.Giant != null && characterData.Giant.Attacking)
+            targetDistance = DangerDistance;
+        else if (characterData.OnGiant || characterData.InGiantProximity)
+            targetDistance = ClimbDistance;
+
+        currentDistance = Mathf.MoveToward(currentDistance, targetDistance, 50.0f * delta);
+    }
+
     private void UpdateFOV(float delta, CharacterData characterData)
     {
         float targetFOV = NormalFOV;
 
-        if (!characterData.OnGiant)
-        {
-            if (characterData.Giant != null && characterData.Giant.TrackPlayer)
-                targetFOV = DangerFOV;
-        }
-        else
-        {
-            targetFOV = ClimbFOV;
-        }
+         if (characterData.Giant != null && characterData.Giant.TrackPlayer)
+            targetFOV = DangerFOV;
 
         unModdedFOV = Mathf.MoveToward(unModdedFOV, targetFOV, 50.0f * delta);
         Camera3D.Fov = unModdedFOV;

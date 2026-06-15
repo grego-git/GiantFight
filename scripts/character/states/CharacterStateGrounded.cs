@@ -196,6 +196,7 @@ public class CharacterStateGrounded : ICharacterState
             characterData.Controller.Velocity = Vector3.Zero;
             characterData.Controller.MoveAndSlide();
             characterData.Controller.Velocity = oldVelocity;
+            characterData.UpdateAfterGiantsPoseUpdate();
             
             if (displacement.Length() >= 1.0f) 
             {

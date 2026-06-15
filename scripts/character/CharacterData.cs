@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.ComponentModel;
 using Godot;
 
 public partial class CharacterData : Node3D
@@ -41,6 +40,7 @@ public partial class CharacterData : Node3D
 
     public ICharacterState CurrentCharacterState { get; set; }
     public CharacterController Controller { get; private set; }
+    public DavyModel Model { get; private set; }
     public CameraController CameraController { get; private set; }
     public GpuParticles3D DeadParticles { get; private set; }
 
@@ -75,6 +75,7 @@ public partial class CharacterData : Node3D
         FillFatigueUp = true;
 
         Controller = (CharacterController)GetNode("CharacterController");
+        Model = (DavyModel)GetNode("Davy");
         CameraController = (CameraController)GetNode("CameraOrientation");
         DeadParticles = (GpuParticles3D)GetNode("DeadParticles");
         CurrentCharacterState = new CharacterStateGrounded(this, Vector3.Zero);
@@ -96,6 +97,7 @@ public partial class CharacterData : Node3D
         IsOnGround = Controller.CheckIfOnGround();
         CurrentCharacterState.EndOfFrame();
 
+        Model.Update(this);
         CameraController.Update((float)delta, this);
         CheckForDeath();
 
@@ -338,7 +340,7 @@ public partial class CharacterData : Node3D
 
     public void UpdateAfterGiantsPoseUpdate()
     {
-        
+        Model.Update(this);
     }
 
     public void CheckForDeath()

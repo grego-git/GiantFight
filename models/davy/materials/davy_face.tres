@@ -1,0 +1,19 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://b267hpn28ml4b"]
+
+[ext_resource type="Shader" uid="uid://dh6xown4w7kte" path="res://scripts/shaders/ps1.gdshader" id="1_hpb3k"]
+[ext_resource type="Texture2D" uid="uid://bo1ttukogr3jf" path="res://models/davy/Davy_DavyFace.png" id="2_3lqe5"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_hpb3k")
+shader_parameter/affine_mapping = false
+shader_parameter/should_reflect = false
+shader_parameter/albedo = ExtResource("2_3lqe5")
+shader_parameter/texture_scale = 1.0
+shader_parameter/alpha_scissor = 0.5
+shader_parameter/jitter = 0.25
+shader_parameter/reflect_strength = 0.1
+shader_parameter/metalness = 0.0
+shader_parameter/specular = 0.0
+shader_parameter/roughness = 0.5
+shader_parameter/resolution = Vector2i(320, 240)

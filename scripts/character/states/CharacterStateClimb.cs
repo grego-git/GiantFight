@@ -86,15 +86,15 @@ public class CharacterStateClimb : ICharacterState
             Vector3 horizontalVelocity = Utils.GetFlatDirectionalVector(characterData.CameraController.CameraOrientation.GlobalBasis.Y) * characterData.JumpSpeed;
             return new CharacterStateAir(characterData, horizontalVelocity, characterData.ClimbSpeed, false, fromChargeJump: true);
         }
-        else if (!faceOn.ClimbableEntity.Destroyed && faceOn.ChangeToCrawl)
+        else if (!faceOn.ClimbableEntity.Destroyed && !characterData.IsStunned() && faceOn.ChangeToCrawl)
         {
             return new CharacterStateCrawl(characterData, faceOn);
         }
-        else if (!faceOn.ClimbableEntity.Destroyed && faceOn.ChangeToHang)
+        else if (!faceOn.ClimbableEntity.Destroyed && !characterData.IsStunned() && faceOn.ChangeToHang)
         {
             return new CharacterStateHang(characterData, faceOn);
         }
-        else if (faceOn.ClimbableEntity.Destroyed || characterData.HasLostGrip() || (!characterData.IsStunned() && !characterData.Controller.GripInput()) || !validClimbFace)
+        else if (faceOn.ClimbableEntity.Destroyed || characterData.HasLostGrip() || (!characterData.IsStunned() && !characterData.Controller.GripInput()) || (!characterData.IsStunned() && !validClimbFace))
         {
             return new CharacterStateAir(characterData, Vector3.Zero, 0.0f, false);
         }
