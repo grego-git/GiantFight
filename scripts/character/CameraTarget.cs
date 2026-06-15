@@ -40,10 +40,23 @@ public partial class CameraTarget : Node3D
 
     private float GetPadding(CharacterData characterData)
     {
-        float padding = 1.0f;
+        float padding = 2.0f;
 
-        if (characterData.Giant != null && characterData.Giant.Attacking)
-            padding = 4.0f;
+        if (characterData.OnGiant)
+        {
+            if (characterData.Giant != null && characterData.Giant.Attacking)
+                padding = 4.0f;
+        }
+        else if (characterData.InGiantProximity)
+        {
+            if (characterData.Giant != null && characterData.Giant.TrackPlayer)
+                padding = 4.0f;
+        }
+        else
+        {
+            if (characterData.Giant != null && characterData.Giant.Attacking)
+                padding = 4.0f;
+        }
 
         return padding;
     }

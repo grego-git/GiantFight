@@ -17,7 +17,7 @@ public partial class GiantHitPoint : StaticBody3D
 
     private bool setOffset;
     private MeshInstance3D mesh;
-    private StandardMaterial3D mat;
+    private ShaderMaterial mat;
     private Transform3D offsetToBone;
 
     private Meter hitMeter;
@@ -34,7 +34,7 @@ public partial class GiantHitPoint : StaticBody3D
         Enabled = true;
         
         mesh = (MeshInstance3D)GetNode("MeshInstance3D");
-        mat = (StandardMaterial3D)mesh.GetSurfaceOverrideMaterial(0);
+        mat = (ShaderMaterial)mesh.GetSurfaceOverrideMaterial(0);
         
         hitMeter = new Meter(0.25f);
         flashMeter = new Meter(0.02f);
@@ -51,10 +51,10 @@ public partial class GiantHitPoint : StaticBody3D
             turnColorOff -= (float)delta * 2.0f;
             turnColorOff = Mathf.Clamp(turnColorOff, 0.0f, 1.0f);
 
-            mat.AlbedoColor = Colors.Red.Lerp(Colors.Black, 1.0f - turnColorOff);
+            mat.SetShaderParameter("albedo", Colors.Red.Lerp(Colors.Black, 1.0f - turnColorOff));
         }
         else 
-            mat.AlbedoColor = Colors.Red;
+            mat.SetShaderParameter("albedo", Colors.Red);
 
         if (!hitMeter.IsEmpty())
         {

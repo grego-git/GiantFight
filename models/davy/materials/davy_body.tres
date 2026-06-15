@@ -18,7 +18,7 @@ shader_parameter/jitter = 0.25
 shader_parameter/reflect_strength = 0.1
 shader_parameter/metalness = 1.0
 shader_parameter/specular = 0.0
-shader_parameter/roughness = 0.302
+shader_parameter/roughness = 0.25
 shader_parameter/resolution = Vector2i(320, 240)
 
 [resource]
@@ -41,3 +41,6 @@ shader_parameter/straight_lines = true
 shader_parameter/interrupt_width = 0.5
 shader_parameter/interrupt_blur = 0.25
 shader_parameter/interrupt_speed = 0.2
+shader_parameter/affine_mapping = false
+shader_parameter/jitter = 0.25
+shader_parameter/resolution = Vector2i(320, 240)

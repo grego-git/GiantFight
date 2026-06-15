@@ -12,7 +12,7 @@ public partial class HitPoint : StaticBody3D
     public string Scene { get; set; }
 
     private MeshInstance3D mesh;
-    private StandardMaterial3D mat;
+    private ShaderMaterial mat;
 
     private Meter hitMeter;
     private Meter flashMeter;
@@ -24,7 +24,7 @@ public partial class HitPoint : StaticBody3D
         base._Ready();
         
         mesh = (MeshInstance3D)GetNode("MeshInstance3D");
-        mat = (StandardMaterial3D)mesh.GetSurfaceOverrideMaterial(0);
+        mat = (ShaderMaterial)mesh.GetSurfaceOverrideMaterial(0);
         
         hitMeter = new Meter(0.25f);
         flashMeter = new Meter(0.02f);
@@ -41,7 +41,7 @@ public partial class HitPoint : StaticBody3D
             turnColorOff -= (float)delta * 2.0f;
             turnColorOff = Mathf.Clamp(turnColorOff, 0.0f, 1.0f);
 
-            mat.AlbedoColor = Colors.Red.Lerp(Colors.Black, 1.0f - turnColorOff);
+            mat.SetShaderParameter("albedo", Colors.Red.Lerp(Colors.Black, 1.0f - turnColorOff));
 
             if (turnColorOff == 0.0f)
             {
@@ -50,7 +50,7 @@ public partial class HitPoint : StaticBody3D
             }
         }
         else 
-            mat.AlbedoColor = Colors.Red;
+            mat.SetShaderParameter("albedo", Colors.Red);
 
         if (!hitMeter.IsEmpty())
         {

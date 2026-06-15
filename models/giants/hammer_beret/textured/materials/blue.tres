@@ -1,0 +1,19 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://b7tp4u06573g0"]
+
+[ext_resource type="Shader" uid="uid://dh6xown4w7kte" path="res://scripts/shaders/ps1.gdshader" id="1_3gexy"]
+[ext_resource type="Texture2D" uid="uid://dsmxc72mgjamq" path="res://models/giants/hammer_beret/textured/HammerBeretTextured_CyanGradient.png" id="2_6w5js"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_3gexy")
+shader_parameter/affine_mapping = false
+shader_parameter/should_reflect = false
+shader_parameter/albedo = ExtResource("2_6w5js")
+shader_parameter/texture_scale = 1.0
+shader_parameter/alpha_scissor = 0.5
+shader_parameter/jitter = 0.25
+shader_parameter/reflect_strength = 0.0
+shader_parameter/metalness = 0.5
+shader_parameter/specular = 0.0
+shader_parameter/roughness = 0.5
+shader_parameter/resolution = Vector2i(320, 240)

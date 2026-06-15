@@ -1,14 +1,28 @@
-[gd_scene load_steps=5 format=3 uid="uid://b3y03b005tnj5"]
+[gd_scene load_steps=6 format=3 uid="uid://b3y03b005tnj5"]
 
 [ext_resource type="Script" uid="uid://cm3ihboqh2p03" path="res://scripts/giant/GiantHitPoint.cs" id="1_uwiwy"]
+[ext_resource type="Shader" uid="uid://kps5w0djtf7t" path="res://scripts/shaders/ps1_color.gdshader" id="2_bridl"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_i0f1t"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_xuk4y"]
+radial_segments = 16
+rings = 8
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ncafl"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n236r"]
 resource_local_to_scene = true
-albedo_color = Color(1, 0, 0, 1)
+render_priority = 0
+shader = ExtResource("2_bridl")
+shader_parameter/affine_mapping = false
+shader_parameter/should_reflect = false
+shader_parameter/albedo = Color(1, 0, 0, 1)
+shader_parameter/alpha_scissor = 0.5
+shader_parameter/jitter = 0.25
+shader_parameter/reflect_strength = 0.0
+shader_parameter/metalness = 0.25
+shader_parameter/specular = 1.0
+shader_parameter/roughness = 0.0
+shader_parameter/resolution = Vector2i(320, 240)
 
 [node name="HitPoint" type="StaticBody3D"]
 collision_layer = 64
@@ -19,4 +33,4 @@ shape = SubResource("SphereShape3D_i0f1t")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_xuk4y")
-surface_material_override/0 = SubResource("StandardMaterial3D_ncafl")
+surface_material_override/0 = SubResource("ShaderMaterial_n236r")

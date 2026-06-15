@@ -171,20 +171,45 @@ public partial class CameraController : Node3D
     {
         float targetDistance = NormalDistance;
 
-        if (characterData.Giant != null && characterData.Giant.Attacking)
-            targetDistance = DangerDistance;
-        else if (characterData.OnGiant || characterData.InGiantProximity)
-            targetDistance = ClimbDistance;
+        if (characterData.OnGiant)
+        {
+            if (characterData.Giant != null && characterData.Giant.Attacking)
+                targetDistance = DangerDistance;
+            else
+                targetDistance = ClimbDistance;
+        }
+        else if (characterData.InGiantProximity)
+        {
+            if (characterData.Giant != null && characterData.Giant.TrackPlayer)
+                targetDistance = DangerDistance;
+        }
+        else
+        {
+            if (characterData.Giant != null && characterData.Giant.TrackPlayer)
+                targetDistance = DangerDistance;
+        }
 
-        currentDistance = Mathf.MoveToward(currentDistance, targetDistance, 50.0f * delta);
+        currentDistance = Mathf.MoveToward(currentDistance, targetDistance, 25.0f * delta);
     }
 
     private void UpdateFOV(float delta, CharacterData characterData)
     {
         float targetFOV = NormalFOV;
-
-         if (characterData.Giant != null && characterData.Giant.TrackPlayer)
-            targetFOV = DangerFOV;
+        
+        if (characterData.OnGiant)
+        {
+            
+        }
+        if (characterData.InGiantProximity)
+        {
+            if (characterData.Giant != null && characterData.Giant.Attacking)
+                targetFOV = DangerFOV;
+        }
+        else
+        {
+            if (characterData.Giant != null && characterData.Giant.TrackPlayer)
+                targetFOV = DangerFOV;
+        }
 
         unModdedFOV = Mathf.MoveToward(unModdedFOV, targetFOV, 50.0f * delta);
         Camera3D.Fov = unModdedFOV;

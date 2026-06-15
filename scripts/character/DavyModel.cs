@@ -41,8 +41,6 @@ public partial class DavyModel : Node3D
 
     public void PlayAnimation(string animation, bool checkCurrentAnimation = true)
     {
-        GD.Print("PLAYING " + animation);
-
         if (checkCurrentAnimation && (ANIM_LIBRARY + animation) == currentAnimation)
             return;
 
@@ -92,7 +90,6 @@ public partial class DavyModel : Node3D
     {
         if (characterData.IsStunned())
         {
-            GD.Print("IS STUNNED");
             PlayAnimation("stun", false);
             return;
         }

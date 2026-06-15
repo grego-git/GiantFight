@@ -1,19 +1,46 @@
-[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://b267hpn28ml4b"]
+[gd_resource type="ShaderMaterial" load_steps=6 format=3 uid="uid://d2iis35ufc4qx"]
 
 [ext_resource type="Shader" uid="uid://dh6xown4w7kte" path="res://scripts/shaders/ps1.gdshader" id="1_hpb3k"]
 [ext_resource type="Texture2D" uid="uid://bo1ttukogr3jf" path="res://models/davy/Davy_DavyFace.png" id="2_3lqe5"]
+[ext_resource type="Texture2D" uid="uid://cudb62timpgt8" path="res://textures/Reflection.png" id="3_wm3pe"]
+[ext_resource type="Shader" uid="uid://cal57alwp36gx" path="res://scripts/shaders/x_ray.gdshader" id="4_0x5gf"]
 
-[resource]
-render_priority = 0
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yx2al"]
+render_priority = 1
 shader = ExtResource("1_hpb3k")
 shader_parameter/affine_mapping = false
-shader_parameter/should_reflect = false
+shader_parameter/should_reflect = true
 shader_parameter/albedo = ExtResource("2_3lqe5")
+shader_parameter/sphere_map = ExtResource("3_wm3pe")
 shader_parameter/texture_scale = 1.0
 shader_parameter/alpha_scissor = 0.5
 shader_parameter/jitter = 0.25
-shader_parameter/reflect_strength = 0.1
+shader_parameter/reflect_strength = 0.0
 shader_parameter/metalness = 0.0
 shader_parameter/specular = 0.0
-shader_parameter/roughness = 0.5
+shader_parameter/roughness = 0.0
+shader_parameter/resolution = Vector2i(320, 240)
+
+[resource]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_yx2al")
+shader = ExtResource("4_0x5gf")
+shader_parameter/enable_glow = true
+shader_parameter/enable_lines = false
+shader_parameter/enable_flicker = false
+shader_parameter/enable_pattern = false
+shader_parameter/base_color = Color(1, 1, 0, 1)
+shader_parameter/glow_color = Color(1, 1, 1, 1)
+shader_parameter/glow_itensity = 4.5
+shader_parameter/glow_amount = 4.5
+shader_parameter/flickering = 0.55
+shader_parameter/line_width = 0.005
+shader_parameter/line_blur = 0.2
+shader_parameter/line_speed = 0.02
+shader_parameter/straight_lines = true
+shader_parameter/interrupt_width = 0.5
+shader_parameter/interrupt_blur = 0.25
+shader_parameter/interrupt_speed = 0.2
+shader_parameter/affine_mapping = false
+shader_parameter/jitter = 0.25
 shader_parameter/resolution = Vector2i(320, 240)

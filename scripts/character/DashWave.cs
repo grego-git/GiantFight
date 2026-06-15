@@ -30,7 +30,7 @@ public partial class DashWave : MeshInstance3D
         timer.FillMeter(-(float)delta * ExpandSpeed);
 
         Scale = (Vector3.One * InitialScale).Lerp(Vector3.One * TargetScale, timer.OneMinusNormalizedFill());
-        material.AlbedoColor = new Color(1.0f, 1.0f, 1.0f, Mathf.Pow(timer.NormalizedFill(), 2.0f));
+        material.AlbedoColor = new Color(1.0f, 1.0f, 1.0f, Mathf.Pow(timer.NormalizedFill(), 4.0f));
 
         if (timer.IsEmpty())
             QueueFree();
